@@ -1,16 +1,27 @@
-import './VotingCard.css';
+import { chakra } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react'
+
+// props.title, props.desc, props.date
 
 function VotingCard(props) {
     const cardDate = props.date.toLocaleString('en-UK', {year: 'numeric', month: 'short', day: '2-digit'}).split('/').join('.');
 
     return (
-        <div className='vote-card'>
-            <div className='vote-card-inner'>
-                <h3 className='vote-card-title'>{props.title}</h3>
-                <p className='vote-card-date'>{cardDate}</p>
-                <p className='vote-card-description'>{props.desc}</p>
-            </div>
-        </div>
+        <chakra.a href='#'>
+            <Box p='28px' minH='20px' borderRadius='15px' overflow='hidden' boxShadow='base' backgroundColor='white'>
+                <chakra.h2 fontSize='xl' fontWeight='600' fontFamily='inter'>
+                    {props.title}
+                </chakra.h2>
+
+                <chakra.h4 fontSize='xs' fontFamily='inter' color="#767676">
+                    {cardDate}
+                </chakra.h4>
+
+                <chakra.p mt='10px' fontFamily='inter' color="#767676">
+                    {props.desc}
+                </chakra.p>
+            </Box>
+        </chakra.a>
     );
 }
 
