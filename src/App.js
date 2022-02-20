@@ -1,14 +1,47 @@
-import VotingCard from "./components/VotingCard";
+import Votes from "./components/Votes/Votes";
 
 function App() {
-    const dateVote = new Date(2012, 11, 13);
+    const votes = [
+        {
+            id: "c84ea9ba-4f2f-4123-8336-2eae1aba252b",
+            created: "2022-02-04T15:33:51.139429Z",
+            title: "A",
+            description: "AAAAAAAAAAAA",
+            voting_starts_at: "2022-02-04T15:33:42Z",
+            voting_ends_at: "2022-02-04T15:33:43Z",
+            archived_at: null,
+            accepts_votes: true,
+            is_active: true,
+            is_archived: false,
+            number_of_polls: 4,
+            owner: "3c0f3144-6056-4bab-8f20-0d7961ef328c",
+            groups: [
+                "0036e39b-3330-49df-a04f-8c30d4d5e6cf",
+                "0274ee7b-884d-454e-88aa-d3259a3de9ff"
+            ]
+        },
+        {
+            id: "c84ea9ba-4f2f-4123-8336-2eae1aba252b",
+            created: "2022-02-04T15:33:51.139429Z",
+            title: "A",
+            description: "AAAAAAAAAAAA",
+            voting_starts_at: "2022-02-04T15:33:42Z",
+            voting_ends_at: "2022-02-04T15:33:43Z",
+            archived_at: null,
+            accepts_votes: true,
+            is_active: true,
+            is_archived: false,
+            number_of_polls: 4,
+            owner: "3c0f3144-6056-4bab-8f20-0d7961ef328c",
+            groups: [
+                "0036e39b-3330-49df-a04f-8c30d4d5e6cf",
+                "0274ee7b-884d-454e-88aa-d3259a3de9ff"
+            ]
+        },
+    ]
 
     return (
-        <div>
-            <VotingCard title="Macanache" date={dateVote} desc="Macalan desc" />
-            <VotingCard title="Macanache" date={dateVote} desc="Macalan desc" />
-            <VotingCard title="Macanache" date={dateVote} desc="Macalan desc" />
-        </div>
+        <Votes votes={votes}/>
     );
 }
 

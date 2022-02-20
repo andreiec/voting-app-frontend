@@ -1,7 +1,7 @@
 import './VotingCard.css';
 
 function VotingCard(props) {
-    const cardDate = props.date.toLocaleString('en-US', {year: 'numeric', month: 'numeric', day: 'numeric'}).split('/').join('.');
+    const cardDate = props.date.toLocaleString('en-UK', {year: 'numeric', month: 'short', day: '2-digit'}).split('/').join('.');
 
     return (
         <div className='vote-card'>
