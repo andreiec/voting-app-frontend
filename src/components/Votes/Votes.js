@@ -1,21 +1,28 @@
 import VotingCard from '../VotingCard/VotingCard';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { SimpleGrid } from '@chakra-ui/react'
+import apiClient from '../../http-common'
 
-function Votes(props) {
+function Votes() {
     
-    const [votes, setVotes] = useState(props.votes);
+    const [votes, setVotes] = useState([]);
+
+    useEffect(() => {
+        apiClient.get('elections/').then((response) => {
+            setVotes(response.data)
+        });
+    }, []);
 
     let votesContent = <p>Nu exista vreun vot!</p>
-    
-    if (props.votes.length > 0) {
+
+    if (votes.length > 0) {
         votesContent = votes.map((vote) => (
             <VotingCard key={vote.id} title={vote.title} date={new Date(vote.created)} desc={vote.description} />
         ));
     }
-    //minChildWidth=345
+
     return (
-        <SimpleGrid columns={[1, 2, 3]}  p='10' backgroundColor='#f4f6fd' spacing='50px'>
+        <SimpleGrid minChildWidth='21.6rem' backgroundColor='#f4f6fd' spacing='30px'>
             {votesContent}
         </SimpleGrid>
     );
