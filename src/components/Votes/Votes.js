@@ -1,30 +1,51 @@
-import VotingCard from '../VotingCard/VotingCard';
-import { useState, useEffect } from 'react'
-import { SimpleGrid } from '@chakra-ui/react'
+import VotesList from './VotesList'
+
+import React, { useState, useEffect, useCallback } from 'react'
+
 import apiClient from '../../http-common'
 
 function Votes() {
-    
     const [votes, setVotes] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-    useEffect(() => {
+    const fetchVotes = useCallback(() => {
+        setIsLoading(true);
+
         apiClient.get('elections/').then((response) => {
             setVotes(response.data)
+            setIsLoading(false)
+            setError(null)
+        }).catch(error => {
+            setIsLoading(false)
+            setError(error)
         });
     }, []);
 
-    let votesContent = <p>Nu exista vreun vot!</p>
+    useEffect(() => {
+        fetchVotes();
+    }, []);
 
-    if (votes.length > 0) {
-        votesContent = votes.map((vote) => (
-            <VotingCard key={vote.id} title={vote.title} date={new Date(vote.created)} desc={vote.description} />
-        ));
+    // Display if no votes exist
+    let content = <p>Nu există voturi!</p>;
+
+    // Display votes if any
+    if (votes.length > 0){
+        content = <VotesList votes={votes}></VotesList>
+    }
+
+    // Display if error
+    if (error) {
+        content = <p>{error.message}</p>;
+    }
+
+    // Display while loading request
+    if (isLoading) {
+        content = <p>Se încarcă..</p>
     }
 
     return (
-        <SimpleGrid minChildWidth='21.6rem' backgroundColor='#f4f6fd' spacing='30px'>
-            {votesContent}
-        </SimpleGrid>
+        <React.Fragment> {content} </React.Fragment>
     );
 }
 
