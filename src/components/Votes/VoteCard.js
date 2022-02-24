@@ -3,7 +3,7 @@ import { Box } from '@chakra-ui/react'
 
 // props.title, props.desc, props.date
 
-function VotingCard(props) {
+function VoteCard(props) {
     const cardDate = props.date.toLocaleString('en-UK', {year: 'numeric', month: 'short', day: '2-digit'}).split('/').join('.');
 
     return (
@@ -25,4 +25,4 @@ function VotingCard(props) {
     );
 }
 
-export default VotingCard;
+export default VoteCard;
