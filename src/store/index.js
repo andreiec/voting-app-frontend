@@ -6,12 +6,12 @@ const counterSlice = createSlice({
     reducers: {
         // Place functions here
         increment(state) {
-            counter++;
+            //counter++;
         }
     }
 });
 
-initialAuthState = {
+let initialAuthState = {
     isAuthenticated: false
 }
 
