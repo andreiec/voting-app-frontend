@@ -1,7 +1,6 @@
 import { chakra } from '@chakra-ui/react';
 import { Box } from '@chakra-ui/react'
-import { Link } from 'react-router-dom';
-
+import { Link, useMatch } from 'react-router-dom';
 // props.title, props.desc, props.date
 
 function VoteCard(props) {

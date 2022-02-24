@@ -1,15 +1,22 @@
+import { Box } from "@chakra-ui/react";
 import { Fragment } from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
+
 function Layout(props) {
     return (
-        <Fragment>
+        <Box minH="100vh">
             <Sidebar />
             <Navbar />
-            <main>{props.children}</main>
-        </Fragment>
+            <Box ml={{ base: 0, md: 60 }}>
+                <Box px={{ base: 0, md: 70 }} bg="red">
+                    {props.children}
+                </Box>
+            </Box>
+        </Box>
     )
 };
+
 
 export default Layout;

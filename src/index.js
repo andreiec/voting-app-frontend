@@ -9,9 +9,20 @@ import store from './store';
 
 const colors = {
     brand: {
-        900: '#1a365d',
-        800: '#153e75',
-        700: '#2a69ac',
+        main_blue: '#2F77CC',
+        bg: '#F4F6FD',
+
+        white: '#FFFFFF',
+        green: '#46B652',
+        red: '#F26464',
+        orange: '#FFB648',
+
+        text_title: '#161616',
+        text_body: '#767676',
+        
+        input_bg: '#EFF0F6',
+        input_ph: '#D6D7E3', // placeholder
+        label: '#B9B9B9',
     },
 }
 
