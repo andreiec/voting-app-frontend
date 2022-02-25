@@ -1,8 +1,10 @@
+import { Box } from "@chakra-ui/react";
+
 function Navbar() {
     return (
-        <header>
-            NAVBAR
-        </header>
+        <Box h='20'>
+
+        </Box>
     )
 }
 
