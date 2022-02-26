@@ -1,23 +1,25 @@
-import Votes from "./components/Votes/Votes";
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
-import Vote from './pages/Vote'
-import Layout from "./layout/Layout";
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import SingleVote from './pages/SingleVote'
+import AllVotes from './pages/AllVotes';
 import NotFound from "./pages/NotFound";
 import Main from "./pages/Main";
+import Login from "./pages/Login"
+import Layout from "./layout/Layout"
 
 function App() {
     return (
         <BrowserRouter>
-            <Layout>
-                <Routes>
-                    <Route path="/" element={<Main />} />
-                    <Route path="/login" element={<></>} />
-                    <Route path="/votes" element={<Votes />} />
-                    <Route path="/votes/:id" element={<Vote />}/>
-                    <Route path="/settings" element={<></>} />
-                    <Route path="*" element={<NotFound />}/>
-                </Routes>
-            </Layout>
+            <Routes>
+                <Route element={<Layout />}>
+                    <Route index element={<Main />} />
+                    <Route path="/votes" element={<AllVotes />} />
+                    <Route path="/votes/:id" element={<SingleVote />} />
+                    <Route path="/settings" element={<></>} />  
+                </Route>
+
+                <Route path="/login" element={<Login />} />
+                <Route path="*" element={<NotFound />}/>
+            </Routes>
         </BrowserRouter>
     );
 }

@@ -2,8 +2,9 @@ import { useParams } from 'react-router-dom';
 import React, { useState, useEffect, useCallback, Fragment } from 'react'
 import apiClient from '../http-common'
 import NotFound from './NotFound';
+import Layout from '../layout/Layout';
 
-function Vote() {
+function SingleVote() {
     const params = useParams();
 
     const [vote, setVote] = useState([]);
@@ -45,8 +46,10 @@ function Vote() {
     }
 
     return (
-        <Fragment>{content}</Fragment>
+        //<Layout>
+            {content}
+        //</Layout>
     )
 };
 
-export default Vote
+export default SingleVote;
