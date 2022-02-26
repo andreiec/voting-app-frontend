@@ -8,7 +8,7 @@ function Layout(props) {
     return (
         <Box minH="100vh">
             <Sidebar />
-            <Flex ml={{ base: 0, md: 60 }} flexDir='column' minH='100vh'>
+            <Flex ml={{ base: 0, md: '275px' }} flexDir='column' minH='100vh'>
                 <Navbar />
                 <Box px={{ base: 0, md: 70 }} py={{ base: 8, md: 12}} bg="brand.bg" flex='1'>
                     {props.children}

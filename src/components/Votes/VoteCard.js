@@ -1,4 +1,4 @@
-import { chakra } from '@chakra-ui/react';
+import { chakra, LinkBox } from '@chakra-ui/react';
 import { Box } from '@chakra-ui/react'
 import { Link } from 'react-router-dom';
 // props.title, props.desc, props.date
@@ -7,7 +7,7 @@ function VoteCard(props) {
     const cardDate = props.date.toLocaleString('en-UK', {year: 'numeric', month: 'short', day: '2-digit'}).split('/').join('.');
 
     return (
-        <chakra.a as={Link} to={'/votes/' + props.id} h='13.75rem' w='21.5rem' borderRadius='15px' overflow='hidden' boxShadow='base' backgroundColor='white' placeSelf='center'>
+        <LinkBox as={Link} to={'/votes/' + props.id} h='13.75rem' w='21.5rem' borderRadius='15px' overflow='hidden' boxShadow='base' backgroundColor='white' placeSelf='center'>
             <Box mx='28px' my='22px'>
                 <chakra.h2 fontSize='lg' fontWeight='600' fontFamily='inter'>
                     {props.title}
@@ -21,7 +21,7 @@ function VoteCard(props) {
                     {props.desc}
                 </chakra.p>
             </Box>
-        </chakra.a>
+        </LinkBox>
     );
 }
 
