@@ -31,7 +31,6 @@ function Login() {
             email: userEmail,
             password: userPass,
         }).then((response) => {
-
             // Wrapped dispatch into a promise to wait for it to complete when changing page
             // This does word but i don't know why
             const loginUser = () => new Promise((resolve, reject) => {

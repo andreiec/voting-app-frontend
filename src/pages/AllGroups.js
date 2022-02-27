@@ -1,4 +1,4 @@
-import VotesList from '../components/Votes/VotesList'
+import GroupsList from '../components/Groups/GroupsList'
 import React, { useState, useEffect, useCallback } from 'react'
 import apiClient from '../http-common'
 import { Center, Spinner, Box, Text } from '@chakra-ui/react';
@@ -11,17 +11,17 @@ let requestConfig = {
     }
 }
 
-function AllVotes() {
-    const [votes, setVotes] = useState([]);
+function AllGroups() {
+    const [groups, setGroups] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [firstTouch, setFirstTouch] = useState(true);
     const [error, setError] = useState(null);
 
-    const fetchVotes = () => {
+    const fetchGroups = () => {
         setIsLoading(true);
 
-        apiClient.get('elections/', requestConfig).then((response) => {
-            setVotes(response.data)
+        apiClient.get('groups/', requestConfig).then((response) => {
+            setGroups(response.data)
             setIsLoading(false)
             setError(null)
         }).catch(error => {
@@ -32,10 +32,10 @@ function AllVotes() {
 
     useEffect(() => {
         setFirstTouch(false);
-        fetchVotes();
+        fetchGroups();
     }, []);
 
-    // Display if no votes exist
+    // Display if no groups exist
     let content; 
 
     // Hide content if it is the first time loading the page
@@ -43,9 +43,9 @@ function AllVotes() {
         content = <Center w='full' h='full'><Text size='xl'>Nu există voturi!</Text></Center>
     }
 
-    // Display votes if any
-    if (votes.length > 0){
-        content = <VotesList votes={[votes[0], votes[1], votes[2], votes[0], votes[1], votes[2], votes[0], votes[1], votes[2]]}></VotesList>
+    // Display groups if any
+    if (groups.length > 0){
+        content = <GroupsList groups={groups}></GroupsList>
     }
 
     // Display if error
@@ -64,4 +64,4 @@ function AllVotes() {
 }
 
 
-export default AllVotes;
+export default AllGroups;

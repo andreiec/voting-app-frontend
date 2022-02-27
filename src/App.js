@@ -6,6 +6,8 @@ import Main from "./pages/Main";
 import Login from "./pages/Login"
 import Layout from "./layout/Layout"
 import { useSelector } from 'react-redux';
+import { Fragment } from 'react';
+import AllGroups from './pages/AllGroups';
 
 function App() {
     const authSelector = useSelector(selector => selector.auth)
@@ -18,12 +20,15 @@ function App() {
                         <Route index element={<Main />} />
                         <Route path="votes" element={<AllVotes />} />
                         <Route path="votes/:id" element={<SingleVote />} />
+                        <Route path="groups" element={<AllGroups></AllGroups>} />
                         <Route path="settings" element={<></>} />  
                     </Route>
                 }
                 
-                {authSelector.isLoggedIn &&
-                    <Route path="*" element={<NotFound />}/>
+                {authSelector.isLoggedIn && <Fragment>
+                        <Route path="not-found" element={<NotFound />} />
+                        <Route path="*" element={<NotFound />} />
+                    </Fragment>
                 }
             
                 {!authSelector.isLoggedIn &&

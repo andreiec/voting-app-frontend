@@ -1,19 +1,26 @@
-import { useParams } from 'react-router-dom';
-import React, { useState, useEffect, useCallback, Fragment } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect, Fragment } from 'react'
 import apiClient from '../http-common'
-import NotFound from './NotFound';
+import Cookies from 'js-cookie';
+
+let requestConfig = {
+    headers : {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${Cookies.get("token")}`,
+    }
+}
 
 function SingleVote() {
     const params = useParams();
+    const navigator = useNavigate();
 
     const [vote, setVote] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const fetchVote = useCallback(() => {
+    const fetchVote = () => {
         setIsLoading(true);
-
-        apiClient.get('elections/' + params.id + '/').then((response) => {
+        apiClient.get(`elections/${params.id}/`, requestConfig).then((response) => {
             setVote(response.data)
             setIsLoading(false)
             setError(null)
@@ -21,7 +28,7 @@ function SingleVote() {
             setIsLoading(false)
             setError(error)
         });
-    }, []);
+    };
 
     useEffect(() => {
         fetchVote();
@@ -33,7 +40,7 @@ function SingleVote() {
 
         // If 404 put not found
         if (error.response.status === 404 || error.response.status === 400) {
-            return(<NotFound />)
+            navigator('/not-found', { replace: true });
         }
 
         content = <p>{error.message}</p>;
