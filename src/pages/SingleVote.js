@@ -46,9 +46,9 @@ function SingleVote() {
     }
 
     return (
-        //<Layout>
+        <Fragment>
             {content}
-        //</Layout>
+        </Fragment>
     )
 };
 

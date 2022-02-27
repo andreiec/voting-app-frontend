@@ -12,12 +12,12 @@ function App() {
             <Routes>
                 <Route element={<Layout />}>
                     <Route index element={<Main />} />
-                    <Route path="/votes" element={<AllVotes />} />
-                    <Route path="/votes/:id" element={<SingleVote />} />
-                    <Route path="/settings" element={<></>} />  
+                    <Route path="votes" element={<AllVotes />} />
+                    <Route path="votes/:id" element={<SingleVote />} />
+                    <Route path="settings" element={<></>} />  
                 </Route>
 
-                <Route path="/login" element={<Login />} />
+                <Route path="login" element={<Login />} />
                 <Route path="*" element={<NotFound />}/>
             </Routes>
         </BrowserRouter>
