@@ -4,37 +4,52 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom'
 
 import { authActions } from "../store";
-import apiClient from '../http-common'
+import apiClient from '../http-common';
+import Cookies from 'js-cookie';
 
+let requestConfig = {
+    headers : {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${Cookies.get("token")}`,
+    }
+};
 
 function Login() {
     const emailInputRef = useRef();
     const passwordInputRef = useRef();
 
     const navigate = useNavigate();
-
+    const selector = useSelector(selection => selection.auth)
     const authDispatch = useDispatch();
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const loginUser = useCallback((userEmail, userPass) => {
+    const loginUser = (userEmail, userPass) => {
         setIsLoading(true);
         apiClient.post('auth/token/', {
             email: userEmail,
             password: userPass,
         }).then((response) => {
-            authDispatch(authActions.login(response.data.refresh));
-            setIsLoading(false);
-            setError(null);
-            navigate('/');
+
+            // Wrapped dispatch into a promise to wait for it to complete when changing page
+            // This does word but i don't know why
+            const loginUser = () => new Promise((resolve, reject) => {
+                authDispatch(authActions.login(response.data['access']), requestConfig);
+            })
+            
+            // This is litarally hell code
+            loginUser().then(() => {
+                console.log(selector.userID);
+                setIsLoading(false);
+                setError(null);
+                navigate('/');
+            })
         }).catch(err => {
             setIsLoading(false);
             setError(err);
         });
-
-
-    }, []);
+    };
 
 
     function submitHandler(event) {

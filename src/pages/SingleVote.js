@@ -2,7 +2,6 @@ import { useParams } from 'react-router-dom';
 import React, { useState, useEffect, useCallback, Fragment } from 'react'
 import apiClient from '../http-common'
 import NotFound from './NotFound';
-import Layout from '../layout/Layout';
 
 function SingleVote() {
     const params = useParams();
