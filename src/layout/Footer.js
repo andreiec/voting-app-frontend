@@ -2,7 +2,7 @@ import { Text, Flex, Box, Spacer } from "@chakra-ui/react";
 
 function Footer() {
     return (
-        <Box  h='47px' borderTop='1px' borderColor='#e0e1ea' bg='brand.bg'>
+        <Box display={{base: 'none', md: 'block'}} h='47px' borderTop='1px' borderColor='#e0e1ea' bg='brand.bg'>
             <Flex px='8' flexDirection='row' color='brand.label' mt='10px' fontSize='sm' fontWeight='500'>
                 <Text>
                     @ Facultatea de Matematică și Informatică
