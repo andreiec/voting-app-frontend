@@ -1,64 +1,42 @@
 import { Flex, Text, Button, Center, Box, FormControl, FormLabel, Input, Link, Alert, AlertIcon, CloseButton } from "@chakra-ui/react";
-import { useCallback, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom'
 
 import { authActions } from "../store";
 import apiClient from '../http-common';
-import Cookies from 'js-cookie';
 
-let requestConfig = {
-    headers : {
-        "Content-type": "application/json",
-        "Authorization": `Bearer ${Cookies.get("token")}`,
-    }
-};
 
 function Login() {
     const emailInputRef = useRef();
     const passwordInputRef = useRef();
 
     const navigate = useNavigate();
-    const selector = useSelector(selection => selection.auth)
     const authDispatch = useDispatch();
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const loginUser = (userEmail, userPass) => {
+
+    function submitHandler() {
+        const enteredEmail = emailInputRef.current.value;
+        const enteredPassword = passwordInputRef.current.value;
+
         setIsLoading(true);
+
         apiClient.post('auth/token/', {
-            email: userEmail,
-            password: userPass,
+            email: enteredEmail,
+            password: enteredPassword,
         }).then((response) => {
-            // Wrapped dispatch into a promise to wait for it to complete when changing page
-            // This does word but i don't know why
-            const loginUser = () => new Promise((resolve, reject) => {
-                authDispatch(authActions.login(response.data['access']), requestConfig);
-            })
-            
-            // This is litarally hell code
-            loginUser().then(() => {
-                console.log(selector.userID);
-                setIsLoading(false);
-                setError(null);
-                navigate('/');
-            })
+            setIsLoading(false);
+            setError(null);
+            authDispatch(authActions.login(response.data['access']));
+            navigate('/');
         }).catch(err => {
             setIsLoading(false);
             setError(err);
         });
     };
-
-
-    function submitHandler(event) {
-        event.preventDefault();
-
-        const enteredEmail = emailInputRef.current.value;
-        const enteredPassword = passwordInputRef.current.value;
-
-        loginUser(enteredEmail, enteredPassword);
-    }
 
     return (
         <Center h='100vh' bg={{base: 'brand.white', md: 'brand.bg'}}>
@@ -70,15 +48,15 @@ function Login() {
                     <Box m={{base: '0px', md: '40px'}} p={{base: '40px', md: '0px'}} w={{base: '100vw', md: '340px' }}>
                         {error && <Alert status='error' my='25px'><AlertIcon />Email-ul sau parola este greșită.<CloseButton position='absolute' right='8px' top='8px' onClick={() => setError(false)}/></Alert>}
 
-                        <form onSubmit={submitHandler}>
-                            <FormControl onSubmit={submitHandler}>
+                        <form>
+                            <FormControl>
                                 <FormLabel fontWeight='600' htmlFor='email'>E-mail</FormLabel>
                                 <Input id='email' type='email' required ref={emailInputRef} />
                                 <FormLabel fontWeight='600' htmlFor='password' mt='10px'>Parolă</FormLabel>
                                 <Input id='password' type='password' required ref={passwordInputRef} />
                             </FormControl>
 
-                            <Button type='submit' isLoading={isLoading} w='full' mt='25px' bg='brand.main_blue' _hover={{bg:'brand.blue_light'}} color='brand.white' fontWeight='400'>Autentifică-te</Button>
+                            <Button onClick={submitHandler} isLoading={isLoading} w='full' mt='25px' bg='brand.main_blue' _hover={{bg:'brand.blue_light'}} color='brand.white' fontWeight='400'>Autentifică-te</Button>
                         </form>
 
                         <Box mt='10px'>

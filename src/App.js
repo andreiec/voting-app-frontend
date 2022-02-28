@@ -1,12 +1,12 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { useSelector } from 'react-redux';
+import React, { Fragment } from 'react';
 import SingleVote from './pages/SingleVote'
 import AllVotes from './pages/AllVotes';
 import NotFound from "./pages/NotFound";
 import Main from "./pages/Main";
-import Login from "./pages/Login"
-import Layout from "./layout/Layout"
-import { useSelector } from 'react-redux';
-import { Fragment } from 'react';
+import Login from "./pages/Login";
+import Layout from "./layout/Layout";
 import AllGroups from './pages/AllGroups';
 
 function App() {
@@ -32,11 +32,11 @@ function App() {
                 }
             
                 {!authSelector.isLoggedIn &&
-                    <Route index element={<Login />} />
+                    <Route path="login" element={<Login />} />
                 }
                 
                 {!authSelector.isLoggedIn &&
-                    <Route path='*' element={<Navigate to='/' />} />
+                    <Route path='*' element={<Navigate to='/login' />} />
                 }
 
             </Routes>

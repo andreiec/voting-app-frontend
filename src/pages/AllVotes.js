@@ -4,12 +4,6 @@ import apiClient from '../http-common'
 import { Center, Spinner, Box, Text } from '@chakra-ui/react';
 import Cookies from 'js-cookie';
 
-let requestConfig = {
-    headers : {
-        "Content-type": "application/json",
-        "Authorization": `Bearer ${Cookies.get("token")}`,
-    }
-}
 
 function AllVotes() {
     const [votes, setVotes] = useState([]);
@@ -19,6 +13,13 @@ function AllVotes() {
 
     const fetchVotes = () => {
         setIsLoading(true);
+
+        let requestConfig = {
+            headers : {
+                "Content-type": "application/json",
+                "Authorization": `Bearer ${Cookies.get("token")}`,
+            }
+        }
 
         apiClient.get('elections/', requestConfig).then((response) => {
             setVotes(response.data)

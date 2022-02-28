@@ -1,5 +1,5 @@
 import { createSlice, configureStore } from '@reduxjs/toolkit'
-import Cookie from 'js-cookie'
+import Cookies from 'js-cookie'
 import jwt_decode from 'jwt-decode';
 
 
@@ -9,7 +9,7 @@ let initialAuthState = {
     userID: null,
 }
 
-const tokenFromCookie = Cookie.get('token');
+const tokenFromCookie = Cookies.get('token');
 
 if (tokenFromCookie) {
     initialAuthState = {
@@ -25,13 +25,13 @@ const authSlice = createSlice({
     initialState: initialAuthState,
     reducers: {
         login(state, action) {
-            Cookie.set('token', action.payload, { expires: 1, sameSite: 'strict', secure: true });
+            Cookies.set('token', action.payload, { expires: 1, sameSite: 'strict', secure: true });
             state.isLoggedIn = true;
             state.token = action.payload;
             state.userID = jwt_decode(action.payload)['id'];
         },
         logout(state){
-            Cookie.remove('token')
+            Cookies.remove('token')
             state.isLoggedIn = false;
             state.token = null;
             state.userID = null;

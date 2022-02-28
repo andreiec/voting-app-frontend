@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { extendTheme, ChakraProvider } from '@chakra-ui/react'
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 
 import './index.css';
 import App from './App';
-import store from './store';
+import store from './store/index';
 
 const colors = {
     brand: {
