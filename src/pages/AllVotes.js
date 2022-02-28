@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import apiClient from "../http-common";
 import { Center, Spinner, Box, Text } from "@chakra-ui/react";
 import Cookies from "js-cookie";
+import Titlebar from "../layout/Titlebar";
 
 function AllVotes() {
     const [votes, setVotes] = useState([]);
@@ -44,8 +45,18 @@ function AllVotes() {
     // Hide content if it is the first time loading the page
     if (!firstTouch) {
         content = (
-            <Center w="full" h="full">
-                <Text size="xl">Nu există voturi!</Text>
+            <Center
+                minW="21.5rem"
+                w='full'
+                h='70vh'
+            >
+                <Text
+                    fontSize="xl"
+                    fontWeight='600'
+                    my='50px'
+                >
+                    Nu există voturi!
+                </Text>
             </Center>
         );
     }
@@ -54,17 +65,7 @@ function AllVotes() {
     if (votes.length > 0) {
         content = (
             <VotesList
-                votes={[
-                    votes[0],
-                    votes[1],
-                    votes[2],
-                    votes[0],
-                    votes[1],
-                    votes[2],
-                    votes[0],
-                    votes[1],
-                    votes[2],
-                ]}
+                votes={votes}
             ></VotesList>
         );
     }
@@ -77,7 +78,7 @@ function AllVotes() {
     // Display while loading request
     if (isLoading) {
         content = (
-            <Center w="full" h="full">
+            <Center h='70vh'>
                 <Spinner
                     thickness="4px"
                     speed="0.65s"
@@ -89,7 +90,12 @@ function AllVotes() {
         );
     }
 
-    return <React.Fragment> {content} </React.Fragment>;
+    return (
+        <React.Fragment>
+            <Titlebar title='Voturile tale' buttonFunction={fetchVotes}/>
+            {content}
+        </React.Fragment> 
+    )
 }
 
 export default AllVotes;

@@ -16,24 +16,24 @@ function Navbar(props) {
     }
 
     return (
-        <Box h="20" boxShadow="sm" zIndex="10">
+        <Box h="65px" boxShadow="sm" zIndex="10">
             <Box w="fit-content" mr="30px" ml="auto">
                 <Menu isLazy>
                     <MenuButton>
                         <Center
-                            h="55px"
+                            h="45px"
                             px="20px"
-                            mt="10px"
+                            mt="8px"
                             boxShadow="base"
-                            borderRadius="10"
+                            borderRadius="15px"
                         >
-                            <Text mb="3px">
+                            <Text mb="3px" fontSize='base'>
                                 {props.user && `${props.user.first_name} ${props.user.last_name[0]}.`}
                             </Text>
                             <Image
                                 src={defaultUserImage}
                                 borderRadius="full"
-                                w="35px"
+                                w="30px"
                                 ml="15px"
                             ></Image>
                         </Center>

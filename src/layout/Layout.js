@@ -42,7 +42,7 @@ function Layout() {
                 <Navbar user={user} />
                 <Box
                     px={{ base: 0, md: 70 }}
-                    py={{ base: 8, md: 12 }}
+                    py={{ base: 8, md: 8 }}
                     bg="brand.bg"
                     flex="1"
                 >

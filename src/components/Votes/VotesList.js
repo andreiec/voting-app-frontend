@@ -13,7 +13,7 @@ function VotesList(props) {
 
     return (
         <Flex
-            columnGap={{ base: "80px", md: "30px" }}
+            columnGap={{ base: "80px", md: "42px" }}
             rowGap="30px"
             flexWrap="wrap"
             justifyContent={{ base: "center", md: "flex-start" }}

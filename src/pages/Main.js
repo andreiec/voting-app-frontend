@@ -1,9 +1,10 @@
 import UserCard from "../components/User/UserCard";
 import VotesList from "../components/Votes/VotesList";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, Fragment } from "react";
 import apiClient from "../http-common";
-import { Center, Spinner, Box, Text, Flex, Spacer } from "@chakra-ui/react";
+import { Center, Spinner, Box, Text, Flex, Button, propNames } from "@chakra-ui/react";
 import Cookies from "js-cookie";
+import Titlebar from "../layout/Titlebar";
 
 function Main() {
     const [votes, setVotes] = useState([]);
@@ -40,30 +41,36 @@ function Main() {
     }, []);
 
     // Display if no votes exist
-    let content;
+    let content = 
+        <Box
+            minW="21.5rem"
+            w={{ base: 'full', md:'calc(100% - 23.6rem)'}}
+        >
+        </Box>;
 
     // Hide content if it is the first time loading the page
     if (!firstTouch) {
-        content = (
-            <Center w="full" h="full">
-                <Text size="xl">Nu există voturi!</Text>
+        content = 
+            <Center
+                minW="21.5rem"
+                w={{ base: 'full', md:'calc(100% - 23.6rem)'}}
+            >
+                <Text
+                    fontSize="xl"
+                    fontWeight='600'
+                    my='50px'
+                >
+                    Nu există voturi!
+                </Text>
             </Center>
-        );
+        ;
     }
 
     // Display votes if any
     if (votes.length > 0) {
         content = (
             <VotesList
-                votes={[
-                    votes[0],
-                    votes[1],
-                    votes[0],
-                    votes[1],                    
-                    votes[0],
-                    votes[1],
-                    votes[1],
-                ]}
+                votes={votes}
                 mainMenu='true'
             ></VotesList>
         );
@@ -71,13 +78,16 @@ function Main() {
 
     // Display if error
     if (error) {
-        content = <p>{error.message}</p>;
+        content = <Box><Text>{error.message}</Text></Box>;
     }
 
     // Display while loading request
     if (isLoading) {
         content = (
-            <Center w="full" h="full">
+            <Center
+                minW="21.5rem"
+                w={{ base: 'full', md:'calc(100% - 23.6rem)'}}
+            >
                 <Spinner
                     thickness="4px"
                     speed="0.65s"
@@ -90,10 +100,19 @@ function Main() {
     }
 
     return (
-        <Flex flexDir='row' gap='30px' flexWrap='wrap' justifyContent='space-between'>
-            {content}
-            <UserCard />
-        </Flex>
+        <Fragment>
+            <Titlebar title='Meniu principal' buttonFunction={fetchVotes}/>
+            <Flex
+                flexDir='row'
+                gap='30px'
+                flexWrap='wrap'
+                justifyContent='space-between'
+            >
+                {content}
+                <UserCard />
+            </Flex>
+        </Fragment>
+
     )
 }
 
