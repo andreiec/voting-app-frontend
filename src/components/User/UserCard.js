@@ -1,7 +1,11 @@
 import { Box, Flex, Image, Spacer, Text } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 import defaultUserImage from "../../images/default-user.jpg";
 
 function UserCard() {
+
+    const userSelector = useSelector(selector => selector.user);
+    const joinedDate = new Date(Date.parse(userSelector.date_joined));
 
     return (
         <Box
@@ -9,6 +13,7 @@ function UserCard() {
             borderRadius='15px'
             h="45rem"
             minW="21.5rem"
+            maxW="21.5rem"
             boxShadow='base'
             display={{ base: 'none', md: 'block' }}
         >
@@ -31,7 +36,7 @@ function UserCard() {
                     fontWeight='600'
                     color='brand.text_title'
                 >
-                    Constantinescu
+                    {userSelector.last_name}
                 </Text>
 
                 <Text
@@ -40,7 +45,7 @@ function UserCard() {
                     mt='-5px'
                     color='brand.text_title'
                 >
-                    Andrei-Eduard
+                    {userSelector.first_name}
                 </Text>
                 
                 <Text
@@ -49,7 +54,7 @@ function UserCard() {
                     mt='10px'
                     color='brand.text_body'
                 >
-                    Student
+                    {userSelector.group_name}
                 </Text>
 
                 <Spacer />
@@ -60,7 +65,7 @@ function UserCard() {
                     mt='10px'
                     color='brand.text_body'
                 >
-                    Data înscrierii: 23.02.2021
+                    Data înscrierii: {joinedDate.toLocaleDateString()}
                 </Text>
             </Flex>
 

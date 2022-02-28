@@ -1,17 +1,19 @@
 import { Flex, Box } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import apiClient from "../http-common";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 import Cookies from "js-cookie";
+import { userActions } from "../store";
 
 function Layout() {
     const [user, setUser] = useState(null);
     const authSelector = useSelector((selector) => selector.auth);
+    const userDispatch = useDispatch();
 
     const fetchUser = () => {
         let requestConfig = {
@@ -25,6 +27,8 @@ function Layout() {
             .get(`users/${authSelector.userID}/`, requestConfig)
             .then((response) => {
                 setUser(response.data);
+                userDispatch(userActions.setUser(response.data))
+                //console.log(response.data)
             })
             .catch((error) => {
                 console.log(error);

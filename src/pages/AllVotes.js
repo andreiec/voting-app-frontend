@@ -92,7 +92,7 @@ function AllVotes() {
 
     return (
         <React.Fragment>
-            <Titlebar title='Voturile tale' buttonFunction={fetchVotes}/>
+            <Titlebar title='Voturile tale' buton={fetchVotes} buttonText="Reîncarcă"/>
             {content}
         </React.Fragment> 
     )

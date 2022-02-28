@@ -1,17 +1,20 @@
 import { Box, Image, Text, Center, Menu, MenuButton, MenuList, MenuItem, MenuGroup, Icon, } from "@chakra-ui/react";
 import { FaPowerOff } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import defaultUserImage from "../images/default-user.jpg";
-import { authActions } from "../store";
+import { authActions, userActions } from "../store";
 
-function Navbar(props) {
-    const authDispatch = useDispatch();
+function Navbar() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const userSelector = useSelector(selector => selector.user)
+
     function logoutHandler() {
-        authDispatch(authActions.logout());
+        dispatch(authActions.logout());
+        dispatch(userActions.removeUser());
         navigate("/login");
     }
 
@@ -28,7 +31,7 @@ function Navbar(props) {
                             borderRadius="15px"
                         >
                             <Text mb="3px" fontSize='base'>
-                                {props.user && `${props.user.first_name} ${props.user.last_name[0]}.`}
+                                {userSelector.last_name && `${userSelector.first_name} ${userSelector.last_name[0]}.`}
                             </Text>
                             <Image
                                 src={defaultUserImage}
@@ -41,7 +44,7 @@ function Navbar(props) {
                     <MenuList>
                         <MenuGroup
                             title={
-                                props.user && `${props.user.first_name} ${props.user.last_name}`
+                                userSelector.last_name && `${userSelector.first_name} ${userSelector.last_name}`
                             }
                         >
                             <MenuItem

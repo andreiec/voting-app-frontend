@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import apiClient from "../http-common";
 import { Center, Spinner, Box, Text } from "@chakra-ui/react";
 import Cookies from "js-cookie";
+import Titlebar from "../layout/Titlebar";
 
 function AllGroups() {
     const [groups, setGroups] = useState([]);
@@ -75,7 +76,12 @@ function AllGroups() {
         );
     }
 
-    return <React.Fragment> {content} </React.Fragment>;
+    return (
+        <React.Fragment>
+            <Titlebar title='Grupuri' button={fetchGroups} buttonText="Reîncarcă" />
+            {content}
+        </React.Fragment>
+    )
 }
 
 export default AllGroups;

@@ -101,7 +101,7 @@ function Main() {
 
     return (
         <Fragment>
-            <Titlebar title='Meniu principal' buttonFunction={fetchVotes}/>
+            <Titlebar title='Meniu principal' button={fetchVotes} buttonText="Reîncarcă"/>
             <Flex
                 flexDir='row'
                 gap='30px'

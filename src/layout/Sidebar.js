@@ -1,12 +1,6 @@
 import { chakra, Flex, Text, Box, Image, Spacer } from "@chakra-ui/react";
 import SidebarItem from "../components/Sidebar/SidebarItem";
-import {
-    FaHome,
-    FaLayerGroup,
-    FaBalanceScale,
-    FaCog,
-    FaAddressCard,
-} from "react-icons/fa";
+import { FaHome, FaLayerGroup, FaBalanceScale, FaCog, FaAddressCard, } from "react-icons/fa";
 import fmi_logo from "../images/logo_fmi.png";
 
 const linkItems = [

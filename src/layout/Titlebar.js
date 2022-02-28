@@ -13,25 +13,27 @@ function Titlebar(props) {
             mb='25px'
             alignItems='center'
         >
-            <Text
+            {props.title && <Text
                 fontSize='2xl'
                 fontWeight='600'
                 
             >
                 {props.title}
             </Text>
+            }
 
-            {props.buttonFunction && <Button
+            {props.button && <Button
                 color='brand.white'
                 bg='brand.main_blue'
                 boxShadow='base'
                 _hover={ { bg: 'brand.blue_light'} }
                 borderRadius='15px'
-                onClick={props.buttonFunction}
+                onClick={props.button}
             >
-                <Text mb='3px' fontWeight='600' px='10px'>Reîncarcă</Text>
+                <Text mb='3px' fontWeight='600' px='10px'>{props.buttonText}</Text>
             </Button>
             }
+
         </Flex>
     )
 }
