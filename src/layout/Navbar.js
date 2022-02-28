@@ -1,15 +1,4 @@
-import {
-    Box,
-    Image,
-    Text,
-    Center,
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem,
-    MenuGroup,
-    Icon,
-} from "@chakra-ui/react";
+import { Box, Image, Text, Center, Menu, MenuButton, MenuList, MenuItem, MenuGroup, Icon, } from "@chakra-ui/react";
 import { FaPowerOff } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -39,8 +28,7 @@ function Navbar(props) {
                             borderRadius="10"
                         >
                             <Text mb="3px">
-                                {props.user &&
-                                    `${props.user.first_name} ${props.user.last_name[0]}.`}
+                                {props.user && `${props.user.first_name} ${props.user.last_name[0]}.`}
                             </Text>
                             <Image
                                 src={defaultUserImage}
@@ -53,8 +41,7 @@ function Navbar(props) {
                     <MenuList>
                         <MenuGroup
                             title={
-                                props.user &&
-                                `${props.user.first_name} ${props.user.last_name}`
+                                props.user && `${props.user.first_name} ${props.user.last_name}`
                             }
                         >
                             <MenuItem

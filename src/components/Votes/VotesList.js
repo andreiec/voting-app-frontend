@@ -1,5 +1,4 @@
-import { Flex, SimpleGrid } from "@chakra-ui/react";
-import { Fragment } from "react";
+import { Flex } from "@chakra-ui/react";
 import VoteCard from "./VoteCard";
 
 function VotesList(props) {
@@ -18,8 +17,10 @@ function VotesList(props) {
             rowGap="30px"
             flexWrap="wrap"
             justifyContent={{ base: "center", md: "flex-start" }}
+            alignContent='start'
+            minW="21.5rem"
+            maxW={ props.mainMenu && {base: '', md:'calc(100% - 23.4rem)'}}
         >
-            {" "}
             {allVotesList.map((vote) => (
                 <VoteCard
                     key={vote.id}
