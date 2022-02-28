@@ -1,15 +1,8 @@
-import GroupsList from '../components/Groups/GroupsList'
-import React, { useState, useEffect, useCallback } from 'react'
-import apiClient from '../http-common'
-import { Center, Spinner, Box, Text } from '@chakra-ui/react';
-import Cookies from 'js-cookie';
-
-let requestConfig = {
-    headers : {
-        "Content-type": "application/json",
-        "Authorization": `Bearer ${Cookies.get("token")}`,
-    }
-}
+import GroupsList from "../components/Groups/GroupsList";
+import React, { useState, useEffect, useCallback } from "react";
+import apiClient from "../http-common";
+import { Center, Spinner, Box, Text } from "@chakra-ui/react";
+import Cookies from "js-cookie";
 
 function AllGroups() {
     const [groups, setGroups] = useState([]);
@@ -20,14 +13,24 @@ function AllGroups() {
     const fetchGroups = () => {
         setIsLoading(true);
 
-        apiClient.get('groups/', requestConfig).then((response) => {
-            setGroups(response.data)
-            setIsLoading(false)
-            setError(null)
-        }).catch(error => {
-            setIsLoading(false)
-            setError(error)
-        });
+        let requestConfig = {
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${Cookies.get("token")}`,
+            },
+        };
+
+        apiClient
+            .get("groups/", requestConfig)
+            .then((response) => {
+                setGroups(response.data);
+                setIsLoading(false);
+                setError(null);
+            })
+            .catch((error) => {
+                setIsLoading(false);
+                setError(error);
+            });
     };
 
     useEffect(() => {
@@ -36,32 +39,43 @@ function AllGroups() {
     }, []);
 
     // Display if no groups exist
-    let content; 
+    let content;
 
     // Hide content if it is the first time loading the page
     if (!firstTouch) {
-        content = <Center w='full' h='full'><Text size='xl'>Nu există voturi!</Text></Center>
+        content = (
+            <Center w="full" h="full">
+                <Text size="xl">Nu există voturi!</Text>
+            </Center>
+        );
     }
 
     // Display groups if any
-    if (groups.length > 0){
-        content = <GroupsList groups={groups}></GroupsList>
+    if (groups.length > 0) {
+        content = <GroupsList groups={groups}></GroupsList>;
     }
 
     // Display if error
     if (error) {
         content = <p>{error.message}</p>;
     }
-    
+
     // Display while loading request
     if (isLoading) {
-        content = <Center w='full' h='full'><Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='lg' /></Center>
+        content = (
+            <Center w="full" h="full">
+                <Spinner
+                    thickness="4px"
+                    speed="0.65s"
+                    emptyColor="gray.200"
+                    color="blue.500"
+                    size="lg"
+                />
+            </Center>
+        );
     }
 
-    return (
-        <React.Fragment> {content} </React.Fragment>
-    );
+    return <React.Fragment> {content} </React.Fragment>;
 }
-
 
 export default AllGroups;

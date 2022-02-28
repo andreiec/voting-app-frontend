@@ -1,14 +1,14 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import React, { useState, useEffect, Fragment } from 'react'
-import apiClient from '../http-common'
-import Cookies from 'js-cookie';
+import { useNavigate, useParams } from "react-router-dom";
+import React, { useState, useEffect, Fragment } from "react";
+import apiClient from "../http-common";
+import Cookies from "js-cookie";
 
 let requestConfig = {
-    headers : {
+    headers: {
         "Content-type": "application/json",
-        "Authorization": `Bearer ${Cookies.get("token")}`,
-    }
-}
+        Authorization: `Bearer ${Cookies.get("token")}`,
+    },
+};
 
 function SingleVote() {
     const params = useParams();
@@ -20,14 +20,17 @@ function SingleVote() {
 
     const fetchVote = () => {
         setIsLoading(true);
-        apiClient.get(`elections/${params.id}/`, requestConfig).then((response) => {
-            setVote(response.data)
-            setIsLoading(false)
-            setError(null)
-        }).catch(error => {
-            setIsLoading(false)
-            setError(error)
-        });
+        apiClient
+            .get(`elections/${params.id}/`, requestConfig)
+            .then((response) => {
+                setVote(response.data);
+                setIsLoading(false);
+                setError(null);
+            })
+            .catch((error) => {
+                setIsLoading(false);
+                setError(error);
+            });
     };
 
     useEffect(() => {
@@ -37,10 +40,9 @@ function SingleVote() {
     let content = <p>{JSON.stringify(vote)}</p>;
 
     if (error) {
-
         // If 404 put not found
         if (error.response.status === 404 || error.response.status === 400) {
-            navigator('/not-found', { replace: true });
+            navigator("/not-found", { replace: true });
         }
 
         content = <p>{error.message}</p>;
@@ -48,14 +50,10 @@ function SingleVote() {
 
     // Display while loading request
     if (isLoading) {
-        content = <p>Se încarcă..</p>
+        content = <p>Se încarcă..</p>;
     }
 
-    return (
-        <Fragment>
-            {content}
-        </Fragment>
-    )
-};
+    return <Fragment>{content}</Fragment>;
+}
 
 export default SingleVote;
