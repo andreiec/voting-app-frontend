@@ -1,4 +1,4 @@
-import { chakra, LinkBox } from '@chakra-ui/react';
+import { chakra, LinkBox, Text } from '@chakra-ui/react';
 import { Box } from '@chakra-ui/react'
 import { Link } from 'react-router-dom';
 // props.title, props.desc, props.date
@@ -9,17 +9,17 @@ function VoteCard(props) {
     return (
         <LinkBox as={Link} to={'/votes/' + props.id} h='13.75rem' w='21.5rem' borderRadius='15px' overflow='hidden' boxShadow='base' backgroundColor='white' placeSelf='center'>
             <Box mx='28px' my='22px'>
-                <chakra.h2 fontSize='lg' fontWeight='600' fontFamily='inter'>
+                <Text fontSize='lg' fontWeight='600' fontFamily='inter' color="brand.text_title">
                     {props.title}
-                </chakra.h2>
+                </Text>
 
-                <chakra.h4 fontSize='xs' mt='-2px' fontFamily='inter' color="#767676">
+                <Text fontSize='xs' mt='-2px' fontFamily='inter' color="brand.text_body">
                     {cardDate}
-                </chakra.h4>
+                </Text>
 
-                <chakra.p mt='10px' fontSize='sm' fontFamily='inter' color="#767676">
+                <Text mt='10px' fontSize='sm' fontFamily='inter' color="brand.text_body">
                     {props.desc}
-                </chakra.p>
+                </Text>
             </Box>
         </LinkBox>
     );

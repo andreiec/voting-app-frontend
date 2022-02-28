@@ -1,13 +1,13 @@
-import { SimpleGrid } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 import GroupCard from './GroupCard';
 
 function GroupsList(props) {
     return (
-        <SimpleGrid minChildWidth={{ base: '17rem', md: '16rem' }} spacing='30px'> {
+        <Flex columnGap={{base:'260px', md:'30px'}} rowGap='30px' flexWrap='wrap' justifyContent={{base:'center', md:'flex-start'}}> {
             props.groups.map((group) => (
                 <GroupCard key={group.id} id={group.id} name={group.name} desc={group.description} color={group.color} />
             )) }
-        </SimpleGrid>
+        </Flex>
     )
 }
 

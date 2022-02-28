@@ -62,7 +62,7 @@ function Login() {
 
     return (
         <Center h='100vh' bg={{base: 'brand.white', md: 'brand.bg'}}>
-            <Flex flexDir="column" alignItems='center'>
+            <Flex flexDir="column" alignItems='center' mb='35px'>
                 <Text fontWeight='bold' fontSize="3xl" color='brand.text_title'>Bun venit!</Text>
                 <Text fontSize="sm" color='brand.text_body'>Autentifică-te pentru a continua.</Text>
 

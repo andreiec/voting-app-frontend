@@ -5,15 +5,15 @@ import { Link } from 'react-router-dom';
 function VoteCard(props) {
     return (
         <LinkBox as={Link} to={'/groups/' + props.id} h='10rem' w='16rem' borderRadius='15px' overflow='hidden' boxShadow='base' backgroundColor='white' placeSelf='center'>
-            <Box mx='28px' my='22px'>
-                <Text color={props.color}>COLOR</Text>
-                <chakra.h2 fontSize='lg' fontWeight='600' fontFamily='inter'>
+            <Box w='full' h='25px' bg={props.color}></Box>
+            <Box mx='28px' mb='22px' mt='12px'>
+                <Text fontSize='lg' fontWeight='600' fontFamily='inter' color="brand.text_title">
                     {props.name}
-                </chakra.h2>
+                </Text>
 
-                <chakra.p mt='10px' fontSize='sm' fontFamily='inter' color="#767676">
+                <Text mt='5px' fontSize='sm' fontFamily='inter' color="brand.text_body">
                     {props.desc}
-                </chakra.p>
+                </Text>
             </Box>
         </LinkBox>
     );
