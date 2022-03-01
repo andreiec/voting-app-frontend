@@ -45,7 +45,7 @@ function Layout() {
             <Flex ml={{ base: 0, md: "275px" }} flexDir="column" minH="100vh">
                 <Navbar user={user} />
                 <Box
-                    px={{ base: 0, md: 70 }}
+                    px={{ base: 0, md: '70px' }}
                     py={{ base: 8, md: 8 }}
                     bg="brand.bg"
                     flex="1"

@@ -12,8 +12,8 @@ function UserCard() {
             bg='brand.white'
             borderRadius='15px'
             h="45rem"
-            minW="21.5rem"
-            maxW="21.5rem"
+            minW="21.2rem"
+            maxW="21.2rem"
             boxShadow='base'
             display={{ base: 'none', md: 'block' }}
         >

@@ -4,7 +4,7 @@ function Titlebar(props) {
 
     return (
         <Flex
-            flexDir='row'
+            flexDir={{base: 'column', md:'row'}}
             justifyContent={{base: 'center', md: 'space-between'}}
             px='50px'
             flexWrap='wrap'

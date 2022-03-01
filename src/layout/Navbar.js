@@ -26,7 +26,7 @@ function Navbar() {
                         <Center
                             h="45px"
                             px="20px"
-                            mt="8px"
+                            mt="9px"
                             boxShadow="base"
                             borderRadius="15px"
                         >

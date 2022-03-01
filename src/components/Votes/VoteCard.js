@@ -18,7 +18,7 @@ function VoteCard(props) {
             as={Link}
             to={"/votes/" + props.id}
             h="13.75rem"
-            w="21.5rem"
+            w="21.2rem"
             borderRadius="15px"
             overflow="hidden"
             boxShadow="base"
