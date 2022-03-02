@@ -3,12 +3,6 @@ import React, { useState, useEffect, Fragment } from "react";
 import apiClient from "../http-common";
 import Cookies from "js-cookie";
 
-let requestConfig = {
-    headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${Cookies.get("token")}`,
-    },
-};
 
 function SingleVote() {
     const params = useParams();
@@ -17,6 +11,13 @@ function SingleVote() {
     const [vote, setVote] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    let requestConfig = {
+        headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+    };
 
     const fetchVote = () => {
         setIsLoading(true);

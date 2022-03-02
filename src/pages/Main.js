@@ -5,13 +5,15 @@ import apiClient from "../http-common";
 import { Center, Spinner, Box, Text, Flex, Button, propNames } from "@chakra-ui/react";
 import Cookies from "js-cookie";
 import Titlebar from "../layout/Titlebar";
+import { useNavigate } from "react-router-dom";
 
 function Main() {
     const [votes, setVotes] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [firstTouch, setFirstTouch] = useState(true);
     const [error, setError] = useState(null);
-
+    const navigate = useNavigate();
+    
     const fetchVotes = () => {
         setIsLoading(true);
 
@@ -101,7 +103,7 @@ function Main() {
 
     return (
         <Fragment>
-            <Titlebar title='Meniu principal' button={fetchVotes} buttonText="Reîncarcă"/>
+            <Titlebar title='Meniu principal' button={fetchVotes} buttonText="Reîncarcă" adminButton={() => navigate('create')} adminButtonText="Adaugă un vot"/>
             <Flex
                 flexDir='row'
                 gap='30px'

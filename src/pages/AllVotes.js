@@ -4,12 +4,14 @@ import apiClient from "../http-common";
 import { Center, Spinner, Box, Text } from "@chakra-ui/react";
 import Cookies from "js-cookie";
 import Titlebar from "../layout/Titlebar";
+import { useNavigate } from "react-router-dom";
 
 function AllVotes() {
     const [votes, setVotes] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [firstTouch, setFirstTouch] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     const fetchVotes = () => {
         setIsLoading(true);
@@ -20,7 +22,7 @@ function AllVotes() {
                 Authorization: `Bearer ${Cookies.get("token")}`,
             },
         };
-
+        
         apiClient
             .get("elections/", requestConfig)
             .then((response) => {
@@ -92,7 +94,7 @@ function AllVotes() {
 
     return (
         <React.Fragment>
-            <Titlebar title='Voturile tale' button={fetchVotes} buttonText="Reîncarcă"/>
+            <Titlebar title='Voturile tale' button={fetchVotes} buttonText="Reîncarcă" adminButton={() => navigate('create')} adminButtonText="Adaugă un vot"/>
             {content}
         </React.Fragment> 
     )
