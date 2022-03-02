@@ -8,9 +8,11 @@ import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Layout from "./layout/Layout";
 import AllGroups from "./pages/AllGroups";
+import CreateVote from "./pages/CreateVote";
 
 function App() {
     const authSelector = useSelector((selector) => selector.auth);
+    const userSelector = useSelector((selector) => selector.user);
 
     return (
         <BrowserRouter>
@@ -22,6 +24,11 @@ function App() {
                         <Route path="votes/:id" element={<SingleVote />} />
                         <Route path="groups" element={<AllGroups></AllGroups>} />
                         <Route path="settings" element={<></>} />
+
+                        {userSelector.is_staff && (
+                            <Route path="create-vote" element={<CreateVote />} />
+                        )}
+                        
                     </Route>
                 )}
 

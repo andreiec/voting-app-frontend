@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import React, { useState, useEffect, Fragment } from "react";
 import apiClient from "../http-common";
 import Cookies from "js-cookie";
+import Vote from "../components/Votes/Vote";
 
 
 function SingleVote() {
@@ -37,8 +38,8 @@ function SingleVote() {
     useEffect(() => {
         fetchVote();
     }, []);
-
-    let content = <p>{JSON.stringify(vote)}</p>;
+    
+    let content = vote.id ? <Vote data={vote} /> : null;
 
     if (error) {
         // If 404 put not found

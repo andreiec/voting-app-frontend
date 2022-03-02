@@ -1,10 +1,11 @@
 import VotesList from "../components/Votes/VotesList";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import apiClient from "../http-common";
-import { Center, Spinner, Box, Text } from "@chakra-ui/react";
+import { Center, Spinner, Text } from "@chakra-ui/react";
 import Cookies from "js-cookie";
 import Titlebar from "../layout/Titlebar";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function AllVotes() {
     const [votes, setVotes] = useState([]);
@@ -12,6 +13,7 @@ function AllVotes() {
     const [firstTouch, setFirstTouch] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const userSelector = useSelector(selector => selector.user);
 
     const fetchVotes = () => {
         setIsLoading(true);
@@ -24,7 +26,7 @@ function AllVotes() {
         };
         
         apiClient
-            .get("elections/", requestConfig)
+            .get(`users/${userSelector.id}/elections/`, requestConfig)
             .then((response) => {
                 setVotes(response.data);
                 setIsLoading(false);
@@ -37,9 +39,11 @@ function AllVotes() {
     };
 
     useEffect(() => {
-        setFirstTouch(false);
-        fetchVotes();
-    }, []);
+        if (userSelector.id){
+            setFirstTouch(false);
+            fetchVotes();
+        }
+    }, [userSelector]);
 
     // Display if no votes exist
     let content;
@@ -94,7 +98,7 @@ function AllVotes() {
 
     return (
         <React.Fragment>
-            <Titlebar title='Voturile tale' button={fetchVotes} buttonText="Reîncarcă" adminButton={() => navigate('create')} adminButtonText="Adaugă un vot"/>
+            <Titlebar title='Voturile tale' button={fetchVotes} buttonText="Reîncarcă" adminButton={() => navigate('/create-vote')} adminButtonText="Adaugă un vot"/>
             {content}
         </React.Fragment> 
     )

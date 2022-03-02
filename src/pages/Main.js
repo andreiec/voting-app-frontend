@@ -1,11 +1,12 @@
 import UserCard from "../components/User/UserCard";
 import VotesList from "../components/Votes/VotesList";
-import React, { useState, useEffect, useCallback, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import apiClient from "../http-common";
-import { Center, Spinner, Box, Text, Flex, Button, propNames } from "@chakra-ui/react";
+import { Center, Spinner, Box, Text, Flex } from "@chakra-ui/react";
 import Cookies from "js-cookie";
 import Titlebar from "../layout/Titlebar";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Main() {
     const [votes, setVotes] = useState([]);
@@ -13,7 +14,8 @@ function Main() {
     const [firstTouch, setFirstTouch] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    
+    const userSelector = useSelector(selector => selector.user);
+
     const fetchVotes = () => {
         setIsLoading(true);
 
@@ -25,7 +27,7 @@ function Main() {
         };
 
         apiClient
-            .get("elections/", requestConfig)
+            .get(`users/${userSelector.id}/elections/`, requestConfig)
             .then((response) => {
                 setVotes(response.data);
                 setIsLoading(false);
@@ -38,9 +40,11 @@ function Main() {
     };
 
     useEffect(() => {
-        setFirstTouch(false);
-        fetchVotes();
-    }, []);
+        if (userSelector.id) {
+            setFirstTouch(false);
+            fetchVotes();
+        }
+    }, [userSelector]);
 
     // Display if no votes exist
     let content = 
@@ -103,7 +107,7 @@ function Main() {
 
     return (
         <Fragment>
-            <Titlebar title='Meniu principal' button={fetchVotes} buttonText="Reîncarcă" adminButton={() => navigate('create')} adminButtonText="Adaugă un vot"/>
+            <Titlebar title='Meniu principal' button={fetchVotes} buttonText="Reîncarcă" adminButton={() => navigate('/create-vote')} adminButtonText="Adaugă un vot"/>
             <Flex
                 flexDir='row'
                 gap='30px'
