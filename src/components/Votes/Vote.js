@@ -1,61 +1,43 @@
-import { Box, Button, Icon, Text } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { useState } from "react";
 import VoteQuestion from "./VoteQuestion";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
+
 import { Form, Formik } from "formik";
+import VoteFormTitle from "../Forms/VoteFormTitle";
+import VoteFormControl from "../Forms/VoteFormControl";
 
 function Vote(props) {
     const [activeQuestion, setActiveQuestion] = useState(0);
-    const [formData, setFormData] = useState({});
 
     const submitHandler = (values, submitProps) => {
         console.log(JSON.stringify(values));
-    }
+    };
 
     return (
-        <Box bg='brand.white' borderRadius='15px' p='30px' boxShadow='sm'>
-            <Text fontSize='xl' color='brand.text_title'>{props.data.title}</Text>
-            <Text fontSize='base' color='brand.text_body'>{props.data.description}</Text>
+        <Flex bg="brand.white" borderRadius="15px" py="30px" px="50px" boxShadow="sm" minH="31rem" flexDir="column">
+            <VoteFormTitle title={props.data.title} description={props.data.description} rest={{mb: '50px'}} />
 
-            <Formik 
-                initialValues={{}}
-                onSubmit={submitHandler}
-            >
+            <Formik initialValues={{}} onSubmit={submitHandler}>
+
                 {({ values, setFieldValue }) => (
                     <Form>
-                        {props.data.questions.map((question) => (
-                            <VoteQuestion key={question.order} data={question} setFieldValue={setFieldValue}/>
+                        {props.data.questions.map((question, index) => (
+                            <Box
+                                key={question.order}
+                                visibility={activeQuestion === index ? "visible" : "hidden"}
+                                position={activeQuestion === index ? "static" : "absolute"}
+                            >
+                                <VoteQuestion data={question} setFieldValue={setFieldValue} />
+                            </Box>
                         ))}
 
-                        <Button
-                            disabled={activeQuestion <= 0}
-                            onClick={() => {setActiveQuestion((activeQuestion) => activeQuestion - 1 )}}
-                        >
-                            <Icon as={FaArrowLeft} />
-                        </Button>
-
-                        <Button
-                            disabled={activeQuestion >= props.data.number_of_polls - 1}
-                            onClick={() => {setActiveQuestion((activeQuestion) => activeQuestion + 1)}}
-                        >
-                            <Icon as={FaArrowRight} />
-                        </Button>
-
-                        <Button
-                            type="submit"
-                            bg="brand.green"
-                            color="brand.white"
-                            _hover={{bg: "brand.green_light"}}
-                        >
-                            Votează
-                        </Button>
+                        <VoteFormControl activeQuestion={activeQuestion} setActiveQuestion={setActiveQuestion} number_of_polls={props.data.number_of_polls}/>
                     </Form>
                 )}
-                
 
             </Formik>
-        </Box>
-    )
+        </Flex>
+    );
 }
 
 export default Vote;

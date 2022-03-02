@@ -1,16 +1,19 @@
-import { Radio, Checkbox } from "@chakra-ui/react"
-import { Field } from "formik";
+import { Radio, Checkbox } from "@chakra-ui/react";
 
 function VoteOptionSingle(props) {
     return (
-        <Radio value={props.data.id}>{props.data.value}</Radio>
-    )
+        <Radio w="min-content" value={props.data.id}>
+            {props.data.value}
+        </Radio>
+    );
 }
 
 function VoteOptionMultiple(props) {
     return (
-        <Checkbox value={props.data.id}>{props.data.value}</Checkbox>
-    )
+        <Checkbox w="min-content" value={props.data.id}>
+            {props.data.value}
+        </Checkbox>
+    );
 }
 
 export { VoteOptionSingle, VoteOptionMultiple };
