@@ -47,7 +47,7 @@ function Layout() {
                 <Box
                     px={{ base: 0, md: '70px' }}
                     py={{ base: 8, md: 8 }}
-                    bg="brand.bg"
+                    bg={{base: "brand.white", md:"brand.bg"}}
                     flex="1"
                 >
                     <Outlet />
