@@ -8,10 +8,6 @@ import VoteFormControl from "../Forms/VoteFormControl";
 function Vote(props) {
     const [activeQuestion, setActiveQuestion] = useState(0);
 
-    const submitHandler = (values, submitProps) => {
-        console.log(JSON.stringify(values));
-    };
-
     return (
         <Flex
             bg="brand.white"
@@ -25,7 +21,7 @@ function Vote(props) {
             <VoteFormTitle title={props.data.title} description={props.data.description} rest={{ mb: "50px" }} />
 
             <Box flexGrow="1">
-                <Formik initialValues={{}} onSubmit={submitHandler}>
+                <Formik initialValues={{}} onSubmit={props.submitHandler}>
                     {({ values, setFieldValue }) => (
                         <Form id={props.data.id}>
                             {props.data.questions.map((question, index) => (

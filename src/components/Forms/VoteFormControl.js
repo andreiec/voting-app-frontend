@@ -1,11 +1,11 @@
-import { Box, Flex, Button, Center, Icon, Text } from "@chakra-ui/react";
+import { Box, Flex, Button, Icon, Text } from "@chakra-ui/react";
 import { FaArrowLeft, FaArrowRight, FaCheck } from "react-icons/fa";
 
 function VoteFormControl(props) {
     return (
         <Box {...props.rest}>
             <Flex flexDir={{base:'column', lg:'row'}} justifyContent='space-between' flexWrap='wrap' alignItems='center' rowGap='30px'>
-                <Box w='111px' visibility='hidden'></Box>
+                <Box w='125px' visibility='hidden'></Box>
 
                 <Box>
                     <Button
@@ -35,6 +35,7 @@ function VoteFormControl(props) {
                     boxShadow="base"
                     type="submit"
                     bg="brand.green"
+                    px='23px'
                     color="brand.white"
                     form={props.formID}
                     _hover={{ bg: "brand.green_light" }}

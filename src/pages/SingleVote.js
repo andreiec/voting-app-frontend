@@ -3,12 +3,13 @@ import React, { useState, useEffect, Fragment } from "react";
 import apiClient from "../http-common";
 import Cookies from "js-cookie";
 import Vote from "../components/Votes/Vote";
+import { useSelector } from "react-redux";
 
 
 function SingleVote() {
     const params = useParams();
     const navigator = useNavigate();
-
+    const userSelector = useSelector(selector => selector.user);
     const [vote, setVote] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -39,7 +40,30 @@ function SingleVote() {
         fetchVote();
     }, []);
     
-    let content = vote.id ? <Vote data={vote} /> : null;
+    
+    const submitHandler = (values, submitProps) => {
+        const submission_data = {
+            id: userSelector.id,
+            sent_on: new Date(),
+            votes: {
+                ...values
+            }
+        }
+        console.log(submission_data);
+
+        apiClient
+            .post('elections/submit/', submission_data, requestConfig)
+            .then((response) => {
+                console.log("SUCCES");
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log("ERROR");
+                console.log(error);
+            });
+    };
+
+    let content = vote.id ? <Vote data={vote} submitHandler={submitHandler} /> : null;
 
     if (error) {
         // If 404 put not found
