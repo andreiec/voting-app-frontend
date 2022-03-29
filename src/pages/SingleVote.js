@@ -4,6 +4,7 @@ import apiClient from "../http-common";
 import Cookies from "js-cookie";
 import Vote from "../components/Votes/Vote";
 import { useSelector } from "react-redux";
+import { useToast } from "@chakra-ui/react";
 
 
 function SingleVote() {
@@ -13,6 +14,8 @@ function SingleVote() {
     const [vote, setVote] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const toast = useToast();
+    const navigate = useNavigate();
 
     let requestConfig = {
         headers: {
@@ -23,17 +26,37 @@ function SingleVote() {
 
     const fetchVote = () => {
         setIsLoading(true);
+
+        // First call get list of all submissions for an election and check if user id is inside the list
+        // If user is not in the list, get the vote data and display the form
         apiClient
-            .get(`elections/${params.id}/`, requestConfig)
+            .get(`elections/${params.id}/submissions/`, requestConfig)
             .then((response) => {
-                setVote(response.data);
-                setIsLoading(false);
-                setError(null);
+
+                // Get all submissions, if user in list then return and navigate
+                const submissions = response.data;
+                submissions.forEach(submission => {
+                    if (submission.user === userSelector.id) {
+                        navigate('/vote-confirmed');
+                        return;
+                    } 
+                });
+
+                apiClient
+                .get(`elections/${params.id}/`, requestConfig)
+                .then((response) => {
+                    setVote(response.data);
+                    setIsLoading(false);
+                    setError(null);
+                })
+                .catch((error) => {
+                    setIsLoading(false);
+                    setError(error);
+                });
             })
             .catch((error) => {
-                setIsLoading(false);
-                setError(error);
-            });
+                console.log(error);
+            })
     };
 
     useEffect(() => {
@@ -43,23 +66,28 @@ function SingleVote() {
     
     const submitHandler = (values, submitProps) => {
         const submission_data = {
-            id: userSelector.id,
+            user_id: userSelector.id,
+            election_id: params.id,
             sent_on: new Date(),
             votes: {
                 ...values
             }
         }
-        console.log(submission_data);
 
+        // TODO pass props for vote confirmed (vote hash, submitted votes, etc..)
         apiClient
-            .post('elections/submit/', submission_data, requestConfig)
+            .post(`elections/${params.id}/submit/`, submission_data, requestConfig)
             .then((response) => {
-                console.log("SUCCES");
-                console.log(response.data);
+                navigate('/vote-confirmed');
             })
             .catch((error) => {
-                console.log("ERROR");
-                console.log(error);
+                toast({
+                    title: 'A aparut o eroare.',
+                    status: 'error',
+                    position: 'top',
+                    duration: 4000,
+                    isClosable: true,
+                })
             });
     };
 

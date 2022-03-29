@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Layout from "./layout/Layout";
 import AllGroups from "./pages/AllGroups";
 import CreateVote from "./pages/CreateVote";
+import VoteConfirmed from "./pages/VoteConfirmed";
 
 function App() {
     const authSelector = useSelector((selector) => selector.auth);
@@ -22,9 +23,10 @@ function App() {
                         <Route index element={<Main />} />
                         <Route path="votes" element={<AllVotes />} />
                         <Route path="votes/:id" element={<SingleVote />} />
-                        <Route path="groups" element={<AllGroups></AllGroups>} />
+                        <Route path="groups" element={<AllGroups />} />
                         <Route path="settings" element={<></>} />
-
+                        <Route path="vote-confirmed" element={<VoteConfirmed />} />
+                        
                         {userSelector.is_staff && (
                             <Route path="create-vote" element={<CreateVote />} />
                         )}
