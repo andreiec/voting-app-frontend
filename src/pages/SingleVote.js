@@ -4,7 +4,7 @@ import apiClient from "../http-common";
 import Cookies from "js-cookie";
 import Vote from "../components/Votes/Vote";
 import { useSelector } from "react-redux";
-import { useToast } from "@chakra-ui/react";
+import { Flex, useToast } from "@chakra-ui/react";
 
 
 function SingleVote() {
@@ -32,27 +32,32 @@ function SingleVote() {
         apiClient
             .get(`elections/${params.id}/submissions/`, requestConfig)
             .then((response) => {
-
+                
+                let alreadyConfirmed = false;
                 // Get all submissions, if user in list then return and navigate
                 const submissions = response.data;
-                submissions.forEach(submission => {
+                submissions.every(submission => {
                     if (submission.user === userSelector.id) {
-                        navigate('/vote-confirmed');
+                        alreadyConfirmed = true;
                         return;
                     } 
                 });
 
-                apiClient
-                .get(`elections/${params.id}/`, requestConfig)
-                .then((response) => {
-                    setVote(response.data);
-                    setIsLoading(false);
-                    setError(null);
-                })
-                .catch((error) => {
-                    setIsLoading(false);
-                    setError(error);
-                });
+                if (alreadyConfirmed) {
+                    navigate('/vote-confirmed');
+                } else {
+                    apiClient
+                    .get(`elections/${params.id}/`, requestConfig)
+                    .then((response) => {
+                        setVote(response.data);
+                        setIsLoading(false);
+                        setError(null);
+                    })
+                    .catch((error) => {
+                        setIsLoading(false);
+                        setError(error);
+                    });
+                }
             })
             .catch((error) => {
                 console.log(error);
@@ -91,7 +96,18 @@ function SingleVote() {
             });
     };
 
-    let content = vote.id ? <Vote data={vote} submitHandler={submitHandler} /> : null;
+    let content = vote.id ? 
+        <Flex
+            bg="brand.white"
+            borderRadius={{ base: "0", md: "15px" }}
+            py="30px"
+            px="50px"
+            boxShadow={{ base: "", md: "sm" }}
+            minH={{base:"82vh", md:"31rem"}}
+            flexDir="column"
+        >
+            <Vote data={vote} submitHandler={submitHandler} /> 
+        </Flex> : null;
 
     if (error) {
         // If 404 put not found
