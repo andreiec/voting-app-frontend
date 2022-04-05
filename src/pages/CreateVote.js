@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import CreateVoteForm from "../components/Forms/CreateVoteForm";
+import CreateVoteForm from "../components/Forms/CreateVoteForm/CreateVoteForm";
 import apiClient from "../http-common";
 import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
