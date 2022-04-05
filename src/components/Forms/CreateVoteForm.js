@@ -1,5 +1,5 @@
-import { Box, FormControl, FormErrorMessage, FormLabel, Input, Text, Textarea, Button, Center, Flex, Select, NumberInputField, NumberInput, Divider, VStack, StackDivider } from "@chakra-ui/react";
-import { Field, FieldArray, Form, Formik } from "formik";
+import { Box, FormControl, Checkbox, CheckboxGroup, FormErrorMessage, FormLabel, Input, Text, Textarea, Button, Center, Flex, Select, NumberInputField, NumberInput, Divider, VStack, StackDivider, InputLeftAddon, InputGroup, InputRightAddon, CloseButton } from "@chakra-ui/react";
+import { Field, FieldArray, Form, Formik, } from "formik";
 import { useState } from "react";
 import { object, number, string, boolean, array } from 'yup'
 
@@ -22,17 +22,18 @@ const emptyQuestion = {
 }
 
 
-function CreateVoteForm() {
+function CreateVoteForm(props) {
 
     const [isLoading, setIsLoading] = useState(false);
+    const groups = props.data.groups;
 
     return (
         <Formik 
             initialValues={{
                 title: '',
                 description: '',
-                number_of_polls: 1,
                 questions: [emptyQuestion],
+                groups: [],
             }}
             validationSchema={object({
                 title: string()
@@ -74,18 +75,17 @@ function CreateVoteForm() {
                 }))
                     .min(1)
                     .max(3),
+                groups: array().min(1),
             })}
             onSubmit={(values) => {
                 console.log(values)
             }}
         >
 
-            {({ values, errors, dirty, isValid, touched }) => (
+            {({ values, errors, dirty, isValid, touched, setFieldValue }) => (
                 <Form autoComplete="off">
-                {console.log(errors)}
-                    <Flex 
-                        flexDir='column'
-                    >
+                    <Flex flexDir='column' >
+
                         {/* Header */}
                         <Box mb='40px'>
                             <Text fontSize='xl' color='brand.text_title'>Creează un vot.</Text>
@@ -93,7 +93,7 @@ function CreateVoteForm() {
                         </Box>
 
                         <Center>
-                            <Text fontSize='xl' mb='20px' fontWeight="600">Informații generale</Text>
+                            <Text fontSize='2xl' mb='20px' fontWeight="600">Informații generale</Text>
                         </Center>
 
                         {/* TODO add this format to login page*/}
@@ -111,12 +111,36 @@ function CreateVoteForm() {
                             <Field as={Textarea} id="description" name="description" />
                             <FormErrorMessage>{errors.description}</FormErrorMessage>
                         </FormControl>
-                        
+
+      
                         <Divider mb='40px' mt='20px'/>
 
+
+                        {/* Groups header */}
                         <Center mb='30px'>
-                            <Text fontSize='xl' mb='20px' fontWeight="600">Întrebari</Text>
+                            <Text fontSize='2xl' fontWeight="600">Grupuri</Text>
                         </Center>
+
+
+                        {/* Groups field */}
+                        <Field name='groups'>
+                            {() => (
+                                <CheckboxGroup onChange={(event) => setFieldValue('groups', event)} colorScheme='blue'>
+                                    <VStack spacing={3} align='stretch'>
+                                        {groups.map((group, index) => (
+                                            <Checkbox key={group.id} value={group.id} >{group.name}</Checkbox>
+                                        ))}
+                                    </VStack>
+                                </CheckboxGroup>
+                            )}
+                        </Field>
+
+
+                        {/* Questions header */}
+                        <Center my='50px'>
+                            <Text fontSize='2xl' fontWeight="600">Întrebari</Text>
+                        </Center>
+
 
                         {/* Dynamic form */}
                         <FieldArray name="questions">
@@ -124,7 +148,7 @@ function CreateVoteForm() {
                                 <VStack divider={<StackDivider borderColor='gray.200'/>} gap={10} align='stretch'>
                                     {values.questions.map((_, index_question) => (
                                         <Box key={index_question}>
-                                            <Text fontSize='md' mb='20px' fontWeight="600">{`Întrebarea ${index_question + 1}`}</Text>
+                                            <Text fontSize='xl' mb='20px' fontWeight="600">{`Întrebarea ${index_question + 1}`}</Text>
 
                                             {/* Question title */}
                                             <FormControl isInvalid={!!errors.questions && !!touched.questions && errors.questions[index_question]?.title && touched.questions[index_question]?.title} mb='15px' isRequired>
@@ -174,11 +198,39 @@ function CreateVoteForm() {
                                                         <FormErrorMessage>{!!errors.questions && errors.questions[index_question]?.max_selections}</FormErrorMessage>
                                                     </FormControl>
 
+
                                                 </Flex>
-                                            </Flex> 
+                                            </Flex>
+
+                                            <Text fontSize='xl' my='20px' fontWeight="600">Opțiuni</Text>
+
+                                             {/* Dynamic options */}
+                                            <FieldArray name={`questions.${index_question}.options`}>
+                                                {({ push: pushOption, remove: removeOption, }) => (
+                                                    <Box>
+                                                        <VStack align='stretch'>
+                                                            {values.questions[index_question].options.map((_, index_question_option) => (
+                                                                <Box key={index_question_option}>
+                                                                    <InputGroup>
+                                                                        <InputLeftAddon children={index_question_option + 1} />
+                                                                        <Field as={Input} type='text' placeholder='Opțiune' borderRadius='0' id={`questions.${index_question}.options.${index_question_option}.value`} name={`questions.${index_question}.options.${index_question_option}.value`}/>
+                                                                        <InputRightAddon p='0' color='brand.white' children={<CloseButton size='sm' w='2rem' color='gray.900' borderLeftRadius='0' h='100%' onClick={() => removeOption(index_question_option)} />}/>
+                                                                    </InputGroup>
+                                                                </Box>
+                                                            ))}
+
+
+                                                        </VStack>
+                                                        
+                                                        <Center mt='2rem'>
+                                                            <Button w='wrap-content' onClick={() => pushOption(emptyOption)}>Adaugă o opțune</Button>
+                                                        </Center>
+                                                    </Box>
+                                                )}
+                                            </FieldArray>
 
                                             {/* Delete question button */}
-                                            <Button fontWeight='400' bg='brand.red' color='brand.white' float='right' mt='30px' _hover={{bg: 'brand.red_dark'}} onClick={() => remove(index_question)}>Șterge întrebarea</Button>
+                                            <Button fontWeight='400' colorScheme='red' color='brand.white' float='right' mt='30px' onClick={() => remove(index_question)}>Șterge întrebarea</Button>
                                         </Box>
                                     ))}
 
@@ -195,8 +247,7 @@ function CreateVoteForm() {
                         <Center mt="80px">
                             <Button
                                 isLoading={isLoading}
-                                bg="brand.green"
-                                _hover={{ bg: "brand.green_light" }}
+                                colorScheme="green"
                                 color="brand.white"
                                 fontWeight="400"
                                 type="submit"
