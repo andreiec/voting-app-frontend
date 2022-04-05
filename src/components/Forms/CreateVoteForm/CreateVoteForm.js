@@ -1,7 +1,7 @@
-import { Box, FormControl, Checkbox, CheckboxGroup, FormErrorMessage, FormLabel, Input, Text, Textarea, Button, Center, Flex, Select, NumberInputField, NumberInput, Divider, VStack, StackDivider, InputLeftAddon, InputGroup, InputRightAddon, CloseButton } from "@chakra-ui/react";
-import { Field, FieldArray, Form, Formik, } from "formik";
+import { Box, Text,  Button, Center, Flex, Divider } from "@chakra-ui/react";
+import { Form, Formik, } from "formik";
 import { useState } from "react";
-import { object, number, string, boolean, array } from 'yup'
+import { object, number, string, array } from 'yup'
 import CreateVoteGeneralInformation from "./CreateVoteGeneralInformation";
 import CreateVoteGroups from "./CreateVoteGroups";
 import CreateVoteQuestions from "./CreateVoteQuestions";
@@ -77,9 +77,11 @@ function CreateVoteForm(props) {
     const groups = props.data.groups;
 
     return (
-        <Formik initialValues={initialValues} validationSchema={validationSchema}>
+        <Formik initialValues={initialValues} validationSchema={validationSchema} validateOnChange={false}>
             {({ values, errors, dirty, isValid, touched, setFieldValue }) => (
+
                 <Form autoComplete="off">
+                {console.log('redraw')}
                     <Flex flexDir='column' >
 
                         {/* Header */}
@@ -118,7 +120,7 @@ function CreateVoteForm(props) {
                         </Center>
 
 
-                        {/*<pre><Box mt='10rem'>{JSON.stringify({ values, errors }, null, 4)}</Box></pre>*/}
+                        <pre><Box mt='10rem'>{JSON.stringify({ values, errors }, null, 4)}</Box></pre>
                     </Flex>
                 </Form>
             )}

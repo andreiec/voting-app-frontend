@@ -1,5 +1,5 @@
 import { Box, Text, Button, Center, CloseButton, Input, InputGroup, InputLeftAddon, InputRightAddon, VStack, } from "@chakra-ui/react";
-import { Field, FieldArray } from "formik";
+import { FastField, FieldArray } from "formik";
 import { Fragment } from "react";
 
 const emptyOption = {
@@ -22,7 +22,7 @@ function CreateVoteQuestionOption(props) {
                                 <Box key={index_question_option}>
                                     <InputGroup>
                                         <InputLeftAddon children={index_question_option + 1} />
-                                        <Field as={Input} type='text' placeholder='Opțiune' borderRadius='0' id={`questions.${props.index_question}.options.${index_question_option}.value`} name={`questions.${props.index_question}.options.${index_question_option}.value`}/>
+                                        <FastField as={Input} type='text' placeholder='Opțiune' borderRadius='0' id={`questions.${props.index_question}.options.${index_question_option}.value`} name={`questions.${props.index_question}.options.${index_question_option}.value`}/>
                                         <InputRightAddon p='0' color='brand.white' children={<CloseButton size='sm' w='2rem' color='gray.900' borderLeftRadius='0' h='100%' onClick={() => removeOption(index_question_option)} />}/>
                                     </InputGroup>
                                 </Box>

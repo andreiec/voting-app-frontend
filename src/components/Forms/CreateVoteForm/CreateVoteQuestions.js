@@ -1,5 +1,5 @@
 import { Box, Button, Center, FormControl, FormErrorMessage, FormLabel, Input, StackDivider, Text, Textarea, VStack } from "@chakra-ui/react";
-import { Field, FieldArray } from "formik";
+import { FastField, FieldArray } from "formik";
 import { Fragment } from "react";
 import CreateVoteQuestionOptions from "./CreateVoteQuestionOptions";
 import CreateVoteQuestionSelectionType from "./CreateVoteQuestionSelectionType";
@@ -45,7 +45,7 @@ function CreateVoteQuestions(props) {
                                 {/* Question title */}
                                 <FormControl isInvalid={!!errors && !!touched && errors[index_question]?.title && touched[index_question]?.title} mb='15px' isRequired>
                                     <FormLabel fontWeight="600" htmlFor={`questions.${index_question}.title`}>Titlu</FormLabel>
-                                    <Field as={Input} id={`questions.${index_question}.title`} name={`questions.${index_question}.title`} />
+                                    <FastField as={Input} id={`questions.${index_question}.title`} name={`questions.${index_question}.title`} />
                                     <FormErrorMessage>{!!errors && errors[index_question]?.title}</FormErrorMessage>
                                 </FormControl>
 
@@ -53,7 +53,7 @@ function CreateVoteQuestions(props) {
                                 {/* Question description */}
                                 <FormControl isInvalid={!!errors && !!touched && errors[index_question]?.description && touched[index_question]?.description} mb='15px'>
                                     <FormLabel fontWeight="600" htmlFor={`questions.${index_question}.description`}>Descriere</FormLabel>
-                                    <Field as={Textarea} id={`questions.${index_question}.description`} name={`questions.${index_question}.description`} />
+                                    <FastField as={Textarea} id={`questions.${index_question}.description`} name={`questions.${index_question}.description`} />
                                     <FormErrorMessage>{!!errors && errors[index_question]?.description}</FormErrorMessage>
                                 </FormControl>
 

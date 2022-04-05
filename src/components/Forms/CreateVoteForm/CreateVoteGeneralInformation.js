@@ -1,5 +1,5 @@
 import { Center, FormControl, FormErrorMessage, FormLabel, Input, Text, Textarea } from "@chakra-ui/react";
-import { Field } from "formik";
+import { FastField, Field } from "formik";
 import { Fragment } from "react";
 
 function CreateVoteGeneralInformation(props) {
@@ -13,7 +13,7 @@ function CreateVoteGeneralInformation(props) {
             {/* Title field */}
             <FormControl isInvalid={!!props.errors.title && props.touched.title} mb='15px' isRequired>
                 <FormLabel fontWeight="600" htmlFor="title">Titlu</FormLabel>
-                <Field as={Input} id="title" name="title" />
+                <FastField as={Input} id="title" name="title" />
                 <FormErrorMessage>{props.errors.title}</FormErrorMessage>
             </FormControl>
             
@@ -21,7 +21,7 @@ function CreateVoteGeneralInformation(props) {
             {/* Description field */}
             <FormControl isInvalid={!!props.errors.description && props.touched.description} mb='15px'>
                 <FormLabel fontWeight="600" htmlFor="description">Descriere</FormLabel>
-                <Field as={Textarea} id="description" name="description" />
+                <FastField as={Textarea} id="description" name="description" />
                 <FormErrorMessage>{props.errors.description}</FormErrorMessage>
             </FormControl>
         </Fragment>
