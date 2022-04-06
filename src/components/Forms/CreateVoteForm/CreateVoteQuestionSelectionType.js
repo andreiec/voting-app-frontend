@@ -1,44 +1,45 @@
 import { Flex, FormControl, FormErrorMessage, FormLabel, NumberInput, NumberInputField, Select } from "@chakra-ui/react";
-import { FastField } from "formik";
+import { useState } from "react";
 
 function CreateVoteQuestionSelectionType(props) {
 
     const index = props.index_question;
     const errors = props.errors.questions;
-    const values = props.values.questions;
-    const touched = props.touched.questions;
+
+    // useState to update min and max selection (might change later)
+    const [selectionType, setSelectionType] = useState('single');
 
     return (
         <Flex flexDir={{ base:'column', md: 'row' }} justifyContent="space-between" flexWrap='wrap'>
 
             {/* Question selection type */}
-            <FormControl w='wrap-content'>
+            <FormControl w='wrap-content' onChange={(event) => {setSelectionType(event.target.value)}}>
                 <FormLabel fontWeight="600" htmlFor={`questions.${index}.selection_type`} w='12rem'>Selectează tipul întrebării</FormLabel>
-                <FastField as={Select} id={`questions.${index}.selection_type`} name={`questions.${index}.selection_type`} mb='15px' w='10rem'>
+                <Select id={`questions.${index}.selection_type`} mb='15px' w='10rem'  {...props.register(`questions.${index}.selection_type`)}>
                     <option value="single">Simplă</option>
                     <option value="multiple">Multiplă</option>
-                </FastField>
+                </Select>
             </FormControl>
 
             <Flex flexDir={{base:'column', md:'row'}} wrap='wrap'>
 
                 {/* Question min selections */}
-                <FormControl isInvalid={!!errors && !!touched && errors[index]?.min_selections && touched[index]?.min_selections} mb='15px' w='9rem' mr='15px'>
+                <FormControl isInvalid={!!errors && errors[index]?.min_selections?.message} mb='15px' w='9rem' mr='15px'>
                     <FormLabel fontWeight="600" htmlFor={`questions.${index}.min_selections`} w='12rem'>Selecții minime</FormLabel>
-                    <NumberInput value={values[index].min_selections} defaultValue={values[index].min_selections} isDisabled={values[index].selection_type === 'single'}>
-                        <FastField as={NumberInputField} id={`questions.${index}.min_selections`} name={`questions.${index}.min_selections`}/>
+                    <NumberInput value={props.getValues(`questions[${index}].min_selections`)} defaultValue={props.getValues(`questions[${index}].min_selections`)} isDisabled={selectionType === 'single'}>
+                        <NumberInputField id={`questions.${index}.min_selections`} {...props.register(`questions.${index}.min_selections`)}/>
                     </NumberInput>
-                    <FormErrorMessage>{!!errors && errors[index]?.min_selections}</FormErrorMessage>
+                    <FormErrorMessage>{!!errors && errors[index]?.min_selections?.message}</FormErrorMessage>
                 </FormControl>
 
 
                 {/* Question max selections */}
-                <FormControl isInvalid={!!errors && !!touched && errors[index]?.max_selections && touched[index]?.max_selections} mb='15px' w='9rem'>
+                <FormControl isInvalid={!!errors && errors[index]?.max_selections?.message} mb='15px' w='9rem'>
                     <FormLabel fontWeight="600" htmlFor={`questions.${index}.max_selections`} w='12rem'>Selecții maxime</FormLabel>
-                    <NumberInput value={values[index].max_selections} defaultValue={values[index].max_selections} isDisabled={values[index].selection_type === 'single'}>
-                        <FastField as={NumberInputField} id={`questions.${index}.max_selections`} name={`questions.${index}.max_selections`}/>
+                    <NumberInput value={props.getValues(`questions[${index}].max_selections`)} defaultValue={props.getValues(`questions[${index}].max_selections`)} isDisabled={selectionType === 'single'}>
+                        <NumberInputField id={`questions.${index}.max_selections`} {...props.register(`questions.${index}.max_selections`)}/>
                     </NumberInput>
-                    <FormErrorMessage>{!!errors && errors[index]?.max_selections}</FormErrorMessage>
+                    <FormErrorMessage>{!!errors && errors[index]?.max_selections?.message}</FormErrorMessage>
                 </FormControl>
 
             </Flex>

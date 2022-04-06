@@ -1,5 +1,4 @@
 import { Center, FormControl, FormErrorMessage, FormLabel, Input, Text, Textarea } from "@chakra-ui/react";
-import { FastField, Field } from "formik";
 import { Fragment } from "react";
 
 function CreateVoteGeneralInformation(props) {
@@ -11,18 +10,18 @@ function CreateVoteGeneralInformation(props) {
 
             {/* TODO add this format to login page*/}
             {/* Title field */}
-            <FormControl isInvalid={!!props.errors.title && props.touched.title} mb='15px' isRequired>
+            <FormControl isInvalid={!!props.errors?.title?.message} mb='15px' isRequired>
                 <FormLabel fontWeight="600" htmlFor="title">Titlu</FormLabel>
-                <FastField as={Input} id="title" name="title" />
-                <FormErrorMessage>{props.errors.title}</FormErrorMessage>
+                <Input id="title" {...props.register('title')}/>
+                <FormErrorMessage>{props.errors?.title?.message}</FormErrorMessage>
             </FormControl>
             
 
             {/* Description field */}
-            <FormControl isInvalid={!!props.errors.description && props.touched.description} mb='15px'>
+            <FormControl isInvalid={!!props.errors?.description?.message} mb='15px'>
                 <FormLabel fontWeight="600" htmlFor="description">Descriere</FormLabel>
-                <FastField as={Textarea} id="description" name="description" />
-                <FormErrorMessage>{props.errors.description}</FormErrorMessage>
+                <Textarea id="description" {...props.register('description')}/>
+                <FormErrorMessage>{props.errors?.description?.message}</FormErrorMessage>
             </FormControl>
         </Fragment>
     )

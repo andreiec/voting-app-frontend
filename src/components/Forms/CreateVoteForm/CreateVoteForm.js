@@ -1,11 +1,12 @@
 import { Box, Text,  Button, Center, Flex, Divider } from "@chakra-ui/react";
-import { Form, Formik, } from "formik";
 import { useState } from "react";
 import { object, number, string, array } from 'yup'
 import CreateVoteGeneralInformation from "./CreateVoteGeneralInformation";
 import CreateVoteGroups from "./CreateVoteGroups";
 import CreateVoteQuestions from "./CreateVoteQuestions";
 
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from "react-hook-form";
 
 const initialValues = {
     title: '',
@@ -50,6 +51,8 @@ const validationSchema = object({
         description: string()
             .max(2047, 'Lungimea maximă este de 2048 de caractere.'),
 
+        selection_type: string(),
+
         min_selections: number()
             .min(1)
             .max(100),
@@ -60,71 +63,70 @@ const validationSchema = object({
         
         options: array(object({
             value: string()
-                .required()
+                //.required()
         }))
             .min(1)
             .max(100),
     }))
         .min(1)
-        .max(3),
+        .max(50),
     groups: array().min(1),
 })
 
+const submitForm = (data) => {
+    console.log(data);
+}
 
 function CreateVoteForm(props) {
 
     const [isLoading, setIsLoading] = useState(false);
     const groups = props.data.groups;
 
+    const { register, handleSubmit, control, setValue, getValues, watch, formState: { errors, isSubmitting, isValid, isDirty } } = useForm({
+        resolver: yupResolver(validationSchema),
+        mode: 'onBlur',
+    });
+
     return (
-        <Formik initialValues={initialValues} validationSchema={validationSchema} validateOnChange={false}>
-            {({ values, errors, dirty, isValid, touched, setFieldValue }) => (
-
-                <Form autoComplete="off">
-                {console.log('redraw')}
-                    <Flex flexDir='column' >
-
-                        {/* Header */}
-                        <Box mb='40px'>
-                            <Text fontSize='xl' color='brand.text_title'>Creează un vot.</Text>
-                            <Text fontSize='md' color='brand.text_body'>Adaugă câmpurile dorite și opțiunile pentru fiecare întrebare.</Text>
-                        </Box>
+        <form onSubmit={handleSubmit(submitForm)} autoComplete="off">
+            <Flex flexDir='column'>
+                {console.log(errors)}
+                {/* Header */}
+                <Box mb='40px'>
+                    <Text fontSize='xl' color='brand.text_title'>Creează un vot.</Text>
+                    <Text fontSize='md' color='brand.text_body'>Adaugă câmpurile dorite și opțiunile pentru fiecare întrebare.</Text>
+                </Box>
 
 
-                        {/* General Information */}
-                        <CreateVoteGeneralInformation errors={errors} touched={touched}/>
-                        <Divider mb='40px' mt='20px'/>
+                {/* General Information */}
+                <CreateVoteGeneralInformation errors={errors} register={register} />
+                <Divider mb='40px' mt='20px'/>
 
 
-                        {/* Groups */}
-                        <CreateVoteGroups groups={groups} setFieldValue={setFieldValue}/>
-                        <Divider my='40px'/>
+                {/* Groups */}
+                <CreateVoteGroups groups={groups} errors={errors} register={register} setValue={setValue}/>
+                <Divider my='40px'/>
 
 
-                        {/* Questions dynamic form */}
-                        <CreateVoteQuestions values={values} errors={errors} touched={touched} />
-                        
+                {/* Questions dynamic form */}
+                <CreateVoteQuestions errors={errors} control={control} register={register} setValue={setValue} getValues={getValues} />
+                
 
-                        {/* Submit button */}
-                        <Center mt="80px">
-                            <Button
-                                isLoading={isLoading}
-                                colorScheme="green"
-                                color="brand.white"
-                                fontWeight="400"
-                                type="submit"
-                                disabled={!(isValid && dirty)}
-                            >
-                                Finalizează
-                            </Button>
-                        </Center>
-
-
-                        <pre><Box mt='10rem'>{JSON.stringify({ values, errors }, null, 4)}</Box></pre>
-                    </Flex>
-                </Form>
-            )}
-        </Formik>
+                {/* Submit button */}
+                <Center mt="80px">
+                    <Button
+                        isLoading={isLoading}
+                        colorScheme="green"
+                        color="brand.white"
+                        fontWeight="400"
+                        type="submit"
+                        disabled={!(isValid && isDirty)}
+                    >
+                        Finalizează
+                    </Button>
+                </Center>
+            </Flex>
+        </form>
     )
 }
 

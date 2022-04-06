@@ -1,6 +1,6 @@
 import { Box, Button, Center, FormControl, FormErrorMessage, FormLabel, Input, StackDivider, Text, Textarea, VStack } from "@chakra-ui/react";
-import { FastField, FieldArray } from "formik";
 import { Fragment } from "react";
+import { useFieldArray } from "react-hook-form";
 import CreateVoteQuestionOptions from "./CreateVoteQuestionOptions";
 import CreateVoteQuestionSelectionType from "./CreateVoteQuestionSelectionType";
 
@@ -22,9 +22,12 @@ const emptyQuestion = {
 
 function CreateVoteQuestions(props) {
 
-    const errors = props.errors.questions;
-    const values = props.values.questions;
-    const touched = props.touched.questions;
+    const errors = props.errors?.questions;
+
+    const { fields, append, remove } = useFieldArray({
+        control: props.control,
+        name: 'questions',
+    })
 
     return (
         <Fragment>
@@ -35,35 +38,33 @@ function CreateVoteQuestions(props) {
             </Center>
 
             {/* Dynamic Form */}
-            <FieldArray name="questions">
-                {({ push, remove, }) => (
                     <VStack divider={<StackDivider borderColor='gray.200'/>} gap={10} align='stretch'>
-                        {values.map((_, index_question) => (
+                        {fields.map((_, index_question) => (
                             <Box key={index_question}>
                                 <Text fontSize='xl' mb='20px' fontWeight="600">{`Întrebarea ${index_question + 1}`}</Text>
 
                                 {/* Question title */}
-                                <FormControl isInvalid={!!errors && !!touched && errors[index_question]?.title && touched[index_question]?.title} mb='15px' isRequired>
+                                <FormControl isInvalid={!!errors && errors[index_question]?.title?.message} mb='15px' isRequired>
                                     <FormLabel fontWeight="600" htmlFor={`questions.${index_question}.title`}>Titlu</FormLabel>
-                                    <FastField as={Input} id={`questions.${index_question}.title`} name={`questions.${index_question}.title`} />
-                                    <FormErrorMessage>{!!errors && errors[index_question]?.title}</FormErrorMessage>
+                                    <Input id={`questions.${index_question}.title`} {...props.register(`questions.${index_question}.title`)} />
+                                    <FormErrorMessage>{!!errors && errors[index_question]?.title?.message}</FormErrorMessage>
                                 </FormControl>
 
 
                                 {/* Question description */}
-                                <FormControl isInvalid={!!errors && !!touched && errors[index_question]?.description && touched[index_question]?.description} mb='15px'>
+                                <FormControl isInvalid={!!errors && errors[index_question]?.description?.message} mb='15px'>
                                     <FormLabel fontWeight="600" htmlFor={`questions.${index_question}.description`}>Descriere</FormLabel>
-                                    <FastField as={Textarea} id={`questions.${index_question}.description`} name={`questions.${index_question}.description`} />
-                                    <FormErrorMessage>{!!errors && errors[index_question]?.description}</FormErrorMessage>
+                                    <Textarea id={`questions.${index_question}.description`} {...props.register(`questions.${index_question}.description`)}/>
+                                    <FormErrorMessage>{!!errors && errors[index_question]?.description?.message}</FormErrorMessage>
                                 </FormControl>
 
 
                                 {/* Question Selection type */}
-                                <CreateVoteQuestionSelectionType index_question={index_question} values={props.values} errors={props.errors} touched={props.touched} />
+                                <CreateVoteQuestionSelectionType index_question={index_question} errors={props.errors} register={props.register} getValues={props.getValues}/>
 
 
                                 {/* Question options dynamic form */}
-                                <CreateVoteQuestionOptions index_question={index_question} values={props.values} errors={props.errors} touched={props.touched}/>
+                                <CreateVoteQuestionOptions index_question={index_question} control={props.control} errors={props.errors} register={props.register} getValues={props.getValues}/>
 
 
                                 {/* Delete question button */}
@@ -72,12 +73,10 @@ function CreateVoteQuestions(props) {
                         ))}
 
                         <Center>
-                            <Button w='wrap-content' onClick={() => push(emptyQuestion)}>Adaugă o întrebare</Button>
+                            <Button w='wrap-content' onClick={() => append(emptyQuestion)}>Adaugă o întrebare</Button>
                         </Center>
                         
                     </VStack>
-                )}
-            </FieldArray>
         </Fragment>
     )
 };
