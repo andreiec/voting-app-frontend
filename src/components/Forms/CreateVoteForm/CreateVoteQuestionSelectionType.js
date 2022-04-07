@@ -26,7 +26,7 @@ function CreateVoteQuestionSelectionType(props) {
                 {/* Question min selections */}
                 <FormControl isInvalid={!!errors && errors[index]?.min_selections?.message} mb='15px' w='9rem' mr='15px'>
                     <FormLabel fontWeight="600" htmlFor={`questions.${index}.min_selections`} w='12rem'>Selecții minime</FormLabel>
-                    <NumberInput value={props.getValues(`questions[${index}].min_selections`)} defaultValue={props.getValues(`questions[${index}].min_selections`)} isDisabled={selectionType === 'single'}>
+                    <NumberInput defaultValue={props.getValues(`questions[${index}].min_selections`)} isDisabled={selectionType === 'single'}>
                         <NumberInputField id={`questions.${index}.min_selections`} {...props.register(`questions.${index}.min_selections`)}/>
                     </NumberInput>
                     <FormErrorMessage>{!!errors && errors[index]?.min_selections?.message}</FormErrorMessage>
@@ -36,7 +36,7 @@ function CreateVoteQuestionSelectionType(props) {
                 {/* Question max selections */}
                 <FormControl isInvalid={!!errors && errors[index]?.max_selections?.message} mb='15px' w='9rem'>
                     <FormLabel fontWeight="600" htmlFor={`questions.${index}.max_selections`} w='12rem'>Selecții maxime</FormLabel>
-                    <NumberInput value={props.getValues(`questions[${index}].max_selections`)} defaultValue={props.getValues(`questions[${index}].max_selections`)} isDisabled={selectionType === 'single'}>
+                    <NumberInput defaultValue={props.getValues(`questions[${index}].max_selections`)} isDisabled={selectionType === 'single'}>
                         <NumberInputField id={`questions.${index}.max_selections`} {...props.register(`questions.${index}.max_selections`)}/>
                     </NumberInput>
                     <FormErrorMessage>{!!errors && errors[index]?.max_selections?.message}</FormErrorMessage>

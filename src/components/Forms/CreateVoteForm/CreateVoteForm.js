@@ -83,6 +83,7 @@ function CreateVoteForm(props) {
     const groups = props.data.groups;
 
     const { register, handleSubmit, control, setValue, getValues, watch, formState: { errors, isSubmitting, isValid, isDirty } } = useForm({
+        defaultValues: initialValues,
         resolver: yupResolver(validationSchema),
         mode: 'onBlur',
     });
