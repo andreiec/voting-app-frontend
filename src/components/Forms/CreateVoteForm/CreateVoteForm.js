@@ -91,7 +91,7 @@ function CreateVoteForm(props) {
     return (
         <form onSubmit={handleSubmit(submitForm)} autoComplete="off">
             <Flex flexDir='column'>
-                {console.log(errors)}
+
                 {/* Header */}
                 <Box mb='40px'>
                     <Text fontSize='xl' color='brand.text_title'>Creează un vot.</Text>
@@ -110,7 +110,7 @@ function CreateVoteForm(props) {
 
 
                 {/* Questions dynamic form */}
-                <CreateVoteQuestions errors={errors} control={control} register={register} setValue={setValue} getValues={getValues} />
+                <CreateVoteQuestions errors={errors} control={control} register={register} setValue={setValue} getValues={getValues} watch={watch}/>
                 
 
                 {/* Submit button */}
