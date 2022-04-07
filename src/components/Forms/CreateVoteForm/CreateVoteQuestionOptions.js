@@ -9,10 +9,12 @@ const emptyOption = {
 
 function CreateVoteQuestionOption(props) {
 
-    const { fields, append, remove } = useFieldArray({
+    const { append, remove } = useFieldArray({
         control: props.control,
         name: `questions.${props.index_question}.options`,
     })
+
+    const fields = props.getValues(`questions.${props.index_question}.options`);
 
     return (
         <Fragment>

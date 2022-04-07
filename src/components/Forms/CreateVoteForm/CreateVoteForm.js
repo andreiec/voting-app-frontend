@@ -63,13 +63,13 @@ const validationSchema = object({
         
         options: array(object({
             value: string()
-                //.required()
+                .required()
         }))
             .min(1)
-            .max(100),
+            .max(50),
     }))
         .min(1)
-        .max(50),
+        .max(30),
     groups: array().min(1),
 })
 
@@ -81,7 +81,7 @@ function CreateVoteForm(props) {
 
     const [isLoading, setIsLoading] = useState(false);
     const groups = props.data.groups;
-
+    
     const { register, handleSubmit, control, setValue, getValues, watch, formState: { errors, isSubmitting, isValid, isDirty } } = useForm({
         defaultValues: initialValues,
         resolver: yupResolver(validationSchema),
@@ -110,7 +110,7 @@ function CreateVoteForm(props) {
 
 
                 {/* Questions dynamic form */}
-                <CreateVoteQuestions errors={errors} control={control} register={register} setValue={setValue} getValues={getValues} watch={watch}/>
+                <CreateVoteQuestions errors={errors} control={control} register={register} setValue={setValue} getValues={getValues} />
                 
 
                 {/* Submit button */}
@@ -127,6 +127,7 @@ function CreateVoteForm(props) {
                     </Button>
                 </Center>
             </Flex>
+            <pre>{JSON.stringify(getValues(), null, 4)}</pre>
         </form>
     )
 }
