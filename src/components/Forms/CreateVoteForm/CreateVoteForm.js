@@ -1,5 +1,5 @@
 import { Box, Text,  Button, Center, Flex, Divider } from "@chakra-ui/react";
-import { useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { object, number, string, array } from 'yup'
 import CreateVoteGeneralInformation from "./CreateVoteGeneralInformation";
 import CreateVoteGroups from "./CreateVoteGroups";
@@ -8,25 +8,6 @@ import CreateVoteQuestions from "./CreateVoteQuestions";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
 
-const initialValues = {
-    title: '',
-    description: '',
-    questions: [{
-        title: '',
-        description: '',
-        selection_type: 'single',
-        min_selections: 1,
-        max_selections: 1,
-        order: 0,
-        options: [
-            {
-                value: '',
-                order: 0,
-            },
-        ]
-    }],
-    groups: [],
-}
 
 const validationSchema = object({
     title: string()
@@ -81,8 +62,34 @@ function CreateVoteForm(props) {
 
     const [isLoading, setIsLoading] = useState(false);
     const groups = props.data.groups;
+    const todayDate = props.data.todayDate;
     
-    const { register, handleSubmit, control, setValue, getValues, watch, formState: { errors, isSubmitting, isValid, isDirty } } = useForm({
+    const initialValues = {
+        title: '',
+        description: '',
+        voting_starts_at_date: new Date(todayDate.getTime() - todayDate.getTimezoneOffset() * 60 * 1000).toISOString().split('T')[0],
+        voting_ends_at_date: new Date(todayDate.getTime() - todayDate.getTimezoneOffset() * 60 * 1000).toISOString().split('T')[0],
+        voting_starts_at_hour: String(todayDate.getHours() + ':' + String(todayDate.getMinutes()).padStart(2, '0')).padStart(2, '0'),
+        voting_ends_at_hour: String(todayDate.getHours() + ':' + String(todayDate.getMinutes()).padStart(2, '0')).padStart(2, '0'),
+        manual_closing: true,
+        questions: [{
+            title: '',
+            description: '',
+            selection_type: 'single',
+            min_selections: 1,
+            max_selections: 1,
+            order: 0,
+            options: [
+                {
+                    value: '',
+                    order: 0,
+                },
+            ]
+        }],
+        groups: [],
+    };
+
+    const { register, handleSubmit, control, setValue, getValues, formState: { errors, isSubmitting, isValid, isDirty } } = useForm({
         defaultValues: initialValues,
         resolver: yupResolver(validationSchema),
         mode: 'onBlur',
@@ -100,7 +107,7 @@ function CreateVoteForm(props) {
 
 
                 {/* General Information */}
-                <CreateVoteGeneralInformation errors={errors} register={register} />
+                <CreateVoteGeneralInformation control={control} errors={errors} register={register} setValue={setValue} todayDate={todayDate} />
                 <Divider mb='40px' mt='20px'/>
 
 

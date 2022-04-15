@@ -51,7 +51,7 @@ function CreateVote() {
             boxShadow={{ base: "", md: "sm" }}
             flexDir="column"
         >
-            <CreateVoteForm data={{groups: groups}} />
+            <CreateVoteForm data={{groups: groups, todayDate: new Date()}} />
         </Flex>
     )
 }
