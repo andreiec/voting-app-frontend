@@ -1,5 +1,5 @@
-import { Center, Flex, FormControl, FormErrorMessage, FormLabel, Input, Switch, Text, Textarea } from "@chakra-ui/react";
-import { Fragment, useEffect, useState } from "react";
+import { Box, Center, Flex, FormControl, FormErrorMessage, FormLabel, Input, Switch, Text, Textarea } from "@chakra-ui/react";
+import { Fragment, useState } from "react";
 import DatePicker from "react-date-picker";
 import TimePicker from 'react-time-picker';
 
@@ -42,14 +42,14 @@ function CreateVoteGeneralInformation(props) {
             <FormControl isInvalid={!!props.errors?.manual_closing?.message} mb='35px'>
                 <FormLabel fontWeight="600">Utilizare manuală</FormLabel>
                     <Switch
-                        onChange={() => {props.setValue('manual_closing', !manualClosing); setManualClosing(!manualClosing);}}
+                        onChange={() => {props.setValue('manual_closing', !manualClosing); setManualClosing(!manualClosing); props.trigger('voting_starts_at_hour'); props.trigger('voting_ends_at_hour');}}
                         size='lg'
                         defaultIsChecked
                     />
                 <FormErrorMessage>{props.errors?.manual_closing?.message}</FormErrorMessage>
             </FormControl>
 
-
+            <Box display={manualClosing ? "none" : "block"}>
             <Flex flexDir={{base:'column', md:'row'}} gap={{base: 25, md: '54px'}} flexWrap='wrap' justifyContent='stretch' mb='45px'>
 
                 {/* Start date field */}
@@ -60,11 +60,11 @@ function CreateVoteGeneralInformation(props) {
                             placeholderText='Selectează data'
                             maxDate={endDateValue}
                             minDate={todayDate}
-                            onChange={(date) => {onStartDateChange(date); props.setValue('voting_starts_at_date', new Date((date.getTime() - date.getTimezoneOffset() * 60 * 1000)).toISOString().split('T')[0])}}
+                            onChange={(date) => {onStartDateChange(date); props.setValue('voting_starts_at_date', new Date((date.getTime() - date.getTimezoneOffset() * 60 * 1000)).toISOString().split('T')[0]); props.trigger('voting_ends_at_hour'); props.trigger('voting_starts_at_hour');}}
                             value={startDateValue}
                             selected={startDateValue}
                             clearIcon={null}
-                            disabled={manualClosing}
+                            //disabled={manualClosing}
                         />
                     <FormErrorMessage>{props.errors?.voting_starts_at_date?.message}</FormErrorMessage>
                 </FormControl>
@@ -74,13 +74,13 @@ function CreateVoteGeneralInformation(props) {
                 <FormControl isInvalid={!!props.errors?.voting_starts_at_hour?.message} w='fit-content'>
                     <FormLabel fontWeight="600" w='fit-content'>Ora începerii votului</FormLabel>
                         <TimePicker
-                            onChange={(hour) => {onStartHourChange(hour); props.setValue('voting_starts_at_hour', hour)}}
+                            onChange={(hour) => {onStartHourChange(hour); props.setValue('voting_starts_at_hour', hour); props.trigger('voting_starts_at_hour'); props.trigger('voting_ends_at_hour');}}
                             value={startHourValue}
                             clearIcon={null}
-                            disabled={manualClosing}
+                            //disabled={manualClosing}
                             disableClock={true}
                         />
-                    <FormErrorMessage>{props.errors?.voting_starts_at_hour?.message}</FormErrorMessage>
+                    {/* <FormErrorMessage>{props.errors?.voting_starts_at_hour?.message}</FormErrorMessage> */}
                 </FormControl>
             </Flex>
 
@@ -93,11 +93,11 @@ function CreateVoteGeneralInformation(props) {
                             dateFormat="dd MMM yyyy"
                             placeholderText='Selectează data'
                             minDate={startDateValue}
-                            onChange={(date) => {onEndDateChange(date); props.setValue('voting_ends_at_date', new Date((date.getTime() - date.getTimezoneOffset() * 60 * 1000)).toISOString().split('T')[0])}}
+                            onChange={(date) => {onEndDateChange(date); props.setValue('voting_ends_at_date', new Date((date.getTime() - date.getTimezoneOffset() * 60 * 1000)).toISOString().split('T')[0]); props.trigger('voting_ends_at_hour'); props.trigger('voting_starts_at_hour');}}
                             value={endDateValue}
                             selected={endDateValue}
                             clearIcon={null}
-                            disabled={manualClosing}
+                            //disabled={manualClosing}
                         />
                     <FormErrorMessage>{props.errors?.voting_ends_at_date?.message}</FormErrorMessage>
                 </FormControl>
@@ -107,15 +107,16 @@ function CreateVoteGeneralInformation(props) {
                 <FormControl isInvalid={!!props.errors?.voting_ends_at_hour?.message} w='fit-content'>
                     <FormLabel fontWeight="600" w='fit-content'>Ora încheierii votului</FormLabel>
                         <TimePicker
-                            onChange={(hour) => {onEndHourChange(hour); props.setValue('voting_ends_at_hour', hour)}}
+                            onChange={(hour) => {onEndHourChange(hour); props.setValue('voting_ends_at_hour', hour); props.trigger('voting_ends_at_hour'); props.trigger('voting_starts_at_hour'); }}
                             value={endHourValue}
                             clearIcon={null}
-                            disabled={manualClosing}
+                            //disabled={manualClosing}
                             disableClock={true}
                         />
                     <FormErrorMessage>{props.errors?.voting_ends_at_hour?.message}</FormErrorMessage>
                 </FormControl>
             </Flex>
+            </Box>
 
         </Fragment>
     )

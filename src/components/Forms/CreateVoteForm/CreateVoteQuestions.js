@@ -9,8 +9,8 @@ const emptyQuestion = {
     title: '',
     description: '',
     selection_type: 'single',
-    min_selections: 1,
-    max_selections: 1,
+    min_selections: '1',
+    max_selections: '1',
     order: 0,
     options: [
         {
@@ -60,7 +60,7 @@ function CreateVoteQuestions(props) {
 
 
                         {/* Question Selection type */}
-                        <CreateVoteQuestionSelectionType index_question={index_question} control={props.control} errors={props.errors} register={props.register} getValues={props.getValues}/>
+                        <CreateVoteQuestionSelectionType index_question={index_question} control={props.control} errors={props.errors} register={props.register} getValues={props.getValues} setValue={props.setValue} trigger={props.trigger}/>
 
 
                         {/* Question options dynamic form */}

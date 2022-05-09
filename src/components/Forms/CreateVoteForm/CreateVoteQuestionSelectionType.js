@@ -35,13 +35,13 @@ function CreateVoteQuestionSelectionType(props) {
                         <Controller
                             control={props.control}
                             name={`questions.${index}.min_selections`}
-                            render={({ field: { onChange, onBlur, ref } }) => (
-                                <NumberInput onChange={onChange} onBlur={onBlur} value={parseInt(props.getValues(`questions.${index}.min_selections`))} isDisabled={props.getValues(`questions.${index}.selection_type`) === 'single'}>
+                            render={({ field: { onChange, ref } }) => (
+                                <NumberInput onChange={onChange} onBlur={() => {props.trigger(`questions.${index}.max_selections`); props.trigger(`questions.${index}.min_selections`);}} value={parseInt(props.getValues(`questions.${index}.min_selections`))} isDisabled={props.getValues(`questions.${index}.selection_type`) === 'single'}>
                                     <NumberInputField ref={ref} id={`questions.${index}.min_selections`} name={`questions.${index}.min_selections`}/>
                                 </NumberInput>
                             )}
                         />
-                    <FormErrorMessage>{!!errors && errors[index]?.min_selections?.message}</FormErrorMessage>
+                    {/*<FormErrorMessage>{!!errors && errors[index]?.min_selections?.message}</FormErrorMessage>*/}
                 </FormControl>
 
 
@@ -51,13 +51,13 @@ function CreateVoteQuestionSelectionType(props) {
                         <Controller
                             control={props.control}
                             name={`questions.${index}.max_selections`}
-                            render={({ field: { onChange, onBlur, ref } }) => (
-                                <NumberInput onChange={onChange} onBlur={onBlur} value={parseInt(props.getValues(`questions.${index}.max_selections`))} isDisabled={props.getValues(`questions.${index}.selection_type`) === 'single'}>
+                            render={({ field: { onChange, ref } }) => (
+                                <NumberInput onChange={onChange} onBlur={() => {props.trigger(`questions.${index}.max_selections`); props.trigger(`questions.${index}.min_selections`);}} value={parseInt(props.getValues(`questions.${index}.max_selections`))} isDisabled={props.getValues(`questions.${index}.selection_type`) === 'single'}>
                                     <NumberInputField ref={ref} id={`questions.${index}.max_selections`} name={`questions.${index}.max_selections`}/>
                                 </NumberInput>
                             )}
                         />
-                    <FormErrorMessage>{!!errors && errors[index]?.max_selections?.message}</FormErrorMessage>
+                    {/*<FormErrorMessage>{!!errors && errors[index]?.max_selections?.message}</FormErrorMessage>*/}
                 </FormControl>
             </Flex>
         </Flex>

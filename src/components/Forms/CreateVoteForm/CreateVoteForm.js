@@ -1,13 +1,21 @@
-import { Box, Text,  Button, Center, Flex, Divider } from "@chakra-ui/react";
-import { memo, useEffect, useMemo, useState } from "react";
+import { Box, Text,  Button, Center, Flex, Divider, FormControl, FormErrorMessage } from "@chakra-ui/react";
+import { useState } from "react";
 import { object, number, string, array } from 'yup'
 import CreateVoteGeneralInformation from "./CreateVoteGeneralInformation";
 import CreateVoteGroups from "./CreateVoteGroups";
 import CreateVoteQuestions from "./CreateVoteQuestions";
-
+import apiClient from "../../../http-common";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import moment from "moment";
+import Cookies from "js-cookie";
 
+
+// Function to compare start time and end time
+const isSameOrBefore = (startTime, endTime) => {
+    return moment(startTime, "HH:mm").isSameOrBefore(moment(endTime, 'HH:mm'));
+}
 
 const validationSchema = object({
     title: string()
@@ -22,48 +30,172 @@ const validationSchema = object({
         .min(0)
         .max(50),
 
+    voting_starts_at_hour: string()
+        .test(
+            'voting_starts_test',
+            'Ora de start nu poate fi mai mare decât cea de final.',
+            function(value) {
+                const { voting_starts_at_date, voting_ends_at_date, voting_ends_at_hour } = this.parent;
+
+                if (this.parent.manual_closing) {
+                    return true;
+                }
+
+                return moment(voting_starts_at_date + " " + value).isBefore(moment(voting_ends_at_date + " " + voting_ends_at_hour))
+            }
+        ),
+
+    voting_ends_at_hour: string()
+        .test(
+            'voting_ends_test',
+            'Ora de final nu poate fi mai mică decât cea de început.',
+            function(value) {
+                const { voting_starts_at_date, voting_ends_at_date, voting_starts_at_hour } = this.parent;
+
+                if (this.parent.manual_closing) {
+                    return true;
+                }
+
+                return moment(voting_starts_at_date + " " + voting_starts_at_hour).isSameOrBefore(moment(voting_ends_at_date + " " + value))
+            }
+        )
+        .test(
+            'voting_ends_after_current_time_test',
+            'Ora de final nu poate fi înainte de ora curentă.',
+            function(value) {
+                const currDate = new Date();
+
+                if (moment(this.parent.voting_ends_at_date).isAfter(moment().format('YYYY-MM-DD'))) {
+                    return true;
+                }
+
+                if (this.parent.manual_closing) {
+                    return true;
+                }
+
+                return isSameOrBefore(String(currDate.getHours()).padStart(2, '0') + ":" + String(currDate.getMinutes()).padStart(2, '0'), value);
+            }
+        ),
+
     // Question validation schema
     questions: array(object({
         title: string()
-            .required('Titul este obligatoriu.')
-            .min(4, 'Lungimea minimă este de 4 caractere.')
-            .max(255, 'Lungimea maximă este de 255 de caractere.'),
+            .required('Titul este obligatoriu')
+            .min(4, 'Lungimea minimă este de 4 caractere')
+            .max(255, 'Lungimea maximă este de 255 de caractere'),
 
         description: string()
-            .max(2047, 'Lungimea maximă este de 2048 de caractere.'),
+            .max(2047, 'Lungimea maximă este de 2048 de caractere'),
 
         selection_type: string(),
 
         min_selections: number()
-            .min(1)
-            .max(100),
+            .min(1, 'Numărul minim de opțiuni este 100')
+            .max(100, 'Numărul maxim de opțiuni este 100')
+            .test(
+                'min_selec_test',
+                'a',
+                function(value) {
+                    const { max_selections } = this.parent;
+                    return value <= max_selections;
+                }
+            ),
 
         max_selections: number()
-            .min(1)
-            .max(100),
+            .min(1, 'Numărul minim de opțiuni este 100')
+            .max(100, 'Numărul maxim de opțiuni este 100')
+            .test(
+                'max_selec_test',
+                'a',
+                function(value) {
+                    const { min_selections } = this.parent;
+                    return value >= min_selections;
+                }
+            ),
         
         options: array(object({
             value: string()
                 .required()
         }))
-            .min(1)
-            .max(50),
+            .min(1, 'Numărul minim de opțiuni este 1')
+            .max(100, 'Numărul maxim de întrebări este 50'),
     }))
         .min(1)
         .max(30),
-    groups: array().min(1),
+
+    groups: array()
+        .min(1, 'Selectează cel puțin un grup'),
 })
 
-const submitForm = (data) => {
-    console.log(data);
-}
 
 function CreateVoteForm(props) {
 
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+
     const groups = props.data.groups;
     const todayDate = props.data.todayDate;
-    
+
+    let requestConfig = {
+        headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+    };
+
+    // Function to handle form submission
+    const submitForm = (data) => {
+
+        // Construct object to be parsed to backend
+        let final_data = { ...data };
+
+        final_data['owner'] = props.data.userID;
+        final_data['number_of_polls'] = final_data.questions.length;
+
+        // Get dates from data
+        const start_date_data = data.voting_starts_at_date.split('-');
+        const start_date = new Date(start_date_data[0], start_date_data[1] - 1, start_date_data[2], ...data.voting_starts_at_hour.split(':'));
+
+        const end_date_data = data.voting_starts_at_date.split('-');
+        const end_date = new Date(end_date_data[0], end_date_data[1] - 1, end_date_data[2], ...data.voting_ends_at_hour.split(':'));
+        
+        // Remove these 4 keys to combine them into only 2
+        delete final_data['voting_starts_at_date'];
+        delete final_data['voting_starts_at_hour'];
+        delete final_data['voting_ends_at_date'];
+        delete final_data['voting_ends_at_hour'];
+
+        // Add the 2 dates needed for backend
+        final_data['voting_starts_at'] = start_date.toISOString().split('.')[0] + 'Z';
+        final_data['voting_ends_at'] = end_date.toISOString().split('.')[0] + 'Z';
+
+        // Iterate through each question and put its order
+        final_data.questions.forEach((question, q_index) => {
+            question['order'] = q_index;
+            
+            // Iterate through each option and put its order
+            question.options.forEach((option, o_index) => {
+                option['order'] = o_index;
+            })
+        });
+
+        setIsLoading(true);
+
+        apiClient
+            .post("elections/", final_data, requestConfig)
+            .then((response) => {
+                setIsLoading(false);
+                console.log(response);
+                navigate("/");
+            })
+            .catch((err) => {
+                setIsLoading(false);
+                console.log("ERROR", err);
+            });
+
+        console.log(JSON.stringify(final_data));
+    }
+
     const initialValues = {
         title: '',
         description: '',
@@ -76,8 +208,8 @@ function CreateVoteForm(props) {
             title: '',
             description: '',
             selection_type: 'single',
-            min_selections: 1,
-            max_selections: 1,
+            min_selections: '1',
+            max_selections: '1',
             order: 0,
             options: [
                 {
@@ -89,7 +221,7 @@ function CreateVoteForm(props) {
         groups: [],
     };
 
-    const { register, handleSubmit, control, setValue, getValues, formState: { errors, isSubmitting, isValid, isDirty } } = useForm({
+    const { register, handleSubmit, control, setValue, getValues, trigger, formState: { errors, isValid, isDirty } } = useForm({
         defaultValues: initialValues,
         resolver: yupResolver(validationSchema),
         mode: 'onBlur',
@@ -107,7 +239,7 @@ function CreateVoteForm(props) {
 
 
                 {/* General Information */}
-                <CreateVoteGeneralInformation control={control} errors={errors} register={register} setValue={setValue} todayDate={todayDate} />
+                <CreateVoteGeneralInformation control={control} errors={errors} register={register} setValue={setValue} todayDate={todayDate} trigger={trigger} />
                 <Divider mb='40px' mt='20px'/>
 
 
@@ -117,7 +249,7 @@ function CreateVoteForm(props) {
 
 
                 {/* Questions dynamic form */}
-                <CreateVoteQuestions errors={errors} control={control} register={register} setValue={setValue} getValues={getValues} />
+                <CreateVoteQuestions errors={errors} control={control} register={register} setValue={setValue} getValues={getValues} trigger={trigger}/>
                 
 
                 {/* Submit button */}
@@ -134,7 +266,7 @@ function CreateVoteForm(props) {
                     </Button>
                 </Center>
             </Flex>
-            <pre>{JSON.stringify(getValues(), null, 4)}</pre>
+            {/*<pre>{JSON.stringify(getValues(), null, 4)}</pre>*/}
         </form>
     )
 }
