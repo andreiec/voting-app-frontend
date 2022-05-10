@@ -1,17 +1,26 @@
 import { chakra, Flex, Text, Box, Image, Spacer } from "@chakra-ui/react";
 import SidebarItem from "../components/Sidebar/SidebarItem";
-import { FaHome, FaLayerGroup, FaBalanceScale, FaCog, FaAddressCard, } from "react-icons/fa";
+import { FaHome, FaLayerGroup, FaBalanceScale, FaCog, FaAddressCard, FaBook } from "react-icons/fa";
 import fmi_logo from "../images/logo_fmi.png";
+import { useSelector } from "react-redux";
 
-const linkItems = [
+let linkItems = [
     { name: "Meniu Principal", icon: FaHome, link: "/" },
     { name: "Voturile tale", icon: FaBalanceScale, link: "/votes" },
     { name: "Grupuri", icon: FaLayerGroup, link: "/groups" },
     { name: "Useri", icon: FaAddressCard, link: "/users" },
-    { name: "Setări", icon: FaCog, link: "/settings" },
+    { name: "Setări", icon: FaCog, link: "/settings" }
 ];
 
 function Sidebar() {
+
+    const userSelector = useSelector(selector => selector.user);
+
+    // If user is staff, add the admin button
+    if (userSelector.is_staff && linkItems[0].name !== "Admin") {
+        linkItems = [{ name: "Admin", icon: FaBook, link: "/admin" }, ...linkItems]
+    }
+
     return (
         <Box
             h="full"
