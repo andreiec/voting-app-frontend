@@ -19,7 +19,7 @@ function CreateVoteQuestionSelectionType(props) {
                     control={props.control}
                     name={`questions.${index}.selection_type`}
                     render={({ field: { onChange, onBlur, ref } }) => (
-                        <Select onChange={onChange} onBlur={onBlur} ref={ref} value={props.getValues(`questions.${index}.selection_type`)} name={`questions.${index}.selection_type`} id={`questions.${index}.selection_type`} mb='15px' w='10rem'>
+                        <Select onChange={(event) => {props.setValue(`questions[${index}].selection_type`, event.target.value, { shouldValidate: true }); props.trigger(`questions.${index}.max_selections`); props.trigger(`questions.${index}.min_selections`);}} onBlur={onBlur} ref={ref} value={props.getValues(`questions.${index}.selection_type`)} name={`questions.${index}.selection_type`} id={`questions.${index}.selection_type`} mb='15px' w='10rem'>
                             <option value="single">Simplă</option>
                             <option value="multiple">Multiplă</option>
                         </Select>

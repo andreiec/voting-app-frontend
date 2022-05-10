@@ -9,7 +9,6 @@ import { Flex, useToast } from "@chakra-ui/react";
 
 function SingleVote() {
     const params = useParams();
-    const navigator = useNavigate();
     const userSelector = useSelector(selector => selector.user);
     const [vote, setVote] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -113,7 +112,7 @@ function SingleVote() {
 
     if (error) {
         if (error.response.status === 404 || error.response.status === 400) {
-            navigator("/not-found", { replace: true });
+            navigate("/not-found", { replace: true });
         }
 
         content = <p>{error.message}</p>;

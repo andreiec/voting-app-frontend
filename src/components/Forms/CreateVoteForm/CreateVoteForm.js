@@ -96,7 +96,12 @@ const validationSchema = object({
                 'min_selec_test',
                 'a',
                 function(value) {
-                    const { max_selections } = this.parent;
+                    const { max_selections, selection_type } = this.parent;
+                    
+                    if (selection_type === 'single') {
+                        return true;
+                    }
+
                     return value <= max_selections;
                 }
             ),
@@ -108,7 +113,12 @@ const validationSchema = object({
                 'max_selec_test',
                 'a',
                 function(value) {
-                    const { min_selections } = this.parent;
+                    const { min_selections, selection_type } = this.parent;
+
+                    if (selection_type === 'single') {
+                        return true;
+                    }
+
                     return value >= min_selections;
                 }
             ),
