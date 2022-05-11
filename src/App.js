@@ -10,6 +10,10 @@ import Layout from "./layout/Layout";
 import AllGroups from "./pages/AllGroups";
 import CreateVote from "./pages/CreateVote";
 import VoteConfirmed from "./pages/VoteConfirmed";
+import Admin from "./pages/Admin/Admin";
+import AdminVotes from "./pages/Admin/AdminVotes";
+import AdminGroups from "./pages/Admin/AdminGroups";
+import AdminUsers from "./pages/Admin/AdminUsers";
 
 function App() {
     const authSelector = useSelector((selector) => selector.auth);
@@ -28,7 +32,13 @@ function App() {
                         <Route path="vote-confirmed" element={<VoteConfirmed />} />
                         
                         {userSelector.is_staff && (
+                            <>
                             <Route path="create-vote" element={<CreateVote />} />
+                            <Route path="admin" element={<Admin />} />
+                            <Route path="admin/votes" element={<AdminVotes />} />
+                            <Route path="admin/groups" element={<AdminGroups />} />
+                            <Route path="admin/users" element={<AdminUsers />} />
+                            </>
                         )}
                         
                     </Route>

@@ -21,6 +21,11 @@ function Sidebar() {
         linkItems = [{ name: "Admin", icon: FaBook, link: "/admin" }, ...linkItems]
     }
 
+    // Remove button if user is not staff
+    if (!userSelector.is_staff && linkItems[0].name === "Admin") {
+        linkItems.shift();
+    }
+
     return (
         <Box
             h="full"
