@@ -1,4 +1,4 @@
-import { Box, Center, Flex, FormControl, FormErrorMessage, FormLabel, Input, Switch, Text, Textarea } from "@chakra-ui/react";
+import { Box, Center, Collapse, Flex, FormControl, FormErrorMessage, FormLabel, Input, Switch, Text, Textarea } from "@chakra-ui/react";
 import { Fragment, useState } from "react";
 import DatePicker from "react-date-picker";
 import TimePicker from 'react-time-picker';
@@ -49,74 +49,77 @@ function CreateVoteGeneralInformation(props) {
                 <FormErrorMessage>{props.errors?.manual_closing?.message}</FormErrorMessage>
             </FormControl>
 
-            <Box display={manualClosing ? "none" : "block"}>
-            <Flex flexDir={{base:'column', md:'row'}} gap={{base: 25, md: '54px'}} flexWrap='wrap' justifyContent='stretch' mb='45px'>
+            <Collapse in={!manualClosing} animateOpacity>
+            <Box mb='30px'>
+                <Flex flexDir={{base:'column', md:'row'}} gap={{base: 25, md: '54px'}} flexWrap='wrap' justifyContent='stretch'>
 
-                {/* Start date field */}
-                <FormControl isInvalid={!!props.errors?.voting_starts_at_date?.message} w='fit-content'>
-                    <FormLabel fontWeight="600" w='fit-content'>Data începerii votului</FormLabel>
-                        <DatePicker
-                            dateFormat="dd MMM yyyy"
-                            placeholderText='Selectează data'
-                            maxDate={endDateValue}
-                            minDate={todayDate}
-                            onChange={(date) => {onStartDateChange(date); props.setValue('voting_starts_at_date', new Date((date.getTime() - date.getTimezoneOffset() * 60 * 1000)).toISOString().split('T')[0]); props.trigger('voting_ends_at_hour'); props.trigger('voting_starts_at_hour');}}
-                            value={startDateValue}
-                            selected={startDateValue}
-                            clearIcon={null}
-                            //disabled={manualClosing}
-                        />
-                    <FormErrorMessage>{props.errors?.voting_starts_at_date?.message}</FormErrorMessage>
-                </FormControl>
+                    {/* Start date field */}
+                    <FormControl isInvalid={!!props.errors?.voting_starts_at_date?.message} w='fit-content'>
+                        <FormLabel fontWeight="600" w='fit-content'>Data începerii votului</FormLabel>
+                            <DatePicker
+                                dateFormat="dd MMM yyyy"
+                                placeholderText='Selectează data'
+                                maxDate={endDateValue}
+                                minDate={todayDate}
+                                onChange={(date) => {onStartDateChange(date); props.setValue('voting_starts_at_date', new Date((date.getTime() - date.getTimezoneOffset() * 60 * 1000)).toISOString().split('T')[0]); props.trigger('voting_ends_at_hour'); props.trigger('voting_starts_at_hour');}}
+                                value={startDateValue}
+                                selected={startDateValue}
+                                clearIcon={null}
+                                //disabled={manualClosing}
+                            />
+                        <FormErrorMessage>{props.errors?.voting_starts_at_date?.message}</FormErrorMessage>
+                    </FormControl>
 
 
-                {/* Start hour field */}
-                <FormControl isInvalid={!!props.errors?.voting_starts_at_hour?.message} w='fit-content'>
-                    <FormLabel fontWeight="600" w='fit-content'>Ora începerii votului</FormLabel>
-                        <TimePicker
-                            onChange={(hour) => {onStartHourChange(hour); props.setValue('voting_starts_at_hour', hour); props.trigger('voting_starts_at_hour'); props.trigger('voting_ends_at_hour');}}
-                            value={startHourValue}
-                            clearIcon={null}
-                            //disabled={manualClosing}
-                            disableClock={true}
-                        />
-                    {/* <FormErrorMessage>{props.errors?.voting_starts_at_hour?.message}</FormErrorMessage> */}
-                </FormControl>
-            </Flex>
+                    {/* Start hour field */}
+                    <FormControl isInvalid={!!props.errors?.voting_starts_at_hour?.message} w='fit-content'>
+                        <FormLabel fontWeight="600" w='fit-content'>Ora începerii votului</FormLabel>
+                            <TimePicker
+                                onChange={(hour) => {onStartHourChange(hour); props.setValue('voting_starts_at_hour', hour); props.trigger('voting_starts_at_hour'); props.trigger('voting_ends_at_hour');}}
+                                value={startHourValue}
+                                clearIcon={null}
+                                //disabled={manualClosing}
+                                disableClock={true}
+                            />
+                        {/* <FormErrorMessage>{props.errors?.voting_starts_at_hour?.message}</FormErrorMessage> */}
+                    </FormControl>
+                </Flex>
 
-            <Flex flexDir={{base:'column', md:'row'}} gap={{base: 25, md: 50}} flexWrap='wrap' mb='25px'>
+                <Flex flexDir={{base:'column', md:'row'}} gap={{base: 25, md: 50}} flexWrap='wrap' mt='25px'>
 
-                {/* End date field */}
-                <FormControl isInvalid={!!props.errors?.voting_ends_at_date?.message} w='fit-content'>
-                    <FormLabel fontWeight="600" w='fit-content'>Data încheierii votului</FormLabel>
-                        <DatePicker
-                            dateFormat="dd MMM yyyy"
-                            placeholderText='Selectează data'
-                            minDate={startDateValue}
-                            onChange={(date) => {onEndDateChange(date); props.setValue('voting_ends_at_date', new Date((date.getTime() - date.getTimezoneOffset() * 60 * 1000)).toISOString().split('T')[0]); props.trigger('voting_ends_at_hour'); props.trigger('voting_starts_at_hour');}}
-                            value={endDateValue}
-                            selected={endDateValue}
-                            clearIcon={null}
-                            //disabled={manualClosing}
-                        />
-                    <FormErrorMessage>{props.errors?.voting_ends_at_date?.message}</FormErrorMessage>
-                </FormControl>
+                    {/* End date field */}
+                    <FormControl isInvalid={!!props.errors?.voting_ends_at_date?.message} w='fit-content'>
+                        <FormLabel fontWeight="600" w='fit-content'>Data încheierii votului</FormLabel>
+                            <DatePicker
+                                dateFormat="dd MMM yyyy"
+                                placeholderText='Selectează data'
+                                minDate={startDateValue}
+                                onChange={(date) => {onEndDateChange(date); props.setValue('voting_ends_at_date', new Date((date.getTime() - date.getTimezoneOffset() * 60 * 1000)).toISOString().split('T')[0]); props.trigger('voting_ends_at_hour'); props.trigger('voting_starts_at_hour');}}
+                                value={endDateValue}
+                                selected={endDateValue}
+                                clearIcon={null}
+                                //disabled={manualClosing}
+                            />
+                        <FormErrorMessage>{props.errors?.voting_ends_at_date?.message}</FormErrorMessage>
+                    </FormControl>
 
-                
-                {/* End hour field */}
-                <FormControl isInvalid={!!props.errors?.voting_ends_at_hour?.message} w='fit-content'>
-                    <FormLabel fontWeight="600" w='fit-content'>Ora încheierii votului</FormLabel>
-                        <TimePicker
-                            onChange={(hour) => {onEndHourChange(hour); props.setValue('voting_ends_at_hour', hour); props.trigger('voting_ends_at_hour'); props.trigger('voting_starts_at_hour'); }}
-                            value={endHourValue}
-                            clearIcon={null}
-                            //disabled={manualClosing}
-                            disableClock={true}
-                        />
-                    <FormErrorMessage>{props.errors?.voting_ends_at_hour?.message}</FormErrorMessage>
-                </FormControl>
-            </Flex>
+                    
+                    {/* End hour field */}
+                    <FormControl isInvalid={!!props.errors?.voting_ends_at_hour?.message} w='fit-content'>
+                        <FormLabel fontWeight="600" w='fit-content'>Ora încheierii votului</FormLabel>
+                            <TimePicker
+                                onChange={(hour) => {onEndHourChange(hour); props.setValue('voting_ends_at_hour', hour); props.trigger('voting_ends_at_hour'); props.trigger('voting_starts_at_hour'); }}
+                                value={endHourValue}
+                                clearIcon={null}
+                                //disabled={manualClosing}
+                                disableClock={true}
+                            />
+                        <FormErrorMessage>{props.errors?.voting_ends_at_hour?.message}</FormErrorMessage>
+                    </FormControl>
+                </Flex>
             </Box>
+            </Collapse>
+            
 
         </Fragment>
     )
