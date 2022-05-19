@@ -48,7 +48,7 @@ function AdminVotes() {
     return (
         <>
             <Titlebar title='Voturi active'/>
-            <ActiveVotesTable data={{votes: activeVotes}}/>
+            <ActiveVotesTable data={{votes: activeVotes, firstTouched: firstTouch}}/>
             
             <Flex 
                 mx={{base: '30px', md: '0px'}}
@@ -60,7 +60,6 @@ function AdminVotes() {
                 <Button
                     colorScheme='green'
                     boxShadow='base'
-                    
                     onClick={() => navigate('/create-vote')}
                 >
                     <Text
@@ -74,10 +73,8 @@ function AdminVotes() {
 
                 <Button
                     colorScheme='blue'
-
                     float={{base: "none", md:'right'}}
                     w={{base: "100%", md: '120px'}}
-                    
                 >
                     Arhivă
                 </Button>

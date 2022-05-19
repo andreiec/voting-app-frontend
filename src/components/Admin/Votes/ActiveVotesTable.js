@@ -19,7 +19,7 @@ function ActiveVotesTable(props) {
             
                     <TableCaption>
                         {/* If no votes, display text */}                    
-                        {!votes.length && <Text mb='30px' fontWeight='600'>Nu există voturi active!</Text>}
+                        {!votes.length && !props.data.firstTouched && <Text mb='30px' fontWeight='600'>Nu există voturi active!</Text>}
                     </TableCaption>
 
                     <Thead>

@@ -98,7 +98,7 @@ function AllVotes() {
 
     return (
         <React.Fragment>
-            <Titlebar title='Voturile tale' button={fetchVotes} buttonText="Reîncarcă" adminButton={() => navigate('/create-vote')} adminButtonText="Adaugă un vot"/>
+            <Titlebar title='Voturile tale' button={fetchVotes} buttonText="Reîncarcă"/>
             {content}
         </React.Fragment> 
     )

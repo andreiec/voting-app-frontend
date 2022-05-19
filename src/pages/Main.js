@@ -107,7 +107,7 @@ function Main() {
 
     return (
         <Fragment>
-            <Titlebar title='Meniu principal' button={fetchVotes} buttonText="Reîncarcă" adminButton={() => navigate('/create-vote')} adminButtonText="Adaugă un vot"/>
+            <Titlebar title='Meniu principal' button={fetchVotes} buttonText="Reîncarcă"/>
             <Flex
                 flexDir='row'
                 gap='30px'
