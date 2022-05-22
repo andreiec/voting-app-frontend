@@ -1,22 +1,15 @@
-import { Drawer, DrawerOverlay, DrawerContent, DrawerHeader, Text, DrawerBody, Flex, Button, useBreakpointValue } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
-import { sidebarActions } from "../../store";
+import { Drawer, DrawerOverlay, DrawerContent, DrawerHeader, Text, DrawerBody, Flex, useBreakpointValue, DrawerCloseButton } from "@chakra-ui/react";
 
-function SidebarMobile(props) {
-
-    const sidebarSelector = useSelector(selector => selector.sidebar);
-    const dispatch = useDispatch();
-
-    const size = useBreakpointValue({base: 'full', md: 'xs'})
+function MobileNavigation(props) {
 
     return (
-        <Drawer isOpen={sidebarSelector.opened} placement="left">
+        <Drawer isOpen={props.isOpen} onClose={props.onClose} placement="left">
             <DrawerOverlay />
             <DrawerContent>
                 <DrawerHeader borderBottomWidth="3px">
                     <Flex flexDir='row' justifyContent='space-between'>
                         <Text>Aplicație Vot</Text>
-                        <Button onClick={() => {dispatch(sidebarActions.closeSidebar())}}/>
+                        <DrawerCloseButton />
                     </Flex>
                     
                 </DrawerHeader>
@@ -28,4 +21,4 @@ function SidebarMobile(props) {
     )
 }
 
-export default SidebarMobile;
+export default MobileNavigation;
