@@ -1,15 +1,11 @@
 
 import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, Box, Text, Button } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom';
 
 function ActiveVotesTable(props) {
     
     const votes = props.data.votes;
-
-    // Hande stop vote button
-    const closeElection = (pk) => {
-        console.log(pk)
-    };
-
+    const navigate = useNavigate();
 
     return (
         <Box
@@ -47,18 +43,9 @@ function ActiveVotesTable(props) {
                                     <Button
                                         colorScheme='gray'
                                         float={{base: "none", md:'right'}}
-                                        mr={{base: '10px', md:'0px'}}
-                                        px='30px'
-                                        onClick={() => closeElection(vote.id)}
-                                    >
-                                        Stop vot
-                                    </Button>
-
-                                    <Button
-                                        colorScheme='gray'
-                                        float={{base: "none", md:'right'}}
                                         mr={{base: '0px', md:'10px'}}
                                         px='30px'
+                                        onClick={() => navigate(`/admin/votes/${vote.id}`)}
                                     >
                                         Detalii
                                     </Button>
