@@ -5,6 +5,12 @@ function ActiveVotesTable(props) {
     
     const votes = props.data.votes;
 
+    // Hande stop vote button
+    const closeElection = (pk) => {
+        console.log(pk)
+    };
+
+
     return (
         <Box
             p='20px'
@@ -19,30 +25,31 @@ function ActiveVotesTable(props) {
             
                     <TableCaption>
                         {/* If no votes, display text */}                    
-                        {!votes.length && !props.data.firstTouched && <Text mb='30px' fontWeight='600'>Nu există voturi active!</Text>}
+                        {!votes.length && !props.data.isLoading && <Text mb='30px' fontWeight='600'>Nu există voturi active!</Text>}
                     </TableCaption>
 
                     <Thead>
                         <Tr>
                             <Th>Titlu</Th>
-                            <Th>Închidere manuală</Th>
+                            {/*<Th>Închidere manuală</Th>*/}
                             <Th isNumeric>Acțiuni</Th>
                         </Tr>
                     </Thead>
                     
                     
                     {/* Display active votes */}
-                    {votes.map((vote) => (
-                        <Tbody>
+                    {votes.map((vote, index) => (
+                        <Tbody key={index}>
                             <Tr>
                                 <Td maxW='300px'><Text maxW='700px' isTruncated>{vote.title}</Text></Td>
-                                <Td>{vote.manual_closing? "DA" : "NU"}</Td>
+                                {/*<Td>{vote.manual_closing? "DA" : "NU"}</Td>*/}
                                 <Td isNumeric>
                                     <Button
                                         colorScheme='gray'
                                         float={{base: "none", md:'right'}}
                                         mr={{base: '10px', md:'0px'}}
                                         px='30px'
+                                        onClick={() => closeElection(vote.id)}
                                     >
                                         Stop vot
                                     </Button>

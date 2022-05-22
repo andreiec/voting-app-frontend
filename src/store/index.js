@@ -18,6 +18,11 @@ let initialUserState = {
     is_staff: false
 };
 
+let initialSidebarState = {
+    opened: false,
+}
+
+
 const tokenFromCookie = Cookies.get("token");
 
 if (tokenFromCookie) {
@@ -81,14 +86,30 @@ const authSlice = createSlice({
     },
 });
 
+const sidebarSlice = createSlice({
+    name: "sidebar",
+    initialState: initialSidebarState,
+    reducers: {
+        openSidebar(state, action) {
+            state.opened = true;
+        },
+
+        closeSidebar(state, action) {
+            state.opened = false;
+        }
+    },
+})
+
 const store = configureStore({
     reducer: {
         // Place reducers here
         auth: authSlice.reducer,
         user: userSlice.reducer,
+        sidebar: sidebarSlice.reducer,
     },
 });
 
 export const authActions = authSlice.actions;
 export const userActions = userSlice.actions;
+export const sidebarActions = sidebarSlice.actions;
 export default store;

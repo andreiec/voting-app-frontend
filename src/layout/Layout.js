@@ -42,7 +42,7 @@ function Layout() {
     return (
         <Box minH="100vh">
             <Sidebar />
-            <Flex ml={{ base: 0, md: "275px" }} flexDir="column" minH="100vh">
+            <Flex ml={{ base: 0, xl: "275px" }} flexDir="column" minH="100vh">
                 <Navbar user={user} />
                 <Box
                     px={{ base: 0, md: '70px' }}

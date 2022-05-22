@@ -1,16 +1,16 @@
-import { Box, Image, Text, Center, Menu, MenuButton, MenuList, MenuItem, MenuGroup, Icon, } from "@chakra-ui/react";
+import { Box, Image, Text, Center, Menu, MenuButton, MenuList, MenuItem, MenuGroup, Icon, Flex, IconButton } from "@chakra-ui/react";
 import { FaPowerOff } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { FiMenu } from "react-icons/fi"
 import defaultUserImage from "../images/default-user.jpg";
-import { authActions, userActions } from "../store";
+import { authActions, userActions, sidebarActions } from "../store";
 
 function Navbar() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const userSelector = useSelector(selector => selector.user)
+    const userSelector = useSelector(selector => selector.user);
 
     function logoutHandler() {
         dispatch(authActions.logout());
@@ -19,7 +19,26 @@ function Navbar() {
     }
 
     return (
-        <Box h="65px" boxShadow="sm" zIndex="10">
+        <Flex h="65px" boxShadow="sm" zIndex="10">
+
+            <Flex
+                alignItems="center"       
+                justifyContent="flex-start"
+                ml='20px'
+                mt='10px'
+                display={{base: 'block', xl: 'none'}}
+            >
+
+                <IconButton
+                    boxShadow="base"
+                    colorScheme='whiteAlpha'
+                    color='brand.title'
+                    onClick={() => { dispatch(sidebarActions.openSidebar()) }}
+                    aria-label="open menu"
+                    icon={<FiMenu />}
+                />
+            </Flex>
+
             <Box w="fit-content" mr="30px" ml="auto">
                 <Menu isLazy>
                     <MenuButton>
@@ -57,7 +76,7 @@ function Navbar() {
                     </MenuList>
                 </Menu>
             </Box>
-        </Box>
+        </Flex>
     );
 }
 

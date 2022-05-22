@@ -9,7 +9,7 @@ import { Button, Flex, Text } from "@chakra-ui/react";
 
 function AdminVotes() {
     const [activeVotes, setActiveVotes] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [firstTouch, setFirstTouch] = useState(true);
     const [error, setError] = useState(null);
     const userSelector = useSelector(selector => selector.user);
@@ -48,7 +48,7 @@ function AdminVotes() {
     return (
         <>
             <Titlebar title='Voturi active'/>
-            <ActiveVotesTable data={{votes: activeVotes, firstTouched: firstTouch}}/>
+            <ActiveVotesTable data={{votes: activeVotes, isLoading: isLoading}}/>
             
             <Flex 
                 mx={{base: '30px', md: '0px'}}
