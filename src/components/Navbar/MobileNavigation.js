@@ -1,5 +1,5 @@
 import { Drawer, DrawerOverlay, DrawerContent, DrawerHeader, Text, DrawerBody, Flex, useBreakpointValue, DrawerCloseButton } from "@chakra-ui/react";
-import { FaHome, FaLayerGroup, FaBalanceScale, FaCog, FaAddressCard, FaBook } from "react-icons/fa";
+import { FaHome, FaLayerGroup, FaBalanceScale, FaBook } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import MobileNavigationItem from "./MobileNavigationItem";
 
@@ -7,8 +7,6 @@ let linkItems = [
     { name: "Meniu Principal", icon: FaHome, link: "/" },
     { name: "Voturile tale", icon: FaBalanceScale, link: "/votes" },
     { name: "Grupuri", icon: FaLayerGroup, link: "/groups" },
-    { name: "Useri", icon: FaAddressCard, link: "/users" },
-    { name: "Setări", icon: FaCog, link: "/settings" }
 ];
 
 function MobileNavigation(props) {

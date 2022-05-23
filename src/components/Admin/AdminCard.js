@@ -24,7 +24,7 @@ function AdminCard(props) {
             <Spacer />
 
             {/* Button */}
-            <Button colorScheme='blue' mb='15px' onClick={() => navigate(props.data.link)}>Accesează</Button>
+            <Button colorScheme='blue' mb='15px' onClick={() => navigate(props.data.link)}><Text mb='3px'>Accesează</Text></Button>
         </Flex>
     )
 }

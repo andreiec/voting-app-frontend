@@ -1,5 +1,5 @@
 import { Box, Image, Text, Center, Menu, MenuButton, MenuList, MenuItem, MenuGroup, Icon, Flex, IconButton, useDisclosure } from "@chakra-ui/react";
-import { FaPowerOff } from "react-icons/fa";
+import { FaPowerOff, FaCog } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FiMenu } from "react-icons/fi"
@@ -46,7 +46,7 @@ function Navbar() {
                 </Flex>
 
                 <Box w="fit-content" mr="30px" ml="auto">
-                    <Menu isLazy>
+                    <Menu autoSelect={false}>
                         <MenuButton>
                             <Center
                                 h="45px"
@@ -72,6 +72,12 @@ function Navbar() {
                                     userSelector.last_name && `${userSelector.first_name} ${userSelector.last_name}`
                                 }
                             >
+                                <MenuItem
+                                    onClick={() => navigate('/settings')}
+                                    icon={<Icon mb="-2px" as={FaCog} />}
+                                >
+                                    <Text>Setări</Text>
+                                </MenuItem>
                                 <MenuItem
                                     onClick={logoutHandler}
                                     icon={<Icon mb="-2px" as={FaPowerOff} />}

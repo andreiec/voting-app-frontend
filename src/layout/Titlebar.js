@@ -29,7 +29,7 @@ function Titlebar(props) {
                 bg='brand.green'
                 boxShadow='base'
                 _hover={ { bg: 'brand.green_light'} }
-                borderRadius='15px'
+                //borderRadius='15px'
                 onClick={props.adminButton}
             >
                 <Text mb='3px' fontWeight='600' px='10px'>{props.adminButtonText}</Text>
@@ -37,11 +37,9 @@ function Titlebar(props) {
             }
 
             {props.buttonText && <Button
-                color='brand.white'
-                bg='brand.main_blue'
+                colorScheme='blue'
                 boxShadow='base'
-                _hover={ { bg: 'brand.blue_light'} }
-                borderRadius='15px'
+                //borderRadius='15px'
                 onClick={props.button}
             >
                 <Text mb='3px' fontWeight='600' px='10px'>{props.buttonText}</Text>

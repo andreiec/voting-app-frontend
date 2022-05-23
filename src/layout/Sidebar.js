@@ -6,8 +6,6 @@ let linkItems = [
     { name: "Meniu Principal", icon: FaHome, link: "/" },
     { name: "Voturile tale", icon: FaBalanceScale, link: "/votes" },
     { name: "Grupuri", icon: FaLayerGroup, link: "/groups" },
-    { name: "Useri", icon: FaAddressCard, link: "/users" },
-    { name: "Setări", icon: FaCog, link: "/settings" }
 ];
 
 function Sidebar() {
