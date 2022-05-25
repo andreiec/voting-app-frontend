@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import apiClient from "../../http-common";
 import { Flex } from "@chakra-ui/react";
 import AdminVote from "../../components/Admin/Votes/AdminVote";
+import Titlebar from "../../layout/Titlebar";
 
 function AdminVoteDetails() {
     const params = useParams();
@@ -123,7 +124,12 @@ function AdminVoteDetails() {
         content = <p>Se încarcă..</p>;
     }
 
-    return <Fragment>{content}</Fragment>;
+    return (
+        <Fragment>
+            <Titlebar title='Detalii' buttonText="Înapoi" button={() => {navigate('/admin/votes/')}}/>
+            {content}
+        </Fragment>
+    )
 }
 
 export default AdminVoteDetails;

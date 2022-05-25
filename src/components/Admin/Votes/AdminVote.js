@@ -1,6 +1,15 @@
+import { useNavigate } from "react-router-dom";
+import Titlebar from "../../../layout/Titlebar";
+import AdminVoteTitle from "./AdminVoteTitle";
+
 function AdminVote(props) {
+    const navigate = useNavigate();
+
     return (
-        <h1>AA</h1>
+        <>
+
+            <AdminVoteTitle data={props.data.vote}/>
+        </>
     )
 }
 

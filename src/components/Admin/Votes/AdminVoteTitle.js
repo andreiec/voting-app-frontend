@@ -1,6 +1,30 @@
+import { Flex, Text } from "@chakra-ui/react";
+
 function AdminVoteTitle(props) {
     return (
-        <h1>{props.data.title}</h1>
+        <Flex
+            flexDir='column'
+            alignItems='center'
+            flexWrap='wrap'
+            {...props.rest}
+        >
+            <Text
+                fontSize='2xl'
+                color='brand.text_title'
+                fontWeight='600'
+            >
+                {props.data.title}
+            </Text>
+
+            <Text
+                fontSize='base'
+                color='brand.text_body'
+                fontWeight='400'
+            >
+                {props.data.description}
+            </Text>
+
+        </Flex>
     )
 }
 

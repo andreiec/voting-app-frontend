@@ -27,15 +27,13 @@ function VoteConfirmed(props) {
                 Votul tău a fost înregistrat.
             </Text>
 
-            <Center>
+            <Center mt="100px">
                 <Button
                     as={Link}
                     to="/"
-                    mt="100px"
-                    bg="brand.main_blue"
-                    _hover={{ bg: "brand.blue_light" }}
-                    color="brand.white"
+                    colorScheme='blue'
                     fontWeight="400"
+                    px='20px'
                 >
                     Meniu Principal
                 </Button>
