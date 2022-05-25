@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import Vote from "../components/Votes/Vote";
 import { useSelector } from "react-redux";
 import { Flex, useToast } from "@chakra-ui/react";
+import VoteConfirmed from "./VoteConfirmed";
 
 
 function SingleVote() {
@@ -13,6 +14,8 @@ function SingleVote() {
     const [vote, setVote] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [alreadyVoted, setAlreadyVoted] = useState(false);
+
     const toast = useToast();
     const navigate = useNavigate();
 
@@ -31,20 +34,22 @@ function SingleVote() {
         apiClient
             .get(`elections/${params.id}/submissions/`, requestConfig)
             .then((response) => {
-                
-                let alreadyConfirmed = false;
+
+                // Use local variable because it takes time to update
+                let localAlreadyVoted = false;
+
                 // Get all submissions, if user in list then return and navigate
                 const submissions = response.data;
                 submissions.every(submission => {
                     if (submission.user === userSelector.id) {
-                        alreadyConfirmed = true;
+                        setAlreadyVoted(true);
+                        setIsLoading(false);
+                        localAlreadyVoted = true;
                         return;
                     } 
                 });
 
-                if (alreadyConfirmed) {
-                    navigate('/vote-confirmed');
-                } else {
+                if (!localAlreadyVoted) {
                     apiClient
                     .get(`elections/${params.id}/`, requestConfig)
                     .then((response) => {
@@ -66,8 +71,27 @@ function SingleVote() {
     useEffect(() => {
         fetchVote();
     }, []);
-    
-    
+
+    let content = null;
+
+    if (alreadyVoted) {
+        content = <VoteConfirmed />
+    } else {
+        // Initial content, if no error display it
+        content = vote.id ? 
+            <Flex
+                bg="brand.white"
+                borderRadius={{ base: "0", md: "15px" }}
+                py={{ base:"20px", md:"40px" }}
+                px={{ base:"50px", md:"60px" }}
+                boxShadow={{ base: "", md: "sm" }}
+                minH={{base:"82vh", md:"31rem"}}
+                flexDir="column"
+            >
+                <Vote data={vote} submitHandler={submitHandler} /> 
+            </Flex> : null;
+    }
+
     const submitHandler = (values, submitProps) => {
         const submission_data = {
             user_id: userSelector.id,
@@ -82,7 +106,7 @@ function SingleVote() {
         apiClient
             .post(`elections/${params.id}/submit/`, submission_data, requestConfig)
             .then((response) => {
-                navigate('/vote-confirmed');
+                navigate('/vote-confirmed', { replace: true });
             })
             .catch((error) => {
                 toast({
@@ -94,20 +118,6 @@ function SingleVote() {
                 })
             });
     };
-
-    // Initial content, if no error display it
-    let content = vote.id ? 
-        <Flex
-            bg="brand.white"
-            borderRadius={{ base: "0", md: "15px" }}
-            py={{ base:"20px", md:"40px" }}
-            px={{ base:"50px", md:"60px" }}
-            boxShadow={{ base: "", md: "sm" }}
-            minH={{base:"82vh", md:"31rem"}}
-            flexDir="column"
-        >
-            <Vote data={vote} submitHandler={submitHandler} /> 
-        </Flex> : null;
 
 
     if (error) {

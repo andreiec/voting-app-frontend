@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import apiClient from "../../http-common";
-import { Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
+import AdminVote from "../../components/Admin/Votes/AdminVote";
 
 function AdminVoteDetails() {
     const params = useParams();
@@ -92,17 +93,37 @@ function AdminVoteDetails() {
         fetchVote();
     }, []);
 
-    return (
-        <>
-            <Text mb='30px'>{JSON.stringify(vote)}</Text>
-            {groups.map((group, index) => (
-                <Text mt='5px' key={index}>{JSON.stringify(group)}</Text>
-            ))
-            }
-            <Text mt='20px'>{JSON.stringify(users)}</Text>
-            <Text mt='20px'>{JSON.stringify(userVotes)}</Text>
-        </>
-    )
+
+    // Initial content, if no error display it
+    let content = vote.id ? 
+    <Flex
+        bg="brand.white"
+        borderRadius={{ base: "0", md: "15px" }}
+        py={{ base:"20px", md:"40px" }}
+        px={{ base:"50px", md:"60px" }}
+        boxShadow={{ base: "", md: "sm" }}
+        minH={{base:"82vh", md:"31rem"}}
+        flexDir="column"
+    >
+        <AdminVote data={{vote: vote, groups: groups, userVotes: userVotes, users: users}} />
+    </Flex> : null;
+
+
+    if (error) {
+        if (error.response.status === 404 || error.response.status === 400) {
+            navigate("/not-found", { replace: false });
+        }
+
+        content = <p>{error.message}</p>;
+    }
+
+
+    // Display while loading request
+    if (isLoading) {
+        content = <p>Se încarcă..</p>;
+    }
+
+    return <Fragment>{content}</Fragment>;
 }
 
 export default AdminVoteDetails;
