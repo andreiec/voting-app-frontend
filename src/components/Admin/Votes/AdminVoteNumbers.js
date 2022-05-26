@@ -1,30 +1,25 @@
-import { Center, CircularProgress, CircularProgressLabel, Flex, Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
+import AdminVoteNumbersCard from "./AdminVoteNumbersCard";
 
 function AdminVoteNumbers(props) {
 
     const vote = props.data.vote;
-    const userVotes = props.data.userVotes;
     const users = props.data.users;
     const usersLength = users.length;
-    const userVotesLength = userVotes.length;
 
-    // Reactive label inside progress circle
-    const circleProgressFontSize = userVotesLength.toString().length >= 7? 'sm' : '2xl';
+    // Count all options
+    let optionsLength = 0;
+
+    vote.questions.forEach((question) => {
+        optionsLength += question.options.length;
+    })
 
     return (
-        <Flex mt='50px' px={{base: '0px', md:'50px'}} justifyContent='space-between' flexDir={{base: 'column', md: 'row'}}>
-            <Flex>
-                {props.data.vote.questions.length}
-                {props.data.users.length}
-            </Flex>
-
-            {/* Progress Circle */}
-            <Center flexDir='column' gap='15px'>
-                <Text fontWeight='600'>Voturi exprimate</Text>
-                <CircularProgress value={usersLength? (userVotesLength / usersLength * 100) : 0} size='120px' thickness={8}>
-                    <CircularProgressLabel fontSize={circleProgressFontSize}>{userVotesLength}</CircularProgressLabel>
-                </CircularProgress>
-            </Center>
+        <Flex flexDir='row' gap='65px' flexWrap='wrap' justifyContent='space-around' px={{base:'0px', md:'100px'}}>
+            <AdminVoteNumbersCard title="Întrebări" value={vote.questions.length} />
+            <AdminVoteNumbersCard title="Opțiuni" value={optionsLength} />
+            <AdminVoteNumbersCard title="Grupuri" value={vote.groups.length} />
+            <AdminVoteNumbersCard title="Votanți" value={usersLength} />
         </Flex>
     )
 }
