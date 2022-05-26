@@ -27,6 +27,10 @@ function AdminVoteDetails() {
     };
 
     const fetchVote = () => {
+
+        // Workflow is like this 
+        // GET election -> GET all groups from election -> GET all users from election groups -> GET all submitted votes
+
         apiClient
             .get(`elections/${params.id}/`, requestConfig)
             .then((election_response) => {
@@ -65,6 +69,17 @@ function AdminVoteDetails() {
                         Promise.all(promises)
                             .then((groups_users) => {
                                 setUsers(groups_users.flat());
+                                
+                                // Get all submited votes from election
+                                apiClient
+                                    .get(`elections/${params.id}/submissions/`, requestConfig)
+                                    .then((submissions_response) => {
+                                        setUserVotes(submissions_response.data);
+                                        setIsLoading(false);
+                                    }).catch((submissions_error) => {
+                                        setIsLoading(false);
+                                        setError(submissions_error)
+                                    })
                             })
                             .catch((groups_users_error) => {
                                 setIsLoading(false);
@@ -76,13 +91,6 @@ function AdminVoteDetails() {
                         setError(group_error);
                 })
 
-                apiClient
-                    .get(`elections/${params.id}/submissions/`, requestConfig)
-                    .then((submissions_response) => {
-                        setUserVotes(submissions_response.data);
-                    })
-                
-                setIsLoading(false);
             })
             .catch((error) => {
                 setIsLoading(false);
@@ -91,23 +99,16 @@ function AdminVoteDetails() {
     };
 
     useEffect(() => {
+        setIsLoading(true);
+        //setTimeout(() => {fetchVote();}, 1500)
         fetchVote();
     }, []);
 
 
     // Initial content, if no error display it
     let content = vote.id ? 
-    <Flex
-        bg="brand.white"
-        borderRadius={{ base: "0", md: "15px" }}
-        py={{ base:"20px", md:"40px" }}
-        px={{ base:"50px", md:"60px" }}
-        boxShadow={{ base: "", md: "sm" }}
-        minH={{base:"82vh", md:"31rem"}}
-        flexDir="column"
-    >
         <AdminVote data={{vote: vote, groups: groups, userVotes: userVotes, users: users}} />
-    </Flex> : null;
+    : null;
 
 
     if (error) {
@@ -127,7 +128,17 @@ function AdminVoteDetails() {
     return (
         <Fragment>
             <Titlebar title='Detalii' buttonText="Înapoi" button={() => {navigate('/admin/votes/')}}/>
-            {content}
+            <Flex
+                bg="brand.white"
+                borderRadius={{ base: "0", md: "15px" }}
+                py={{ base:"20px", md:"40px" }}
+                px={{ base:"50px", md:"60px" }}
+                boxShadow={{ base: "", md: "sm" }}
+                minH={{base:"82vh", md:"31rem"}}
+                flexDir="column"
+            >
+                {content}
+            </Flex>
         </Fragment>
     )
 }

@@ -72,25 +72,7 @@ function SingleVote() {
         fetchVote();
     }, []);
 
-    let content = null;
 
-    if (alreadyVoted) {
-        content = <VoteConfirmed />
-    } else {
-        // Initial content, if no error display it
-        content = vote.id ? 
-            <Flex
-                bg="brand.white"
-                borderRadius={{ base: "0", md: "15px" }}
-                py={{ base:"20px", md:"40px" }}
-                px={{ base:"50px", md:"60px" }}
-                boxShadow={{ base: "", md: "sm" }}
-                minH={{base:"82vh", md:"31rem"}}
-                flexDir="column"
-            >
-                <Vote data={vote} submitHandler={submitHandler} /> 
-            </Flex> : null;
-    }
 
     const submitHandler = (values, submitProps) => {
         const submission_data = {
@@ -118,7 +100,26 @@ function SingleVote() {
                 })
             });
     };
+    
+    let content = null;
 
+    if (alreadyVoted) {
+        content = <VoteConfirmed />
+    } else {
+        // Initial content, if no error display it
+        content = vote.id ? 
+            <Flex
+                bg="brand.white"
+                borderRadius={{ base: "0", md: "15px" }}
+                py={{ base:"20px", md:"40px" }}
+                px={{ base:"50px", md:"60px" }}
+                boxShadow={{ base: "", md: "sm" }}
+                minH={{base:"82vh", md:"31rem"}}
+                flexDir="column"
+            >
+                <Vote data={vote} submitHandler={submitHandler} /> 
+            </Flex> : null;
+    }
 
     if (error) {
         if (error.response.status === 404 || error.response.status === 400) {
