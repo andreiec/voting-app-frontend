@@ -105,9 +105,25 @@ function AdminVoteDetails() {
     }, []);
 
 
+    const stopVoteHandler = () => {
+        let current_vote = vote;
+        current_vote.is_active = false;
+        current_vote.accepts_votes = false;
+        current_vote.is_archived = true;
+
+        apiClient
+            .put(`elections/${params.id}/`, current_vote, requestConfig)
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
     // Initial content, if no error display it
     let content = vote.id ? 
-        <AdminVote data={{vote: vote, groups: groups, userVotes: userVotes, users: users}} />
+        <AdminVote data={{vote: vote, groups: groups, userVotes: userVotes, users: users, stopVoteHandler: stopVoteHandler}} />
     : null;
 
 

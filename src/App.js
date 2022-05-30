@@ -15,6 +15,7 @@ import AdminVotes from "./pages/Admin/AdminVotes";
 import AdminGroups from "./pages/Admin/AdminGroups";
 import AdminUsers from "./pages/Admin/AdminUsers";
 import AdminVoteDetails from "./pages/Admin/AdminVoteDetails";
+import AdminVotesArchived from "./pages/Admin/AdminVotesArchived";
 
 function App() {
     const authSelector = useSelector((selector) => selector.auth);
@@ -37,6 +38,7 @@ function App() {
                             <Route path="create-vote" element={<CreateVote />} />
                             <Route path="admin" element={<Admin />} />
                             <Route path="admin/votes" element={<AdminVotes />} />
+                            <Route path="admin/votes/archived" element={<AdminVotesArchived />} />
                             <Route path="admin/votes/:id" element={<AdminVoteDetails />} />
                             <Route path="admin/groups" element={<AdminGroups />} />
                             <Route path="admin/users" element={<AdminUsers />} />

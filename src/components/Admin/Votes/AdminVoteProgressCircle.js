@@ -1,4 +1,4 @@
-import { Button, Center, CircularProgress, CircularProgressLabel, Divider, Flex, Text } from "@chakra-ui/react";
+import { Button, Center, CircularProgress, CircularProgressLabel, Text } from "@chakra-ui/react";
 
 function AdminVoteProgressCircle(props){
 
@@ -17,7 +17,7 @@ function AdminVoteProgressCircle(props){
             <CircularProgress value={usersLength? (userVotesLength / usersLength * 100) : 0} size='120px' thickness={8}>
                 <CircularProgressLabel fontSize={circleProgressFontSize}>{userVotesLength}</CircularProgressLabel>
             </CircularProgress>
-            <Button colorScheme='green' px='25px' mt='10px'><Text mb='3px'>Stop vot</Text></Button>
+            <Button colorScheme='green' px='25px' mt='10px' onClick={props.data.stopVoteHandler}><Text mb='3px'>Stop vot</Text></Button>
         </Center>
     )
 }

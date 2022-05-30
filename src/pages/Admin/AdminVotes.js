@@ -75,6 +75,7 @@ function AdminVotes() {
                     colorScheme='blue'
                     float={{base: "none", md:'right'}}
                     w={{base: "100%", md: '120px'}}
+                    onClick={() => navigate('/admin/votes/archived')}
                 >
                     <Text mb='3px'>
                         Arhivă

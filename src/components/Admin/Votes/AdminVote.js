@@ -9,7 +9,7 @@ function AdminVote(props) {
         <Flex flexDir='column' gap='90px'>
             <AdminVoteTitle data={props.data.vote}/>
             <AdminVoteNumbers data={{vote: props.data.vote, users: props.data.users, userVotes: props.data.userVotes}} />
-            <AdminVoteProgressCircle data={{users: props.data.users, userVotes: props.data.userVotes}} />
+            <AdminVoteProgressCircle data={{users: props.data.users, userVotes: props.data.userVotes, stopVoteHandler: props.data.stopVoteHandler}} />
             <AdminVoteSubmittedVotes data={{users: props.data.users, userVotes: props.data.userVotes}} />
         </Flex>
     )
