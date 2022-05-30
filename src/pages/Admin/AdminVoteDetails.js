@@ -5,6 +5,7 @@ import apiClient from "../../http-common";
 import { Flex } from "@chakra-ui/react";
 import AdminVote from "../../components/Admin/Votes/AdminVote";
 import Titlebar from "../../layout/Titlebar";
+import AdminVoteInactive from "../../components/Admin/Votes/AdminVoteInactive";
 
 function AdminVoteDetails() {
     const params = useParams();
@@ -100,8 +101,8 @@ function AdminVoteDetails() {
 
     useEffect(() => {
         setIsLoading(true);
-        //setTimeout(() => {fetchVote();}, 1500)
-        fetchVote();
+        setTimeout(() => {fetchVote();}, 1500)
+        //fetchVote();
     }, []);
 
 
@@ -121,10 +122,16 @@ function AdminVoteDetails() {
             })
     }
 
+    let content;
+
     // Initial content, if no error display it
-    let content = vote.id ? 
-        <AdminVote data={{vote: vote, groups: groups, userVotes: userVotes, users: users, stopVoteHandler: stopVoteHandler}} />
-    : null;
+    if (!isLoading) {
+        content = vote.is_active ? 
+            <AdminVote data={{vote: vote, groups: groups, userVotes: userVotes, users: users, stopVoteHandler: stopVoteHandler}} />
+        : 
+            <AdminVoteInactive data={{vote: vote, groups: groups, userVotes: userVotes, users: users}}/>;
+    }
+    
 
 
     if (error) {
@@ -143,7 +150,7 @@ function AdminVoteDetails() {
 
     return (
         <Fragment>
-            <Titlebar title='Detalii' buttonText="Înapoi" button={() => {navigate('/admin/votes/')}}/>
+            <Titlebar title='Detalii' buttonText="Înapoi" button={() => {navigate(-1)}}/>
             <Flex
                 bg="brand.white"
                 borderRadius={{ base: "0", md: "15px" }}

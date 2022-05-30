@@ -5,7 +5,6 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ActiveVotesTable from "../../components/Admin/Votes/ActiveVotesTable";
-import { Button, Flex, Text } from "@chakra-ui/react";
 
 function AdminVotesArchived() {
     const [activeVotes, setActiveVotes] = useState([]);
