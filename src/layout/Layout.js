@@ -8,7 +8,7 @@ import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 import Cookies from "js-cookie";
-import { automaticLogout, userActions } from "../store";
+import { userActions } from "../store";
 
 function Layout() {
     const [user, setUser] = useState(null);

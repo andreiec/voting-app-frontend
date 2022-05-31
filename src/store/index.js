@@ -18,15 +18,38 @@ let initialUserState = {
     is_staff: false
 };
 
+const calculateRemainingTime = (expirationTime) => {
+    const currentTime = new Date().getTime();
+    const adjExpirationTime = new Date(expirationTime * 1000).getTime();
 
+    const remainingDuration = adjExpirationTime - currentTime;
+    return remainingDuration;
+}
+
+let logoutTimer;
 const tokenFromCookie = Cookies.get("token");
 
+// Function to logout automatically
+export const automaticLogout = (timeAmount) => {
+    return async (dispatch) => {
+        logoutTimer = setTimeout(dispatch, timeAmount, authSlice.actions.logout());
+    }
+}
+
 if (tokenFromCookie) {
-    initialAuthState = {
-        token: tokenFromCookie,
-        isLoggedIn: true,
-        userID: jwt_decode(tokenFromCookie)["id"],
-    };
+    const remainingTime = calculateRemainingTime(jwt_decode(tokenFromCookie)["exp"])
+
+    // If remaining time is less than 10 minutes, logout 600000
+    if (remainingTime < 600000) {
+        localStorage.removeItem('expirationTime')
+        Cookies.remove('token');
+    } else {
+        initialAuthState = {
+            token: tokenFromCookie,
+            isLoggedIn: true,
+            userID: jwt_decode(tokenFromCookie)["id"],
+        };
+    }
 }
 
 const userSlice = createSlice({
@@ -68,6 +91,9 @@ const authSlice = createSlice({
                 sameSite: "strict",
                 secure: true,
             });
+
+            localStorage.setItem('expirationTime', jwt_decode(action.payload)["exp"]);
+
             state.isLoggedIn = true;
             state.token = action.payload;
             state.userID = jwt_decode(action.payload)["id"];
@@ -78,6 +104,10 @@ const authSlice = createSlice({
             state.isLoggedIn = false;
             state.token = null;
             state.userID = null;
+
+            if (logoutTimer) {
+                clearTimeout(logoutTimer);
+            }
         },
     },
 });
@@ -89,12 +119,6 @@ const store = configureStore({
         user: userSlice.reducer,
     },
 });
-
-export const automaticLogout = (timeAmount) => {
-    return async (dispatch) => {
-        setTimeout(dispatch, timeAmount, authSlice.actions.logout());
-    }
-}
 
 export const authActions = authSlice.actions;
 export const userActions = userSlice.actions;
