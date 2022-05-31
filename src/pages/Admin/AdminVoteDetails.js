@@ -16,7 +16,7 @@ function AdminVoteDetails() {
     const [users, setUsers] = useState([]);
     const [userVotes, setUserVotes] = useState([]);
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
@@ -124,12 +124,12 @@ function AdminVoteDetails() {
 
     let content;
 
-    // Initial content, if no error display it
+
     if (!isLoading) {
         content = vote.is_active ? 
             <AdminVote data={{vote: vote, groups: groups, userVotes: userVotes, users: users, stopVoteHandler: stopVoteHandler}} />
         : 
-            <AdminVoteInactive data={{vote: vote, groups: groups, userVotes: userVotes, users: users}}/>;
+            <AdminVoteInactive data={{vote: vote, groups: groups, userVotes: userVotes, users: users}} />;
     }
     
 

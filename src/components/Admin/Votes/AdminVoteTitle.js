@@ -28,6 +28,7 @@ function AdminVoteTitle(props) {
                 fontSize='base'
                 color='brand.text_body'
                 fontWeight='400'
+                mt='10px'
             >
                 {(new Date(props.data.created)).toISOString().split('T')[0]}
             </Text>

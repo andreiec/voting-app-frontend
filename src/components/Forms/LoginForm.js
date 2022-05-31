@@ -3,10 +3,11 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { authActions } from "../../store";
+import { authActions, automaticLogout } from "../../store";
 import apiClient from "../../http-common";
 import { Form, Formik, Field } from "formik";
 import * as Yup from 'yup';
+import jwt_decode from "jwt-decode";
 
 const initialValues = {
     email: "",
@@ -18,10 +19,17 @@ const validationSchema = Yup.object({
     password: Yup.string().required('Obligatoriu')
 })
 
+const calculateRemainingTime = (expirationTime) => {
+    const currentTime = new Date().getTime();
+    const adjExpirationTime = new Date(expirationTime * 1000).getTime();
+
+    const remainingDuration = adjExpirationTime - currentTime;
+    return remainingDuration;
+}
 
 function LoginForm(props) {
     const navigate = useNavigate();
-    const authDispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -37,7 +45,12 @@ function LoginForm(props) {
             .then((response) => {
                 setIsLoading(false);
                 setError(null);
-                authDispatch(authActions.login(response.data["access"]));
+
+                const remainingTime = calculateRemainingTime(jwt_decode(response.data["access"])["exp"]);
+
+                dispatch(automaticLogout(remainingTime));
+                dispatch(authActions.login(response.data["access"]));
+
                 navigate("/");
             })
             .catch((err) => {

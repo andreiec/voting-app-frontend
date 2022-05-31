@@ -1,4 +1,4 @@
-import { createSlice, configureStore } from "@reduxjs/toolkit";
+import { createSlice, configureStore, current } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
 
@@ -89,6 +89,12 @@ const store = configureStore({
         user: userSlice.reducer,
     },
 });
+
+export const automaticLogout = (timeAmount) => {
+    return async (dispatch) => {
+        setTimeout(dispatch, timeAmount, authSlice.actions.logout());
+    }
+}
 
 export const authActions = authSlice.actions;
 export const userActions = userSlice.actions;

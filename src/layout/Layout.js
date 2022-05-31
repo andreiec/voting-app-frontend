@@ -8,12 +8,12 @@ import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 import Cookies from "js-cookie";
-import { userActions } from "../store";
+import { automaticLogout, userActions } from "../store";
 
 function Layout() {
     const [user, setUser] = useState(null);
     const authSelector = useSelector((selector) => selector.auth);
-    const userDispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const fetchUser = () => {
         let requestConfig = {
@@ -27,8 +27,7 @@ function Layout() {
             .get(`users/${authSelector.userID}/`, requestConfig)
             .then((response) => {
                 setUser(response.data);
-                userDispatch(userActions.setUser(response.data))
-                //console.log(response.data)
+                dispatch(userActions.setUser(response.data))
             })
             .catch((error) => {
                 console.log(error);
