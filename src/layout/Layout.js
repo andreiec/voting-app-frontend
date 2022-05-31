@@ -8,7 +8,17 @@ import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 import Cookies from "js-cookie";
-import { userActions } from "../store";
+import { automaticLogout, userActions } from "../store";
+
+import jwt_decode from "jwt-decode";
+
+const calculateRemainingTime = (expirationTime) => {
+    const currentTime = new Date().getTime();
+    const adjExpirationTime = new Date(expirationTime * 1000).getTime();
+
+    const remainingDuration = adjExpirationTime - currentTime;
+    return remainingDuration;
+}
 
 function Layout() {
     const [user, setUser] = useState(null);
@@ -36,6 +46,10 @@ function Layout() {
 
     useEffect(() => {
         fetchUser();
+
+        const remainingTime = calculateRemainingTime(jwt_decode(Cookies.get("token"))["exp"]);
+        dispatch(automaticLogout(remainingTime));
+
     }, []);
 
     return (

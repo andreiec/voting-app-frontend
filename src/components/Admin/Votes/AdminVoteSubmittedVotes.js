@@ -5,7 +5,7 @@ import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa'
 function AdminVoteSubmittedVotes(props) {
 
     const users = props.data.users;
-    const userVotes = props.data.userVotes;
+    const userSubmissions = props.data.userSubmissions;
 
     return (
         <Center mb='50px'>
@@ -20,7 +20,7 @@ function AdminVoteSubmittedVotes(props) {
 
                     <Tbody>
                         {users.map((user, index) => {
-                            const hasVoted = userVotes.some((element) => {return element.user === user.id});
+                            const hasVoted = userSubmissions.some((element) => {return element.user === user.id});
 
                             return (
                                 <Tr key={index}>

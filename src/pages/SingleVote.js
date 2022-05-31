@@ -40,7 +40,8 @@ function SingleVote() {
 
                 // Get all submissions, if user in list then return and navigate
                 const submissions = response.data;
-                submissions.every(submission => {
+
+                submissions.forEach(submission => {
                     if (submission.user === userSelector.id) {
                         setAlreadyVoted(true);
                         setIsLoading(false);

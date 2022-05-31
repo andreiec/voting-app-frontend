@@ -1,4 +1,4 @@
-import { createSlice, configureStore, current } from "@reduxjs/toolkit";
+import { createSlice, configureStore } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
 
@@ -13,7 +13,8 @@ let initialUserState = {
     email: null,
     first_name: null,
     last_name: null,
-    group: null,
+    group_id: null,
+    group_name: null,
     date_joined: null,
     is_staff: false
 };
@@ -39,8 +40,8 @@ export const automaticLogout = (timeAmount) => {
 if (tokenFromCookie) {
     const remainingTime = calculateRemainingTime(jwt_decode(tokenFromCookie)["exp"])
 
-    // If remaining time is less than 10 minutes, logout 600000
-    if (remainingTime < 600000) {
+    // If remaining time is less than 1 hour, logout
+    if (remainingTime < 3600000) {
         localStorage.removeItem('expirationTime')
         Cookies.remove('token');
     } else {
