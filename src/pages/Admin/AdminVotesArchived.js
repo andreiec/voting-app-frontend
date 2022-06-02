@@ -47,7 +47,7 @@ function AdminVotesArchived() {
     return (
         <>
             <Titlebar title='Arhivă' buttonText="Înapoi" button={() => {navigate('/admin/votes')}}/>
-            <ActiveVotesTable data={{votes: archivedVoted, isLoading: isLoading}}/>
+            <ActiveVotesTable isArchivePage={true} data={{votes: archivedVoted, isLoading: isLoading}}/>
         </>
     )
 }

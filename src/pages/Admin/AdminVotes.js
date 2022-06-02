@@ -48,7 +48,7 @@ function AdminVotes() {
     return (
         <>
             <Titlebar title='Voturi active' buttonText="Înapoi" button={() => {navigate('/admin')}}/>
-            <ActiveVotesTable data={{votes: activeVotes, isLoading: isLoading}}/>
+            <ActiveVotesTable isArchivePage={false} data={{votes: activeVotes, isLoading: isLoading}}/>
             
             <Flex 
                 mx={{base: '30px', md: '0px'}}

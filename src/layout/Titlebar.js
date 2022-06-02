@@ -39,7 +39,7 @@ function Titlebar(props) {
             {props.buttonText && <Button
                 colorScheme='blue'
                 boxShadow='base'
-                //borderRadius='15px'
+                w={{base: '150px', md: 'fit-content'}}//borderRadius='15px'
                 onClick={props.button}
             >
                 <Text mb='3px' fontWeight='600' px='10px'>{props.buttonText}</Text>

@@ -1,17 +1,37 @@
-import { Flex, Center, Text, Divider } from "@chakra-ui/react";
+import { Flex, Center, Text, Button } from "@chakra-ui/react";
 import AdminVoteInactiveQuestionTable from "./AdminVoteInactiveQuestionTable";
-import AdminVoteProgressCircle from "./AdminVoteProgressCircle";
 import AdminVoteTitle from "./AdminVoteTitle";
+import apiClient from "../../../http-common";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 function AdminVoteInactive(props) {
     
     const vote = props.data.vote;
     const userVotes = props.data.userVotes.reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map());
     const userLength = props.data.users.length;
-    vote.questions[0].title='fsdfasdfas dfasdfadsfasdj foasjdfoipajsdoifjaosdjfo ajsdoifjaiosdjiop sdjfoiajsdoifjao psidjfosadjoifpa?'
+    const navigate = useNavigate();
+
+    let requestConfig = {
+        headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+    };
+
+    const deleteElectionHandler = () => {
+        apiClient
+            .delete(`elections/${vote.id}/`, requestConfig)
+            .then(() => {
+                navigate('/admin/votes/archived')
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
 
     return (
-        <Flex flexDir='column' gap='60px' mb='40px'>
+        <Flex flexDir='column' gap='60px'>
             <AdminVoteTitle data={vote}/>
 
             <Center gap='100px' flexDir='column'>
@@ -24,6 +44,10 @@ function AdminVoteInactive(props) {
                     )
                 })}
             </Center>
+
+            <Button onClick={deleteElectionHandler} alignSelf={{base: 'center', md: 'flex-end'}} colorScheme='red' w={{base: '100%', md:'100px'}}>
+                <Text mb='3px'>Șterge</Text>
+            </Button>
         </Flex>
     )
 }

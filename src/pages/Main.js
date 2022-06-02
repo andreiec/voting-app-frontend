@@ -27,7 +27,7 @@ function Main() {
         };
 
         apiClient
-            .get(`users/${userSelector.id}/elections/`, requestConfig)
+            .get(`users/${userSelector.id}/elections/9`, requestConfig)
             .then((response) => {
                 setVotes(response.data);
                 setIsLoading(false);

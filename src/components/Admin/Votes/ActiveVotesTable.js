@@ -21,7 +21,7 @@ function ActiveVotesTable(props) {
             
                     <TableCaption>
                         {/* If no votes, display text */}                    
-                        {!votes.length && !props.data.isLoading && <Text mb='30px' fontWeight='600'>Nu există voturi active!</Text>}
+                        {!votes.length && !props.data.isLoading && <Text mb='30px' fontWeight='600'>Nu există voturi {props.isArchivePage? "arhivate":"active"}!</Text>}
                     </TableCaption>
 
                     <Thead>

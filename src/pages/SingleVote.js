@@ -1,10 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
-import React, { useState, useEffect, Fragment } from "react";
+import { useState, useEffect, Fragment } from "react";
+import { useSelector } from "react-redux";
+import { Flex, useToast } from "@chakra-ui/react";
+
 import apiClient from "../http-common";
 import Cookies from "js-cookie";
 import Vote from "../components/Votes/Vote";
-import { useSelector } from "react-redux";
-import { Flex, useToast } from "@chakra-ui/react";
 import VoteConfirmed from "./VoteConfirmed";
 
 

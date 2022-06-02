@@ -153,7 +153,7 @@ function AdminVoteDetails() {
         apiClient
             .put(`elections/${params.id}/`, current_vote, requestConfig)
             .then((response) => {
-                console.log(response.data);
+                fetchVote();
             })
             .catch((error) => {
                 console.log(error)
