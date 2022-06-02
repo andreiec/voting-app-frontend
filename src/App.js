@@ -34,8 +34,9 @@ const calculateRemainingTime = (expirationTime) => {
 function App() {
     const authSelector = useSelector((selector) => selector.auth);
     const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const dispatch = useDispatch();
-    console.log(user)
+
     const fetchUser = () => {
         let requestConfig = {
             headers: {
@@ -49,68 +50,73 @@ function App() {
             .then((response) => {
                 setUser(response.data);
                 dispatch(userActions.setUser(response.data))
+                setIsLoading(false);
             })
             .catch((error) => {
                 console.log(error);
             });
     };
 
+
     useEffect(() => {
-        fetchUser();
+        if (authSelector.isLoggedIn) {
+            setIsLoading(true);
+            fetchUser();
+            
+            const remainingTime = calculateRemainingTime(jwt_decode(Cookies.get("token"))["exp"]);
+            dispatch(automaticLogout(remainingTime));
+        } else {
+            setIsLoading(false);
+        }
+    }, [authSelector.isLoggedIn]);
 
-        const remainingTime = calculateRemainingTime(jwt_decode(Cookies.get("token"))["exp"]);
-        dispatch(automaticLogout(remainingTime));
-
-    }, []);
-
+    console.log(isLoading)
 
     return (
-        <React.Fragment>
-            {user && 
-                <BrowserRouter>
-                    <Routes>
-                        {authSelector.isLoggedIn && (
-                            <Route element={<Layout />}>
-                                <Route index element={<Main />} />
-                                <Route path="votes" element={<AllVotes />} />
-                                <Route path="votes/:id" element={<SingleVote />} />
-                                <Route path="groups" element={<AllGroups />} />
-                                <Route path="settings" element={<></>} />
-                                <Route path="vote-confirmed" element={<VoteConfirmed />} />
-                                
-                                {user.is_staff && (
-                                    <>
-                                    <Route path="create-vote" element={<CreateVote />} />
-                                    <Route path="admin" element={<Admin />} />
-                                    <Route path="admin/votes" element={<AdminVotes />} />
-                                    <Route path="admin/votes/archived" element={<AdminVotesArchived />} />
-                                    <Route path="admin/votes/:id" element={<AdminVoteDetails />} />
-                                    <Route path="admin/groups" element={<AdminGroups />} />
-                                    <Route path="admin/users" element={<AdminUsers />} />
-                                    </>
-                                )}
-                                
-                            </Route>
-                        )}
+        <BrowserRouter>
+            {!isLoading &&
+                <Routes>
+                    {user && authSelector.isLoggedIn && (
+                        <Route element={<Layout />}>
+                            <Route index element={<Main />} />
+                            <Route path="votes" element={<AllVotes />} />
+                            <Route path="votes/:id" element={<SingleVote />} />
+                            <Route path="groups" element={<AllGroups />} />
+                            <Route path="settings" element={<></>} />
+                            <Route path="vote-confirmed" element={<VoteConfirmed />} />
+                            
+                            {user.is_staff && (
+                                <>
+                                <Route path="create-vote" element={<CreateVote />} />
+                                <Route path="admin" element={<Admin />} />
+                                <Route path="admin/votes" element={<AdminVotes />} />
+                                <Route path="admin/votes/archived" element={<AdminVotesArchived />} />
+                                <Route path="admin/votes/:id" element={<AdminVoteDetails />} />
+                                <Route path="admin/groups" element={<AdminGroups />} />
+                                <Route path="admin/users" element={<AdminUsers />} />
+                                </>
+                            )}
+                            
+                        </Route>
+                    )}   
 
-                        {authSelector.isLoggedIn && (
-                            <Fragment>
-                                <Route path="not-found" element={<NotFound />} />
-                                <Route path="*" element={<NotFound />} />
-                            </Fragment>
-                        )}
+                    {authSelector.isLoggedIn && (
+                        <Fragment>
+                            <Route path="not-found" element={<NotFound />} />
+                            <Route path="*" element={<NotFound />} />
+                        </Fragment>
+                    )}
 
-                        {!authSelector.isLoggedIn && (
-                            <Route path="login" element={<Login />} />
-                        )}
+                    {!authSelector.isLoggedIn && (
+                        <Route path="login" element={<Login />} />
+                    )}
 
-                        {!authSelector.isLoggedIn && (
-                            <Route path="*" element={<Navigate to="/login" />} />
-                        )}
-                    </Routes>
-                </BrowserRouter>
+                    {!authSelector.isLoggedIn && (
+                        <Route path="*" element={<Navigate to="/login" />} />
+                    )}
+                </Routes>
             }
-        </React.Fragment>
+        </BrowserRouter>
     );
 }
 
