@@ -13,7 +13,6 @@ function Main() {
     const [isLoading, setIsLoading] = useState(false);
     const [firstTouch, setFirstTouch] = useState(true);
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
     const userSelector = useSelector(selector => selector.user);
 
     const fetchVotes = () => {
