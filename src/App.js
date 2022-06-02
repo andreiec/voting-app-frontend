@@ -20,6 +20,7 @@ import AdminVotesArchived from "./pages/Admin/AdminVotesArchived";
 import apiClient from "./http-common";
 import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
+import AdminGroupDetails from "./pages/Admin/AdminGroupDetails";
 
 
 const calculateRemainingTime = (expirationTime) => {
@@ -62,7 +63,6 @@ function App() {
         if (authSelector.isLoggedIn) {
             setIsLoading(true);
             fetchUser();
-            
             const remainingTime = calculateRemainingTime(jwt_decode(Cookies.get("token"))["exp"]);
             dispatch(automaticLogout(remainingTime));
         } else {
@@ -70,7 +70,6 @@ function App() {
         }
     }, [authSelector.isLoggedIn]);
 
-    console.log(isLoading)
 
     return (
         <BrowserRouter>
@@ -93,6 +92,7 @@ function App() {
                                 <Route path="admin/votes/archived" element={<AdminVotesArchived />} />
                                 <Route path="admin/votes/:id" element={<AdminVoteDetails />} />
                                 <Route path="admin/groups" element={<AdminGroups />} />
+                                <Route path="admin/groups/:id" element={<AdminGroupDetails />} />
                                 <Route path="admin/users" element={<AdminUsers />} />
                                 </>
                             )}

@@ -10,7 +10,6 @@ import { Button, Flex, Text } from "@chakra-ui/react";
 function AdminVotes() {
     const [activeVotes, setActiveVotes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [firstTouch, setFirstTouch] = useState(true);
     const [error, setError] = useState(null);
     const userSelector = useSelector(selector => selector.user);
     const navigate = useNavigate();
@@ -40,7 +39,6 @@ function AdminVotes() {
 
     useEffect(() => {
         if (userSelector.id){
-            setFirstTouch(false);
             fetchVotes();
         }
     }, [userSelector]);

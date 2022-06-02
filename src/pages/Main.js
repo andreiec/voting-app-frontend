@@ -5,7 +5,6 @@ import apiClient from "../http-common";
 import { Center, Spinner, Box, Text, Flex } from "@chakra-ui/react";
 import Cookies from "js-cookie";
 import Titlebar from "../layout/Titlebar";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function Main() {
