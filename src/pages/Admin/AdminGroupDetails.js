@@ -34,6 +34,37 @@ function AdminGroupDetails() {
             })
     }
 
+    const handleSubmit = (data) => {
+        let final_data = group;
+        final_data.color = data.color;
+        final_data.name = data.name;
+        final_data.description = data.description;
+
+        apiClient
+            .put(`groups/${group.id}/`, final_data, requestConfig)
+            .then((response) => {
+                setIsLoading(false);
+                navigate("/admin/groups/");
+            })
+            .catch((err) => {
+                setError(err);
+                setIsLoading(false);
+            })
+    }
+
+    const handleDelete = (data) => {
+        apiClient
+            .delete(`groups/${group.id}/`, requestConfig)
+            .then((response) => {
+                setIsLoading(false);
+                navigate("/admin/groups/");
+            })
+            .catch((err) => {
+                setError(err);
+                setIsLoading(false);
+            })
+    }
+
 
     useEffect(() => {
         setIsLoading(true);
@@ -45,7 +76,7 @@ function AdminGroupDetails() {
 
 
     if (!isLoading) {
-        content = <AdminGroup data={{group: group, updateExisting: true}} />
+        content = <AdminGroup data={{group: group, updateExisting: true, submitForm: handleSubmit, handleDelete: handleDelete}} />
     }
     
 

@@ -15,7 +15,7 @@ const validationSchema = object({
         .max(2047, 'Lungimea maximă este de 2047 de caractere'),
 })
 
-function AdminGroup(props) {
+function AdminUser(props) {
     const group = props.data.group;
 
     const [color, setColor] = useState(props.data.updateExisting? group.color : '#ffffff');
@@ -69,7 +69,7 @@ function AdminGroup(props) {
             <FormLabel fontWeight="600" htmlFor="color">Culoare</FormLabel>
             <HexColorPicker color={color} onChange={(event) => {setColor(event); setValue('color', event, { shouldDirty: true }); }} />
             
-            {/* Submit button if create group */}
+            {/* Submit button if create vote*/}
             {!props.data.updateExisting &&
                 <Center mt="40px">
                     <Button
@@ -123,4 +123,4 @@ function AdminGroup(props) {
     )
 }
 
-export default AdminGroup;
+export default AdminUser;
