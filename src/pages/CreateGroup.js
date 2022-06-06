@@ -7,7 +7,6 @@ import Cookies from "js-cookie";
 import apiClient from "../http-common";
 
 function CreateGroup() {
-    const params = useParams();
     const navigate = useNavigate();
     
     const [group, setGroup] = useState(null);
@@ -25,7 +24,6 @@ function CreateGroup() {
         apiClient
             .post("groups/", data, requestConfig)
             .then((response) => {
-                console.log(response.data)
                 setIsLoading(false);
                 navigate("/admin/groups/");
             })

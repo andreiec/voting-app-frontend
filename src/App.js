@@ -22,6 +22,8 @@ import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
 import AdminGroupDetails from "./pages/Admin/AdminGroupDetails";
 import CreateGroup from "./pages/CreateGroup";
+import AdminUserDetails from "./pages/Admin/AdminUserDetails";
+import CreateUser from "./pages/CreateUser";
 
 
 const calculateRemainingTime = (expirationTime) => {
@@ -89,6 +91,7 @@ function App() {
                                 <>
                                 <Route path="create-vote" element={<CreateVote />} />
                                 <Route path="create-group" element={<CreateGroup />} />
+                                <Route path="create-user" element={<CreateUser />} />
                                 <Route path="admin" element={<Admin />} />
                                 <Route path="admin/votes" element={<AdminVotes />} />
                                 <Route path="admin/votes/archived" element={<AdminVotesArchived />} />
@@ -96,6 +99,7 @@ function App() {
                                 <Route path="admin/groups" element={<AdminGroups />} />
                                 <Route path="admin/groups/:id" element={<AdminGroupDetails />} />
                                 <Route path="admin/users" element={<AdminUsers />} />
+                                <Route path="admin/users/:id" element={<AdminUserDetails />} />
                                 </>
                             )}
                             
