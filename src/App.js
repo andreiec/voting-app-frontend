@@ -10,7 +10,7 @@ import Login from "./pages/Login";
 import Layout from "./layout/Layout";
 import AllGroups from "./pages/AllGroups";
 import CreateVote from "./pages/CreateVote";
-import VoteConfirmed from "./pages/VoteConfirmed";
+import VoteConfirmed from "./components/Votes/VoteConfirmed";
 import Admin from "./pages/Admin/Admin";
 import AdminVotes from "./pages/Admin/AdminVotes";
 import AdminGroups from "./pages/Admin/AdminGroups";

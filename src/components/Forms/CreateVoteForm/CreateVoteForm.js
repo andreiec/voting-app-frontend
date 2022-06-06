@@ -195,12 +195,11 @@ function CreateVoteForm(props) {
             .post("elections/", final_data, requestConfig)
             .then((response) => {
                 setIsLoading(false);
-                console.log(response);
                 navigate("/");
             })
             .catch((err) => {
                 setIsLoading(false);
-                console.log("ERROR", err);
+                console.log(err);
             });
 
         console.log(JSON.stringify(final_data));

@@ -36,7 +36,7 @@ function AdminUser(props) {
         initialValues = {
             first_name: user.first_name,
             last_name: user.last_name,
-            group: user.group.id,
+            group: user.group? user.group.id : null,
             is_staff: user.is_staff,
             email: user.email,
         }

@@ -6,7 +6,8 @@ import { Flex, useToast } from "@chakra-ui/react";
 import apiClient from "../http-common";
 import Cookies from "js-cookie";
 import Vote from "../components/Votes/Vote";
-import VoteConfirmed from "./VoteConfirmed";
+import VoteConfirmed from "../components/Votes/VoteConfirmed";
+import VoteClosed from "../components/Votes/VoteClosed";
 
 
 function SingleVote() {
@@ -107,6 +108,8 @@ function SingleVote() {
 
     if (alreadyVoted) {
         content = <VoteConfirmed />
+    } else if (vote !== null && !vote.is_active) {
+        content = <VoteClosed />
     } else {
         // Initial content, if no error display it
         content = vote.id ? 

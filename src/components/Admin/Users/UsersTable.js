@@ -1,5 +1,5 @@
 
-import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, Box, Text, Button } from '@chakra-ui/react'
+import { Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer, Box, Text, Button } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom';
 
 function UsersTable(props) {

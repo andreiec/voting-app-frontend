@@ -37,7 +37,7 @@ function AdminVoteInactive(props) {
             <Center gap='100px' flexDir='column'>
                 {vote.questions.map((question, index) => {
                     return (
-                        <Flex flexDir='column' alignItems='center' gap='40px'>
+                        <Flex flexDir='column' alignItems='center' gap='40px' key={index}>
                             <Text fontSize='md' fontWeight='600' w='fit-content'>{question.title}</Text>
                             <AdminVoteInactiveQuestionTable key={index} data={{question: question, userVotes: userVotes, userLength: userLength}}/>
                         </Flex>
