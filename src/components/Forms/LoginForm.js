@@ -1,12 +1,13 @@
-import { Button, Box, FormControl, FormLabel, Input, Link, Alert, AlertIcon, CloseButton, FormErrorMessage, } from "@chakra-ui/react";
+import { Button, Box, FormControl, FormLabel, Input, Link, Alert, AlertIcon, CloseButton, FormErrorMessage, toast, useToast, } from "@chakra-ui/react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { Link as ReachLink } from "react-router-dom";
 import { authActions, automaticLogout } from "../../store";
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
 import apiClient from "../../http-common";
-import { Form, Formik, Field } from "formik";
-import * as Yup from 'yup';
+import { object, string } from 'yup'
 import jwt_decode from "jwt-decode";
 
 const initialValues = {
@@ -14,9 +15,12 @@ const initialValues = {
     password: "",
 }
 
-const validationSchema = Yup.object({
-    email: Yup.string().email('Email invalid').required('Obligatoriu'),
-    password: Yup.string().required('Obligatoriu')
+const validationSchema = object({
+    email: string()
+        .email('Email invalid')
+        .required('Obligatoriu'),
+    password: string()
+        .required('Obligatoriu')
 })
 
 const calculateRemainingTime = (expirationTime) => {
@@ -30,12 +34,13 @@ const calculateRemainingTime = (expirationTime) => {
 function LoginForm(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const toast = useToast();
 
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
 
     const submitHandler = (values, submitProps) => {
         setIsLoading(true);
+
 
         apiClient
             .post("auth/token/", {
@@ -55,51 +60,52 @@ function LoginForm(props) {
             })
             .catch((err) => {
                 setIsLoading(false);
-                setError(err);
+                
+                // Toast error
+                if (err.response.status === 401) {
+                    toast({
+                        title: 'Email sau parolă greșită!',
+                        status: 'error',
+                        position: 'top',
+                        duration: 4000,
+                        isClosable: true,
+                    })
+                } else {
+                    toast({
+                        title: 'A apărut o eroare!',
+                        status: 'error',
+                        position: 'top',
+                        duration: 4000,
+                        isClosable: true,
+                    })
+                }
             });
     };
+
+
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        defaultValues: initialValues,
+        resolver: yupResolver(validationSchema),
+        mode: 'onBlur',
+    });
+
 
     return (
         <Box bg="white" borderRadius="10px" mt="30px">
             <Box m={{ base: "0px", md: "40px" }} p={{ base: "40px", md: "0px" }} w={{ base: "100vw", md: "340px" }}>
-                {error && (
-                    <Alert status="error" my="25px">
-                        <AlertIcon />
-                        Email-ul sau parola greșită.
-                        <CloseButton
-                            position="absolute"
-                            right="8px"
-                            top="8px"
-                            onClick={() => props.handleSetError(false)}
-                        />
-                    </Alert>
-                )}
+                
+                <form onSubmit={handleSubmit(submitHandler)} autoComplete="off">
+                        <FormControl isInvalid={!!errors?.email?.message} mb='10px' isRequired>
+                            <FormLabel fontWeight="600" htmlFor="email">Email</FormLabel>
+                            <Input id="email" {...register('email')}/>
+                            <FormErrorMessage>{errors?.email?.message}</FormErrorMessage>
+                        </FormControl>
 
-                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
-                    <Form>
-                        <Field name="email">
-                            {({ field, form }) => (
-                                <FormControl isInvalid={form.errors.email && form.touched.email}>
-                                    <FormLabel fontWeight="600" htmlFor="email">
-                                        E-mail
-                                    </FormLabel>
-                                    <Input {...field} id="email" />
-                                    <FormErrorMessage>{form.errors.email}</FormErrorMessage>
-                                </FormControl>
-                            )}
-                        </Field>
-
-                        <Field name="password">
-                            {({ field, form }) => (
-                                <FormControl mt="10px" isInvalid={form.errors.password && form.touched.password}>
-                                    <FormLabel fontWeight="600" htmlFor="password">
-                                        Parolă
-                                    </FormLabel>
-                                    <Input {...field} id="password" type="password" />
-                                    <FormErrorMessage>{form.errors.password}</FormErrorMessage>
-                                </FormControl>
-                            )}
-                        </Field>
+                        <FormControl isInvalid={!!errors?.password?.message} isRequired>
+                            <FormLabel fontWeight="600" htmlFor="password">Parolă</FormLabel>
+                            <Input id="password" {...register('password')} type='password'/>
+                            <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
+                        </FormControl>
 
                         <Button
                             isLoading={isLoading}
@@ -111,11 +117,10 @@ function LoginForm(props) {
                         >
                             Autentifică-te
                         </Button>
-                    </Form>
-                </Formik>
+                </form>
 
                 <Box mt="10px">
-                    <Link href="#" color="blue.600">
+                    <Link as={ReachLink} to="/forgot-password" color="blue.600">
                         Parolă uitată?
                     </Link>
                 </Box>

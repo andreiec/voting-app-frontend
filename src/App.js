@@ -25,6 +25,7 @@ import CreateGroup from "./pages/CreateGroup";
 import AdminUserDetails from "./pages/Admin/AdminUserDetails";
 import CreateUser from "./pages/CreateUser";
 import AdminVoteDetailsArchived from "./pages/Admin/AdminVoteDetailsArchived";
+import ForgotPassword from "./pages/ForgotPassword";
 
 
 const calculateRemainingTime = (expirationTime) => {
@@ -116,7 +117,10 @@ function App() {
                     )}
 
                     {!authSelector.isLoggedIn && (
+                        <>
                         <Route path="login" element={<Login />} />
+                        <Route path="forgot-password" element={<ForgotPassword />} />
+                        </>
                     )}
 
                     {!authSelector.isLoggedIn && (
