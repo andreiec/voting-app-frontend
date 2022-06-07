@@ -10,7 +10,7 @@ function VoteFormTitle(props) {
         >
             <Text
                 fontSize='2xl'
-                color='brand.text_title'
+                color='gray.900'
                 fontWeight='600'
             >
                 {props.title}
@@ -18,7 +18,7 @@ function VoteFormTitle(props) {
 
             <Text
                 fontSize='base'
-                color='brand.text_body'
+                color='gray.500'
                 fontWeight='400'
             >
                 {props.description}

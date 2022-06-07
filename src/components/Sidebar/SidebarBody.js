@@ -6,7 +6,7 @@ function SidebarBody(props) {
     return (
         <Box
         h="full"
-        bg="brand.main_blue"
+        bg="blue.600"
         display={{ base: "none", xl: "block" }}
         pos="fixed"
         w={{ base: "full", xl: "275px" }}
@@ -19,7 +19,7 @@ function SidebarBody(props) {
                 alignItems="center"
                 justifyContent="space-around"
             >
-                <Text fontSize="xl" fontWeight="700" color="brand.white">
+                <Text fontSize="xl" fontWeight="700" color="white">
                     Aplicație Vot
                 </Text>
             </Flex>

@@ -98,7 +98,7 @@ function AdminGroupDetails() {
         <Fragment>
             <Titlebar title='Detalii' button={() => {navigate("/admin/groups/")}} buttonText="Înapoi" />
             <Flex
-                bg="brand.white"
+                bg="white"
                 borderRadius={{ base: "0", md: "15px" }}
                 py={{ base:"20px", md:"40px" }}
                 px={{ base:"50px", md:"60px" }}

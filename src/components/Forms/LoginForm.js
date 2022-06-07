@@ -60,7 +60,7 @@ function LoginForm(props) {
     };
 
     return (
-        <Box bg="brand.white" borderRadius="10px" mt="30px">
+        <Box bg="white" borderRadius="10px" mt="30px">
             <Box m={{ base: "0px", md: "40px" }} p={{ base: "40px", md: "0px" }} w={{ base: "100vw", md: "340px" }}>
                 {error && (
                     <Alert status="error" my="25px">
@@ -105,9 +105,7 @@ function LoginForm(props) {
                             isLoading={isLoading}
                             w="full"
                             mt="25px"
-                            bg="brand.main_blue"
-                            _hover={{ bg: "brand.blue_light" }}
-                            color="brand.white"
+                            colorScheme='blue'
                             fontWeight="400"
                             type="submit"
                         >
@@ -117,7 +115,7 @@ function LoginForm(props) {
                 </Formik>
 
                 <Box mt="10px">
-                    <Link href="#" color="brand.main_blue">
+                    <Link href="#" color="blue.600">
                         Parolă uitată?
                     </Link>
                 </Box>

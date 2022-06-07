@@ -46,8 +46,8 @@ function AdminGroup(props) {
 
             {/* Header */}
             <Box mb='40px'>
-                <Text fontSize='xl' color='brand.text_title'>{props.data.updateExisting? "Editează" : "Adaugă" } un grup.</Text>
-                <Text fontSize='md' color='brand.text_body'>{props.data.updateExisting? "Editează" : "Completează" } câmpurile dorite pentru a updata detaliile grupului.</Text>
+                <Text fontSize='xl' color='gray.900'>{props.data.updateExisting? "Editează" : "Adaugă" } un grup.</Text>
+                <Text fontSize='md' color='gray.500'>{props.data.updateExisting? "Editează" : "Completează" } câmpurile dorite pentru a updata detaliile grupului.</Text>
             </Box>
 
             {/* Title field */}
@@ -75,7 +75,7 @@ function AdminGroup(props) {
                     <Button
                         isLoading={isLoading}
                         colorScheme="green"
-                        color="brand.white"
+                        color="white"
                         fontWeight="400"
                         type="submit"
                         disabled={!(isValid && isDirty)}
@@ -108,7 +108,7 @@ function AdminGroup(props) {
                     <Button
                         isLoading={isLoading}
                         colorScheme="green"
-                        color="brand.white"
+                        color="white"
                         fontWeight="400"
                         type="submit"
                         disabled={!(isValid && isDirty)}

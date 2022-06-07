@@ -9,7 +9,7 @@ function UserCard() {
 
     return (
         <Box
-            bg='brand.white'
+            bg='white'
             borderRadius='15px'
             h="45rem"
             minW="21.2rem"
@@ -34,7 +34,7 @@ function UserCard() {
                     fontSize='2xl'
                     mt='20px'
                     fontWeight='600'
-                    color='brand.text_title'
+                    color='gray.900'
                 >
                     {userSelector.last_name}
                 </Text>
@@ -43,7 +43,7 @@ function UserCard() {
                     fontSize='2xl'
                     fontWeight='600'
                     mt='-5px'
-                    color='brand.text_title'
+                    color='gray.900'
                 >
                     {userSelector.first_name}
                 </Text>
@@ -52,7 +52,7 @@ function UserCard() {
                     fontSize='md'
                     fontWeight='400'
                     mt='10px'
-                    color='brand.text_body'
+                    color='gray.500'
                 >
                     {userSelector.group_name}
                 </Text>
@@ -63,7 +63,7 @@ function UserCard() {
                     fontSize='sm'
                     fontWeight='400'
                     mt='10px'
-                    color='brand.text_body'
+                    color='gray.500'
                 >
                     Data înscrierii: {joinedDate.toLocaleDateString()}
                 </Text>

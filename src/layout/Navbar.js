@@ -38,7 +38,7 @@ function Navbar() {
                     <IconButton
                         boxShadow="base"
                         colorScheme='whiteAlpha'
-                        color='brand.title'
+                        color='gray.900'
                         onClick={onOpen}
                         aria-label="open menu"
                         icon={<FiMenu />}

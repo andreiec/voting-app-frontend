@@ -44,7 +44,7 @@ function CreateVote() {
 
     return (
         <Flex
-            bg="brand.white"
+            bg="white"
             borderRadius={{ base: "0", md: "15px" }}
             py={{ base:"20px", md:"60px" }}
             px={{ base:"30px", md:"80px" }}

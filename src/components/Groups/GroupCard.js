@@ -21,7 +21,7 @@ function VoteCard(props) {
                     fontSize="lg"
                     fontWeight="600"
                     fontFamily="inter"
-                    color="brand.text_title"
+                    color="gray.900"
                 >
                     {props.name}
                 </Text>
@@ -30,7 +30,7 @@ function VoteCard(props) {
                     mt="5px"
                     fontSize="sm"
                     fontFamily="inter"
-                    color="brand.text_body"
+                    color="gray.500"
                 >
                     {props.desc}
                 </Text>

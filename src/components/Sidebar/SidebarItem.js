@@ -13,7 +13,7 @@ function SidebarItem(props) {
                 color="brand.text_unfocused"
                 px="20px"
                 h="50px"
-                _hover={{ bg: "brand.blue_light", color: "brand.white" }}
+                _hover={{ bg: "blue.500", color: "white" }}
                 transition="0.2s ease"
                 fontWeight="500"
             >

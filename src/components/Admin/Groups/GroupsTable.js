@@ -10,7 +10,7 @@ function GroupsTable(props) {
     return (
         <Box
             p='20px'
-            bg="brand.white"
+            bg="white"
             borderRadius={{ base: "0", md: "15px" }}
             py={{ base:"20px", md:"30px" }}
             px={{ base:"30px", md:"40px" }}

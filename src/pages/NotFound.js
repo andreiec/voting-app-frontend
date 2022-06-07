@@ -11,7 +11,7 @@ function NotFound() {
                     fontWeight="bold"
                     fontSize="2xl"
                     mt="15px"
-                    color="brand.text_title"
+                    color="gray.900"
                 >
                     Pagina nu a fost găsită.
                 </Text>
@@ -19,9 +19,7 @@ function NotFound() {
                     as={Link}
                     to="/"
                     mt="25px"
-                    bg="brand.main_blue"
-                    _hover={{ bg: "brand.blue_light" }}
-                    color="brand.white"
+                    colorScheme='blue'
                     fontWeight="400"
                 >
                     Meniu Principal

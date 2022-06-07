@@ -10,7 +10,7 @@ function AdminVoteTitle(props) {
         >
             <Text
                 fontSize='2xl'
-                color='brand.text_title'
+                color='gray.900'
                 fontWeight='600'
             >
                 {props.data.title}
@@ -18,7 +18,7 @@ function AdminVoteTitle(props) {
 
             <Text
                 fontSize='base'
-                color='brand.text_body'
+                color='gray.500'
                 fontWeight='400'
             >
                 {props.data.description}
@@ -26,7 +26,7 @@ function AdminVoteTitle(props) {
 
             <Text
                 fontSize='base'
-                color='brand.text_body'
+                color='gray.500'
                 fontWeight='400'
                 mt='10px'
             >

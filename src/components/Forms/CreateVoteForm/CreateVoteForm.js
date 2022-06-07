@@ -240,8 +240,8 @@ function CreateVoteForm(props) {
 
                 {/* Header */}
                 <Box mb='40px'>
-                    <Text fontSize='xl' color='brand.text_title'>Creează un vot.</Text>
-                    <Text fontSize='md' color='brand.text_body'>Adaugă câmpurile dorite și opțiunile pentru fiecare întrebare.</Text>
+                    <Text fontSize='xl' color='gray.900'>Creează un vot.</Text>
+                    <Text fontSize='md' color='gray.500'>Adaugă câmpurile dorite și opțiunile pentru fiecare întrebare.</Text>
                 </Box>
 
 
@@ -264,7 +264,7 @@ function CreateVoteForm(props) {
                     <Button
                         isLoading={isLoading}
                         colorScheme="green"
-                        color="brand.white"
+                        color="white"
                         fontWeight="400"
                         type="submit"
                         disabled={!(isValid && isDirty)}

@@ -6,8 +6,8 @@ function VoteQuestion(props) {
     return (
         <Fragment>
             <Box mb="20px">
-                <Text color="brand.text_title">{props.data.title}</Text>
-                <Text color="brand.text_body">{props.data.description}</Text>
+                <Text color="gray.900">{props.data.title}</Text>
+                <Text color="gray.500">{props.data.description}</Text>
             </Box>
 
             {props.data.selection_type === "single" && (

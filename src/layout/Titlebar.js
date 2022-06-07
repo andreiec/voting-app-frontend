@@ -25,10 +25,8 @@ function Titlebar(props) {
             }
             
             {userSelector.is_staff && props.adminButtonText && <Button
-                color='brand.white'
-                bg='brand.green'
+                colorScheme='green'
                 boxShadow='base'
-                _hover={ { bg: 'brand.green_light'} }
                 //borderRadius='15px'
                 onClick={props.adminButton}
             >

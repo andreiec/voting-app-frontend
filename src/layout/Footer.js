@@ -12,7 +12,7 @@ function Footer() {
             <Flex
                 px="8"
                 flexDirection="row"
-                color="brand.label"
+                color="gray.400"
                 mt="10px"
                 fontSize="sm"
                 fontWeight="500"

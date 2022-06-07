@@ -68,7 +68,7 @@ function CreateVoteQuestions(props) {
 
 
                         {/* Delete question button */}
-                        <Button fontWeight='400' colorScheme='red' color='brand.white' float='right' mt='30px' onClick={() => remove(index_question)} onMouseDown={(e) => e.preventDefault()}>Șterge întrebarea</Button>
+                        <Button fontWeight='400' colorScheme='red' color='white' float='right' mt='30px' onClick={() => remove(index_question)} onMouseDown={(e) => e.preventDefault()}>Șterge întrebarea</Button>
                     </Box>
                 ))}
 

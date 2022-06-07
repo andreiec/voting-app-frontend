@@ -18,8 +18,8 @@ function AdminCard(props) {
         >
 
             {/* Icon and title */}
-            <Icon as={props.data.icon} boxSize="5rem" p='2px' color='brand.text_title'/>
-            <Text fontSize='2xl' mt='20px' fontWeight='600' color='brand.text_title'>{props.data.title}</Text>
+            <Icon as={props.data.icon} boxSize="5rem" p='2px' color='gray.900'/>
+            <Text fontSize='2xl' mt='20px' fontWeight='600' color='gray.900'>{props.data.title}</Text>
 
             <Spacer />
 

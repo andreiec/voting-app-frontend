@@ -34,11 +34,9 @@ function VoteFormControl(props) {
                     disabled={props.activeQuestion < props.number_of_polls - 1}
                     boxShadow="base"
                     type="submit"
-                    bg="brand.green"
+                    colorScheme='green'
                     px='23px'
-                    color="brand.white"
                     form={props.formID}
-                    _hover={{ bg: "brand.green_light" }}
                 >
                     <Flex flexDir='row'>
                         <Icon as={FaCheck} pt='2px'></Icon>

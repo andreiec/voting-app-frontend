@@ -28,7 +28,7 @@ function CreateVoteQuestionOption(props) {
                         <InputGroup>
                             <InputLeftAddon children={index_question_option + 1} />
                             <Input type='text' placeholder='Opțiune' borderRadius='0' id={`questions.${props.index_question}.options.${index_question_option}.value`} {...props.register(`questions.${props.index_question}.options.${index_question_option}.value`)}/>
-                            <InputRightAddon p='0' color='brand.white' children={<CloseButton size='sm' w='2rem' color='gray.900' borderLeftRadius='0' h='100%' onClick={() => remove(index_question_option)} onMouseDown={(e) => e.preventDefault()} />}/>
+                            <InputRightAddon p='0' color='white' children={<CloseButton size='sm' w='2rem' color='gray.900' borderLeftRadius='0' h='100%' onClick={() => remove(index_question_option)} onMouseDown={(e) => e.preventDefault()} />}/>
                         </InputGroup>
                     </Box>
                 ))}

@@ -53,8 +53,8 @@ function AdminUser(props) {
 
             {/* Header */}
             <Box mb='40px'>
-                <Text fontSize='xl' color='brand.text_title'>{props.data.updateExisting? "Editează" : "Adaugă" } un user.</Text>
-                <Text fontSize='md' color='brand.text_body'>{props.data.updateExisting? "Editează" : "Completează" } câmpurile dorite pentru a updata detaliile userului.</Text>
+                <Text fontSize='xl' color='gray.900'>{props.data.updateExisting? "Editează" : "Adaugă" } un user.</Text>
+                <Text fontSize='md' color='gray.500'>{props.data.updateExisting? "Editează" : "Completează" } câmpurile dorite pentru a updata detaliile userului.</Text>
             </Box>
 
             {/* Last name field */}
@@ -112,7 +112,7 @@ function AdminUser(props) {
                     <Button
                         isLoading={isLoading}
                         colorScheme="green"
-                        color="brand.white"
+                        color="white"
                         fontWeight="400"
                         type="submit"
                         disabled={!(isValid && isDirty)}
@@ -145,7 +145,7 @@ function AdminUser(props) {
                     <Button
                         isLoading={isLoading}
                         colorScheme="green"
-                        color="brand.white"
+                        color="white"
                         fontWeight="400"
                         type="submit"
                         disabled={!(isValid && isDirty)}

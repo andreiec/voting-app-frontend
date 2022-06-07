@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function VoteClosed(props) {
     return (
         <Flex
-            bg="brand.white"
+            bg="white"
             borderRadius={{ base: "0", md: "15px" }}
             py="30px"
             px="50px"
@@ -14,7 +14,7 @@ function VoteClosed(props) {
             <Text
                 fontSize='xl'
                 fontWeight='600'
-                color='brand.text_title'
+                color='gray.900'
                 mb='8px'
             >
                 Vot încheiat!
@@ -22,7 +22,7 @@ function VoteClosed(props) {
             <Text
                 fontSize='sm'
                 fontWeight='400'
-                color='brand.text_body'
+                color='gray.500'
             >
                 Contactează administratorul pentru a primi răspunsul votului.
             </Text>
