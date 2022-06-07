@@ -26,6 +26,7 @@ import AdminUserDetails from "./pages/Admin/AdminUserDetails";
 import CreateUser from "./pages/CreateUser";
 import AdminVoteDetailsArchived from "./pages/Admin/AdminVoteDetailsArchived";
 import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 
 const calculateRemainingTime = (expirationTime) => {
@@ -120,6 +121,7 @@ function App() {
                         <>
                         <Route path="login" element={<Login />} />
                         <Route path="forgot-password" element={<ForgotPassword />} />
+                        <Route path="reset-password" element={<ResetPassword />} />
                         </>
                     )}
 

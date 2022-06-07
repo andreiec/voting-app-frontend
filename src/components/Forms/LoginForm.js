@@ -1,4 +1,4 @@
-import { Button, Box, FormControl, FormLabel, Input, Link, Alert, AlertIcon, CloseButton, FormErrorMessage, toast, useToast, } from "@chakra-ui/react";
+import { Button, Box, FormControl, FormLabel, Input, Link, FormErrorMessage, useToast, } from "@chakra-ui/react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -49,7 +49,6 @@ function LoginForm(props) {
             })
             .then((response) => {
                 setIsLoading(false);
-                setError(null);
 
                 const remainingTime = calculateRemainingTime(jwt_decode(response.data["access"])["exp"]);
 

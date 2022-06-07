@@ -1,8 +1,8 @@
 import { Flex, Text, Center } from "@chakra-ui/react";
-import ForgotPasswordForm from "../components/Forms/ForgotPasswordForm";
+import ResetPasswordForm from "../components/Forms/ResetPasswordForm";
 
 
-function ForgotPassword() {
+function ResetPassword() {
     return (
         <Center h="100vh" bg={{ base: "white", md: "brand.bg" }}>
             <Flex flexDir="column" alignItems="center" mb="35px">
@@ -10,12 +10,12 @@ function ForgotPassword() {
                     Parolă uitată
                 </Text>
                 <Text fontSize="sm" color="gray.500">
-                    Introdu adresa de mail pentru a continua.
+                    Introdu noua parolă și confirmarea acesteia
                 </Text>
-                <ForgotPasswordForm />
+                <ResetPasswordForm />
             </Flex>
         </Center>
     );
 }
 
-export default ForgotPassword;
+export default ResetPassword;
