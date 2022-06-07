@@ -201,8 +201,6 @@ function CreateVoteForm(props) {
                 setIsLoading(false);
                 console.log(err);
             });
-
-        console.log(JSON.stringify(final_data));
     }
 
     const initialValues = {

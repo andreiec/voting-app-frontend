@@ -65,7 +65,7 @@ function AdminVoteDetailsArchived() {
 
     return (
         <Fragment>
-            <Titlebar title='Detalii' buttonText="Înapoi" button={() => {navigate(-1)}}/>
+            <Titlebar title='Detalii' buttonText="Înapoi" button={() => {navigate('/admin/votes/archived')}}/>
             <Flex
                 bg="brand.white"
                 borderRadius={{ base: "0", md: "15px" }}

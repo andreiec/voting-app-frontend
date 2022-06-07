@@ -43,7 +43,7 @@ function AdminVotesArchived() {
             fetchVotes();
         }
     }, [userSelector]);
-    console.log(archivedVotes)
+    
     return (
         <>
             <Titlebar title='Arhivă' buttonText="Înapoi" button={() => {navigate('/admin/votes')}}/>

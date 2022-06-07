@@ -111,7 +111,7 @@ function AdminVoteDetails() {
         apiClient
             .get(`elections/${params.id}/close/`, requestConfig)
             .then((response) => {
-                navigate(`/admin/votes/archived/${response.data.vote_id}`)
+                navigate(`/admin/votes/archived/${response.data.vote_id}`, { replace: true })
             })
             .catch((error) => {
                 console.log(error)
@@ -125,7 +125,7 @@ function AdminVoteDetails() {
         if (vote.is_active) {
             content = <AdminVote data={{vote: vote, groups: groups, userSubmissions: userSubmissions, users: users, stopVoteHandler: stopVoteHandler}} />
         } else {
-            content = <p>Votul este arhivat.</p>
+            content = <p>Votul este athivat.</p>
         }
     }
     
@@ -147,7 +147,7 @@ function AdminVoteDetails() {
 
     return (
         <Fragment>
-            <Titlebar title='Detalii' buttonText="Înapoi" button={() => {navigate(-1)}}/>
+            <Titlebar title='Detalii' buttonText="Înapoi" button={() => {navigate('/admin/votes/')}}/>
             <Flex
                 bg="brand.white"
                 borderRadius={{ base: "0", md: "15px" }}

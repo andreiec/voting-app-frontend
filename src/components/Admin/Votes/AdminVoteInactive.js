@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 function AdminVoteInactive(props) {
     
     const vote = props.data.vote;
-    console.log(vote)
+
     const navigate = useNavigate();
 
     let requestConfig = {
@@ -20,7 +20,7 @@ function AdminVoteInactive(props) {
 
     const deleteElectionHandler = () => {
         apiClient
-            .delete(`elections/${vote.election_id}/`, requestConfig)
+            .delete(`elections/${vote.election}/`, requestConfig)
             .then(() => {
                 navigate('/admin/votes/archived')
             })
