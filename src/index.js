@@ -9,6 +9,7 @@ import store from './store/index';
 
 const colors = {
     brand: {
+        blue: '#2F77CC',
         bg: '#F4F6FD',
         text_unfocused: '#97bbe6',
     },

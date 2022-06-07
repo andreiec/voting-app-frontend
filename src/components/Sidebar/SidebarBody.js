@@ -6,7 +6,7 @@ function SidebarBody(props) {
     return (
         <Box
         h="full"
-        bg="blue.600"
+        bg="brand.blue"
         display={{ base: "none", xl: "block" }}
         pos="fixed"
         w={{ base: "full", xl: "275px" }}
