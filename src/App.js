@@ -28,6 +28,8 @@ import AdminVoteDetailsArchived from "./pages/Admin/AdminVoteDetailsArchived";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Settings from "./pages/Settings";
+import SingleGroup from "./pages/SingleGroup";
+
 
 const calculateRemainingTime = (expirationTime) => {
     const currentTime = new Date().getTime();
@@ -87,6 +89,7 @@ function App() {
                             <Route path="votes" element={<AllVotes />} />
                             <Route path="votes/:id" element={<SingleVote />} />
                             <Route path="groups" element={<AllGroups />} />
+                            <Route path="groups/:id" element={<SingleGroup />} />
                             <Route path="settings" element={<Settings />} />
                             <Route path="vote-confirmed" element={<VoteConfirmed />} />
                             
