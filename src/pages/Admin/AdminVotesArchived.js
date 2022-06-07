@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import ActiveVotesTable from "../../components/Admin/Votes/ActiveVotesTable";
 
 function AdminVotesArchived() {
-    const [archivedVoted, setArchivedVoted] = useState([]);
+    const [archivedVotes, setArchivedVotes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [firstTouch, setFirstTouch] = useState(true);
     const [error, setError] = useState(null);
@@ -25,9 +25,9 @@ function AdminVotesArchived() {
         };
         
         apiClient
-            .get(`elections/inactive/`, requestConfig)
+            .get('archived-elections/', requestConfig)
             .then((response) => {
-                setArchivedVoted(response.data);
+                setArchivedVotes(response.data);
                 setIsLoading(false);
                 setError(null);
             })
@@ -43,11 +43,11 @@ function AdminVotesArchived() {
             fetchVotes();
         }
     }, [userSelector]);
-
+    console.log(archivedVotes)
     return (
         <>
             <Titlebar title='Arhivă' buttonText="Înapoi" button={() => {navigate('/admin/votes')}}/>
-            <ActiveVotesTable isArchivePage={true} data={{votes: archivedVoted, isLoading: isLoading}}/>
+            <ActiveVotesTable isArchivePage={true} data={{votes: archivedVotes, isLoading: isLoading}}/>
         </>
     )
 }

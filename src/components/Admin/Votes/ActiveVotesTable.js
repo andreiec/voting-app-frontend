@@ -37,7 +37,7 @@ function ActiveVotesTable(props) {
                     {votes.map((vote, index) => (
                         <Tbody key={index}>
                             <Tr>
-                                <Td maxW='300px'><Text maxW='700px' isTruncated>{vote.title}</Text></Td>
+                                <Td maxW='300px'><Text maxW='700px' isTruncated>{props.isArchivePage? vote.data.title: vote.title}</Text></Td>
                                 {/*<Td>{vote.manual_closing? "DA" : "NU"}</Td>*/}
                                 <Td isNumeric>
                                     <Button
@@ -45,7 +45,7 @@ function ActiveVotesTable(props) {
                                         float={{base: "none", md:'right'}}
                                         mr={{base: '0px', md:'10px'}}
                                         px='30px'
-                                        onClick={() => navigate(`/admin/votes/${vote.id}`)}
+                                        onClick={() => navigate(props.isArchivePage? `/admin/votes/archived/${vote.id}` : `/admin/votes/${vote.id}`)}
                                     >
                                         Detalii
                                     </Button>

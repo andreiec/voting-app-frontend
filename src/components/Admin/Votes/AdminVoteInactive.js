@@ -8,8 +8,7 @@ import { useNavigate } from "react-router-dom";
 function AdminVoteInactive(props) {
     
     const vote = props.data.vote;
-    const userVotes = props.data.userVotes.reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map());
-    const userLength = props.data.users.length;
+    console.log(vote)
     const navigate = useNavigate();
 
     let requestConfig = {
@@ -21,7 +20,7 @@ function AdminVoteInactive(props) {
 
     const deleteElectionHandler = () => {
         apiClient
-            .delete(`elections/${vote.id}/`, requestConfig)
+            .delete(`elections/${vote.election_id}/`, requestConfig)
             .then(() => {
                 navigate('/admin/votes/archived')
             })
@@ -32,14 +31,14 @@ function AdminVoteInactive(props) {
 
     return (
         <Flex flexDir='column' gap='60px'>
-            <AdminVoteTitle data={vote}/>
+            <AdminVoteTitle data={vote.data}/>
 
             <Center gap='100px' flexDir='column'>
-                {vote.questions.map((question, index) => {
+                {vote.data.questions.map((question, index) => {
                     return (
                         <Flex flexDir='column' alignItems='center' gap='40px' key={index}>
                             <Text fontSize='md' fontWeight='600' w='fit-content'>{question.title}</Text>
-                            <AdminVoteInactiveQuestionTable key={index} data={{question: question, userVotes: userVotes, userLength: userLength}}/>
+                            <AdminVoteInactiveQuestionTable key={index} data={{question: question, submittedVotesCount: 3}}/>
                         </Flex>
                     )
                 })}

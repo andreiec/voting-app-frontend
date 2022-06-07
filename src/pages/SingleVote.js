@@ -13,7 +13,7 @@ import VoteClosed from "../components/Votes/VoteClosed";
 function SingleVote() {
     const params = useParams();
     const userSelector = useSelector(selector => selector.user);
-    const [vote, setVote] = useState([]);
+    const [vote, setVote] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [alreadyVoted, setAlreadyVoted] = useState(false);
@@ -37,9 +37,6 @@ function SingleVote() {
             .get(`elections/${params.id}/submissions/`, requestConfig)
             .then((response) => {
 
-                // Use local variable because it takes time to update
-                let localAlreadyVoted = false;
-
                 // Get all submissions, if user in list then return and navigate
                 const submissions = response.data;
 
@@ -47,13 +44,12 @@ function SingleVote() {
                     if (submission.user === userSelector.id) {
                         setAlreadyVoted(true);
                         setIsLoading(false);
-                        localAlreadyVoted = true;
                         return;
                     } 
                 });
 
-                if (!localAlreadyVoted) {
-                    apiClient
+                // Get election
+                apiClient
                     .get(`elections/${params.id}/`, requestConfig)
                     .then((response) => {
                         setVote(response.data);
@@ -64,7 +60,7 @@ function SingleVote() {
                         setIsLoading(false);
                         setError(error);
                     });
-                }
+                
             })
             .catch((error) => {
                 console.log(error);
@@ -106,10 +102,10 @@ function SingleVote() {
     
     let content = null;
 
-    if (alreadyVoted) {
-        content = <VoteConfirmed />
-    } else if (vote !== null && !vote.is_active) {
+    if (vote?.id && !vote.is_active) {
         content = <VoteClosed />
+    } else if (alreadyVoted) {
+        content = <VoteConfirmed />
     } else {
         // Initial content, if no error display it
         content = vote.id ? 

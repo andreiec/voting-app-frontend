@@ -4,8 +4,7 @@ import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Text } from '@chakra-u
 function AdminVoteInactiveQuestionTable(props) {
 
     const question = props.data.question;
-    const userVotes = props.data.userVotes;
-    const userLength = props.data.userLength;
+    const submittedVotesCount = props.data.submittedVotesCount;
 
     return (
         <TableContainer minW='340px'>
@@ -19,16 +18,8 @@ function AdminVoteInactiveQuestionTable(props) {
 
                 <Tbody>
                     {question.options.map((option, index) => {
-                        let vote_count = 0;
-                        let moreThanHalf = false;
-
-                        if (userVotes.has(option.id)) {
-                            vote_count = userVotes.get(option.id);
-                        }
-
-                        if (vote_count > userLength / 2) {
-                            moreThanHalf = true;
-                        }
+                        let vote_count = option.vote_count;
+                        let moreThanHalf = vote_count > submittedVotesCount / 2;
 
                         return (
                             <Tr key={index}>

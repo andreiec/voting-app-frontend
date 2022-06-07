@@ -24,6 +24,7 @@ import AdminGroupDetails from "./pages/Admin/AdminGroupDetails";
 import CreateGroup from "./pages/CreateGroup";
 import AdminUserDetails from "./pages/Admin/AdminUserDetails";
 import CreateUser from "./pages/CreateUser";
+import AdminVoteDetailsArchived from "./pages/Admin/AdminVoteDetailsArchived";
 
 
 const calculateRemainingTime = (expirationTime) => {
@@ -94,8 +95,9 @@ function App() {
                                 <Route path="create-user" element={<CreateUser />} />
                                 <Route path="admin" element={<Admin />} />
                                 <Route path="admin/votes" element={<AdminVotes />} />
-                                <Route path="admin/votes/archived" element={<AdminVotesArchived />} />
                                 <Route path="admin/votes/:id" element={<AdminVoteDetails />} />
+                                <Route path="admin/votes/archived" element={<AdminVotesArchived />} />
+                                <Route path="admin/votes/archived/:id" element={<AdminVoteDetailsArchived />} />
                                 <Route path="admin/groups" element={<AdminGroups />} />
                                 <Route path="admin/groups/:id" element={<AdminGroupDetails />} />
                                 <Route path="admin/users" element={<AdminUsers />} />

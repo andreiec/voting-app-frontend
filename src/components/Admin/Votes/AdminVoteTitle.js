@@ -30,7 +30,7 @@ function AdminVoteTitle(props) {
                 fontWeight='400'
                 mt='10px'
             >
-                {(new Date(props.data.created)).toISOString().split('T')[0]}
+                {(new Date(props.data.voting_starts_at)).toISOString().split('T')[0]}
             </Text>
 
         </Flex>
