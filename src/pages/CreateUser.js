@@ -84,7 +84,7 @@ function CreateUser() {
         fetchGroups();
     }, [])
 
-    console.log(isSubmitLoading);
+
     return (
         <Fragment>
             <Titlebar title='Detalii' button={() => {navigate("/admin/users/")}} buttonText="Înapoi" />
