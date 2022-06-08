@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import apiClient from "../../http-common";
-import { Flex, useToast } from "@chakra-ui/react";
+import { Center, Flex, Spinner, useToast } from "@chakra-ui/react";
 import AdminVote from "../../components/Admin/Votes/AdminVote";
 import Titlebar from "../../layout/Titlebar";
 
@@ -155,7 +155,16 @@ function AdminVoteDetails() {
 
     // Display while loading request
     if (isLoading) {
-        content = <p>Se încarcă..</p>;
+        {/* Loding spinner */}
+        content = <Center>
+            <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="blue.600"
+                size="lg"
+            />
+        </Center>
     }
 
     return (

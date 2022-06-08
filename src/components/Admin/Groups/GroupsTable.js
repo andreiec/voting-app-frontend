@@ -1,5 +1,5 @@
 
-import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, Box, Text, Button } from '@chakra-ui/react'
+import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, Box, Text, Button, Center, Spinner } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom';
 
 function GroupsTable(props) {
@@ -18,10 +18,26 @@ function GroupsTable(props) {
         >
             <TableContainer>
                 <Table variant='simple'>
-            
+
+
+
                     <TableCaption>
                         {/* If no groups, display text */}                    
                         {!groups.length && !props.data.isLoading && <Text mb='30px' fontWeight='600'>Nu există grupuri!</Text>}
+                        
+                        {/* Loding spinner */}
+                        {props.data.isLoading && 
+                            <Center>
+                                <Spinner
+                                    thickness="4px"
+                                    speed="0.65s"
+                                    emptyColor="gray.200"
+                                    color="blue.600"
+                                    size="lg"
+                                />
+                            </Center>
+                        }
+
                     </TableCaption>
 
                     <Thead>

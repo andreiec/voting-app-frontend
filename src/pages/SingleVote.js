@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, Fragment } from "react";
 import { useSelector } from "react-redux";
-import { Flex, useToast } from "@chakra-ui/react";
+import { Center, Flex, Spinner, useToast } from "@chakra-ui/react";
 
 import apiClient from "../http-common";
 import Cookies from "js-cookie";
@@ -133,7 +133,16 @@ function SingleVote() {
     
     // Display while loading request
     if (isLoading) {
-        content = <p>Se încarcă..</p>;
+        {/* Loding spinner */}
+        content = <Center>
+            <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="blue.600"
+                size="lg"
+            />
+        </Center>
     }
 
     return <Fragment>{content}</Fragment>;
