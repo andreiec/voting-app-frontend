@@ -156,6 +156,8 @@ function CreateVoteForm(props) {
     // Function to handle form submission
     const submitForm = (data) => {
 
+        setIsLoading(true);
+
         // Construct object to be parsed to backend
         let final_data = { ...data };
 
@@ -182,6 +184,11 @@ function CreateVoteForm(props) {
         // Iterate through each question and put its order
         final_data.questions.forEach((question, q_index) => {
             question['order'] = q_index;
+
+            if (question['selection_type'] === 'single') {
+                question['min_selections'] = 1;
+                question['max_selections'] = 1;
+            }
             
             // Iterate through each option and put its order
             question.options.forEach((option, o_index) => {
@@ -189,7 +196,6 @@ function CreateVoteForm(props) {
             })
         });
 
-        setIsLoading(true);
 
         apiClient
             .post("elections/", final_data, requestConfig)

@@ -31,12 +31,12 @@ function VoteFormControl(props) {
                 </Box>
 
                 <Button
-                    disabled={props.activeQuestion < props.number_of_polls - 1}
                     boxShadow="base"
                     type="submit"
                     colorScheme='green'
                     px='23px'
                     form={props.formID}
+                    disabled={!(props.isDirty && props.isValid)}
                 >
                     <Flex flexDir='row'>
                         <Icon as={FaCheck} pt='2px'></Icon>
