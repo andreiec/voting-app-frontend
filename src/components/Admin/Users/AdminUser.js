@@ -44,7 +44,7 @@ function AdminUser(props) {
         }
     }
 
-    const { register, handleSubmit, setValue, getValues, formState: { errors, isValid, isDirty }, control } = useForm({
+    const { register, handleSubmit, setValue, getValues, formState: { errors, isValid, isDirty, isSubmitting }, control } = useForm({
         defaultValues: initialValues,
         resolver: yupResolver(validationSchema),
         mode: 'onBlur',
@@ -112,12 +112,12 @@ function AdminUser(props) {
             {!props.data.updateExisting &&
                 <Center mt="40px">
                     <Button
-                        isLoading={props.isLoading}
+                        isLoading={props.data.isSubmitLoading}
                         colorScheme="green"
                         color="white"
                         fontWeight="400"
                         type="submit"
-                        disabled={!(isValid && isDirty)}
+                        disabled={!(isValid && isDirty) || props.data.isSubmitLoading}
                     >
                         Finalizează
                     </Button>
@@ -158,7 +158,7 @@ function AdminUser(props) {
 
                     {/* Add a new vote button */}
                     <Button
-                        isLoading={props.isLoading}
+                        isLoading={props.data.isSubmitLoading}
                         colorScheme="green"
                         color="white"
                         fontWeight="400"

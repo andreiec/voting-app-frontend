@@ -103,23 +103,12 @@ function SingleVote() {
     let content = null;
 
     if (vote?.id && !vote.is_active) {
-        content = <VoteClosed />
+        return ( <VoteClosed /> )
     } else if (alreadyVoted) {
-        content = <VoteConfirmed />
+        return ( <VoteConfirmed /> )
     } else {
         // Initial content, if no error display it
-        content = vote.id ? 
-            <Flex
-                bg="white"
-                borderRadius={{ base: "0", md: "15px" }}
-                py={{ base:"20px", md:"40px" }}
-                px={{ base:"50px", md:"60px" }}
-                boxShadow={{ base: "", md: "sm" }}
-                minH={{base:"82vh", md:"31rem"}}
-                flexDir="column"
-            >
-                <Vote data={vote} submitHandler={submitHandler} /> 
-            </Flex> : null;
+        content = vote.id ? <Vote data={vote} submitHandler={submitHandler} />  : null;
     }
 
     if (error) {
@@ -145,7 +134,18 @@ function SingleVote() {
         </Center>
     }
 
-    return <Fragment>{content}</Fragment>;
+    return (
+        <Flex
+            bg="white"
+            borderRadius={{ base: "0", md: "15px" }}
+            py={{ base:"20px", md:"40px" }}
+            px={{ base:"50px", md:"60px" }}
+            boxShadow={{ base: "", md: "sm" }}
+            minH={{base:"82vh", md:"31rem"}}
+            flexDir="column"
+        >
+            {content}
+        </Flex> )
 }
 
 export default SingleVote;

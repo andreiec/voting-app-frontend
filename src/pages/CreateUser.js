@@ -14,6 +14,8 @@ function CreateUser() {
     const [availableGroups, setAvailableGroups] = useState([]);
     
     const [isLoading, setIsLoading] = useState(true);
+    const [isSubmitLoading, setIsSubmitLoading] = useState(false);
+
     const [error, setError] = useState(null);
     
     let requestConfig = {
@@ -24,6 +26,8 @@ function CreateUser() {
     };
 
     const fetchGroups = () => {
+        setIsLoading(true);
+
         apiClient
             .get("groups/", requestConfig)
             .then((response) => {
@@ -41,10 +45,12 @@ function CreateUser() {
             data.group = null;
         }
 
+        setIsSubmitLoading(true);
+
         apiClient
             .post("users/", data, requestConfig)
             .then((response) => {
-                setIsLoading(false);
+                setIsSubmitLoading(false);
                 navigate("/admin/users/");
 
                 toast({
@@ -67,7 +73,8 @@ function CreateUser() {
                 } else {
                     setError(err);
                 }
-                setIsLoading(false);
+
+                setIsSubmitLoading(false);
             })
     }
 
@@ -77,7 +84,7 @@ function CreateUser() {
         fetchGroups();
     }, [])
 
-
+    console.log(isSubmitLoading);
     return (
         <Fragment>
             <Titlebar title='Detalii' button={() => {navigate("/admin/users/")}} buttonText="Înapoi" />
@@ -90,7 +97,7 @@ function CreateUser() {
                 minH={{base:"82vh", md:"31rem"}}
                 flexDir="column"
             >
-                <AdminUser data={{user: user, updateExisting: false, submitForm: handleSubmit, availableGroups: availableGroups}} />
+                <AdminUser data={{user: user, updateExisting: false, submitForm: handleSubmit, availableGroups: availableGroups, isSubmitLoading: isSubmitLoading}} />
             </Flex>
         </Fragment>
     )

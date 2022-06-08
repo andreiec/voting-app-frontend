@@ -112,6 +112,14 @@ function AdminUserDetails() {
                         duration: 4000,
                         isClosable: true,
                     })
+                } else if (err.response.status === 406) {
+                    toast({
+                        title: 'Nu se poate șterge administratorul de bază!',
+                        status: 'error',
+                        position: 'top',
+                        duration: 4000,
+                        isClosable: true,
+                    })
                 } else {
                     setError(err);
                 }

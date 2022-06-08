@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { automaticLogout, userActions } from "./store";
+import { authActions, automaticLogout, userActions } from "./store";
 import React, { Fragment, useState, useEffect } from "react";
 import SingleVote from "./pages/SingleVote";
 import AllVotes from "./pages/AllVotes";
@@ -29,6 +29,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Settings from "./pages/Settings";
 import SingleGroup from "./pages/SingleGroup";
+import { toast, useToast } from "@chakra-ui/react";
 
 
 const calculateRemainingTime = (expirationTime) => {
@@ -42,6 +43,7 @@ const calculateRemainingTime = (expirationTime) => {
 
 function App() {
     const authSelector = useSelector((selector) => selector.auth);
+    const toast = useToast();
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const dispatch = useDispatch();
@@ -62,7 +64,15 @@ function App() {
                 setIsLoading(false);
             })
             .catch((error) => {
-                console.log(error);
+                dispatch(userActions.removeUser());
+                dispatch(authActions.logout());
+                toast({
+                    title: 'A apărut o eroare!',
+                    status: 'error',
+                    position: 'top',
+                    duration: 4000,
+                    isClosable: true,
+                })
             });
     };
 
