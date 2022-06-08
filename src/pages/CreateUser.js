@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, useToast } from "@chakra-ui/react";
 import { Fragment, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AdminUser from "../components/Admin/Users/AdminUser";
@@ -8,10 +8,11 @@ import apiClient from "../http-common";
 
 function CreateUser() {
     const navigate = useNavigate();
-    
+    const toast = useToast();
+
     const [user, setUser] = useState(null);
     const [availableGroups, setAvailableGroups] = useState([]);
-
+    
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     
@@ -45,9 +46,27 @@ function CreateUser() {
             .then((response) => {
                 setIsLoading(false);
                 navigate("/admin/users/");
+
+                toast({
+                    title: 'Utilizator creat cu succes!',
+                    status: 'success',
+                    position: 'top',
+                    duration: 4000,
+                    isClosable: true,
+                });
             })
             .catch((err) => {
-                setError(err);
+                if (err.response.status === 409) {
+                    toast({
+                        title: 'Nu se pot face modificări cât timp este un vot activ!',
+                        status: 'error',
+                        position: 'top',
+                        duration: 4000,
+                        isClosable: true,
+                    });
+                } else {
+                    setError(err);
+                }
                 setIsLoading(false);
             })
     }

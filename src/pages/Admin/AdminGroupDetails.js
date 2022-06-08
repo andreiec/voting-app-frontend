@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, useToast } from "@chakra-ui/react";
 import { Fragment, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AdminGroup from "../../components/Admin/Groups/AdminGroup";
@@ -9,7 +9,8 @@ import apiClient from "../../http-common";
 function AdminGroupDetails() {
     const params = useParams();
     const navigate = useNavigate();
-    
+    const toast = useToast();
+
     const [group, setGroup] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -47,7 +48,17 @@ function AdminGroupDetails() {
                 navigate("/admin/groups/");
             })
             .catch((err) => {
-                setError(err);
+                if (err.response.status === 409) {
+                    toast({
+                        title: 'Nu se pot face modificări cât timp este un vot activ!',
+                        status: 'error',
+                        position: 'top',
+                        duration: 4000,
+                        isClosable: true,
+                    })
+                } else {
+                    setError(err);
+                }
                 setIsLoading(false);
             })
     }
@@ -60,7 +71,17 @@ function AdminGroupDetails() {
                 navigate("/admin/groups/");
             })
             .catch((err) => {
-                setError(err);
+                if (err.response.status === 409) {
+                    toast({
+                        title: 'Nu se pot face modificări cât timp este un vot activ!',
+                        status: 'error',
+                        position: 'top',
+                        duration: 4000,
+                        isClosable: true,
+                    })
+                } else {
+                    setError(err);
+                }
                 setIsLoading(false);
             })
     }

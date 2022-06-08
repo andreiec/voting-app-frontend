@@ -1,4 +1,4 @@
-import { Box, Text,  Button, Center, Flex, Divider, FormControl, FormErrorMessage } from "@chakra-ui/react";
+import { Box, Text,  Button, Center, Flex, Divider, FormControl, FormErrorMessage, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { object, number, string, array } from 'yup'
 import CreateVoteGeneralInformation from "./CreateVoteGeneralInformation";
@@ -142,6 +142,7 @@ function CreateVoteForm(props) {
 
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const toast = useToast();
 
     const groups = props.data.groups;
     const todayDate = props.data.todayDate;
@@ -202,6 +203,14 @@ function CreateVoteForm(props) {
             .then((response) => {
                 setIsLoading(false);
                 navigate("/");
+
+                toast({
+                    title: 'Vot creat cu succes!',
+                    status: 'success',
+                    position: 'top',
+                    duration: 4000,
+                    isClosable: true,
+                });
             })
             .catch((err) => {
                 setIsLoading(false);
