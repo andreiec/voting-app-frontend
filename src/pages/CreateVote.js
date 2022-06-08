@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import CreateVoteForm from "../components/Forms/CreateVoteForm/CreateVoteForm";
 import apiClient from "../http-common";
@@ -7,9 +7,10 @@ import { useSelector } from "react-redux";
 
 function CreateVote() {
     const [groups, setGroups] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [firstTouch, setFirstTouch] = useState(true);
-    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const toast = useToast();
+
     const userSelector = useSelector(selector => selector.user);
 
     const fetchGroups = () => {
@@ -27,17 +28,22 @@ function CreateVote() {
             .then((response) => {
                 setGroups(response.data);
                 setIsLoading(false);
-                setError(null);
             })
             .catch((error) => {
                 setIsLoading(false);
-                setError(error);
+
+                toast({
+                    title: 'A apărut o eroare!',
+                    status: 'error',
+                    position: 'top',
+                    duration: 4000,
+                    isClosable: true,
+                })
             });
     };
 
     useEffect(() => {
         if (userSelector.id) {
-            setFirstTouch(false);
             fetchGroups();
         }
     }, [userSelector]);

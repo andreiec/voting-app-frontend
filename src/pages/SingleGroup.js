@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect, Fragment } from "react";
-import { useSelector } from "react-redux";
-import { Flex, useToast } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+import { Flex } from "@chakra-ui/react";
 
 import apiClient from "../http-common";
 import Cookies from "js-cookie";

@@ -5,14 +5,14 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ActiveVotesTable from "../../components/Admin/Votes/ActiveVotesTable";
-import { Button, Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, Text, useToast } from "@chakra-ui/react";
 
 function AdminVotes() {
     const [activeVotes, setActiveVotes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
     const userSelector = useSelector(selector => selector.user);
     const navigate = useNavigate();
+    const toast = useToast();
 
     const fetchVotes = () => {
         setIsLoading(true);
@@ -29,11 +29,17 @@ function AdminVotes() {
             .then((response) => {
                 setActiveVotes(response.data);
                 setIsLoading(false);
-                setError(null);
             })
             .catch((error) => {
                 setIsLoading(false);
-                setError(error);
+
+                toast({
+                    title: 'A apărut o eroare!',
+                    status: 'error',
+                    position: 'top',
+                    duration: 4000,
+                    isClosable: true,
+                })
             });
     };
 
