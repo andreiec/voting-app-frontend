@@ -88,6 +88,13 @@ function SingleVote() {
             .post(`elections/${params.id}/submit/`, submission_data, requestConfig)
             .then((response) => {
                 navigate('/vote-confirmed', { replace: true });
+                toast({
+                    title: 'Vot înregistrat.',
+                    status: 'success',
+                    position: 'top',
+                    duration: 4000,
+                    isClosable: true,
+                })
             })
             .catch((error) => {
                 toast({

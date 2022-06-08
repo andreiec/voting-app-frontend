@@ -50,6 +50,7 @@ function Vote(props) {
                 activeQuestion={activeQuestion}
                 setActiveQuestion={setActiveQuestion}
                 number_of_polls={props.data.number_of_polls}
+                handleVote={handleSubmit(props.submitHandler)}
                 formID={props.data.id}
                 rest={{ mt: "30px" }}
                 isDirty={isDirty}

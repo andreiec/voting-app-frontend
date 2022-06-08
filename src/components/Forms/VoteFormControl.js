@@ -1,7 +1,12 @@
-import { Box, Flex, Button, Icon, Text } from "@chakra-ui/react";
+import { Box, Flex, Button, Icon, Text, useDisclosure } from "@chakra-ui/react";
 import { FaArrowLeft, FaArrowRight, FaCheck } from "react-icons/fa";
+import CustomAlertDialog from "../Misc/CustomAlertDialog";
 
 function VoteFormControl(props) {
+
+    // Alert dialog logic
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
     return (
         <Box {...props.rest}>
             <Flex flexDir={{base:'column', lg:'row'}} justifyContent='space-between' flexWrap='wrap' alignItems='center' rowGap='30px'>
@@ -32,7 +37,7 @@ function VoteFormControl(props) {
 
                 <Button
                     boxShadow="base"
-                    type="submit"
+                    onClick={onOpen}
                     colorScheme='green'
                     px='23px'
                     form={props.formID}
@@ -43,6 +48,20 @@ function VoteFormControl(props) {
                         <Text display="inline" mt='-2px' ml='6px'>Votează</Text>
                     </Flex>
                 </Button>
+
+                <CustomAlertDialog
+                    onOpen={onOpen}
+                    onClose={onClose}
+                    isOpen={isOpen}
+                    handleAlertConfirm={props.handleVote}
+                    data={{
+                        title: "Confirmă votul.",
+                        body: "Ești sigur că vrei să confirmi votul?",
+                        leftButtonText: "Închide",
+                        rightButtonText: "Confirmă",
+                        rightButtonColorScheme: "green",
+                    }}
+                />
             </Flex>
         </Box>
     );

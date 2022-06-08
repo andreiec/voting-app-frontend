@@ -6,7 +6,7 @@ function VoteQuestion(props) {
     return (
         <Fragment>
             <Box mb="20px">
-                <Text color="gray.900">{props.data.title}</Text>
+                <Text fontSize='lg' fontWeight='600' color="gray.900">{props.data.title}</Text>
                 <Text color="gray.500">{props.data.description}</Text>
 
             </Box>

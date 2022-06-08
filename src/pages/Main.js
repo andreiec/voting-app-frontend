@@ -107,7 +107,7 @@ function Main() {
         <Fragment>
             <Titlebar title='Meniu principal' button={fetchVotes} buttonText="Reîncarcă"/>
             <Flex
-                flexDir='row'
+                flexDir={{base: 'column', md:'row'}}
                 gap='30px'
                 flexWrap='wrap'
                 justifyContent='space-between'

@@ -2,7 +2,7 @@ import { Radio, Checkbox } from "@chakra-ui/react";
 
 function VoteOptionSingle(props) {
     return (
-        <Radio w="min-content" value={props.data.id}>
+        <Radio w="fit-content" value={props.data.id}>
             {props.data.value}
         </Radio>
     );
@@ -10,7 +10,7 @@ function VoteOptionSingle(props) {
 
 function VoteOptionMultiple(props) {
     return (
-        <Checkbox w="min-content" value={props.data.id}>
+        <Checkbox w="fit-content" value={props.data.id}>
             {props.data.value}
         </Checkbox>
     );

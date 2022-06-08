@@ -287,7 +287,7 @@ function CreateVoteForm(props) {
                         color="white"
                         fontWeight="400"
                         onClick={onOpen}
-                        disabled={!(isValid && isDirty)}
+                        disabled={!(isValid && isDirty) || isLoading}
                     >
                         Finalizează
                     </Button>
