@@ -1,4 +1,4 @@
-import { Text, Flex, Box, Spacer } from "@chakra-ui/react";
+import { Text, Flex, Box, Spacer, Link } from "@chakra-ui/react";
 
 function Footer() {
     return (
@@ -19,8 +19,8 @@ function Footer() {
             >
                 <Text>@ Facultatea de Matematică și Informatică</Text>
                 <Spacer />
-                <Text mr="20px">Despre</Text>
-                <Text>Contact</Text>
+                <Link mr="20px" href='https://fmi.unibuc.ro/' isExternal>Despre</Link>
+                <Link href='https://fmi.unibuc.ro/secretariat/' isExternal>Contact</Link>
             </Flex>
         </Box>
     );
