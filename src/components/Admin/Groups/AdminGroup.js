@@ -3,7 +3,8 @@ import { HexColorPicker } from "react-colorful";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string } from 'yup'
 import { useForm } from "react-hook-form";
-import { Box, Button, Center, Flex, FormControl, FormErrorMessage, FormLabel, Input, Text, Textarea } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, FormControl, FormErrorMessage, FormLabel, Input, Text, Textarea, useDisclosure } from "@chakra-ui/react";
+import CustomAlertDialog from "../../Misc/CustomAlertDialog";
 
 const validationSchema = object({
     name: string()
@@ -17,6 +18,9 @@ const validationSchema = object({
 
 function AdminGroup(props) {
     const group = props.data.group;
+
+    // Alert dialog logic
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const [color, setColor] = useState(props.data.updateExisting? group.color : '#ffffff');
     const [isLoading, setIsLoading] = useState(false);
@@ -92,17 +96,30 @@ function AdminGroup(props) {
                     flexDir={{base: 'column', md: 'row'}}
                     gap='15px' mt='40px'
                     justifyContent='space-between'>
-
+                    
                     <Button
                         colorScheme='red'
                         float={{base: "none", md:'right'}}
                         w={{base: "100%", md: '120px'}}
-                        onClick={props.data.handleDelete}
+                        onClick={onOpen}
                     >
                         <Text mb='3px'>
                             Șterge
                         </Text>
                     </Button>
+
+                    <CustomAlertDialog
+                        onOpen={onOpen}
+                        onClose={onClose}
+                        isOpen={isOpen}
+                        handleAlertConfirm={props.data.handleDelete}
+                        data={{
+                            title: "Confirmă ștergerea.",
+                            body: "Ești sigur că vrei să ștergi grupul?",
+                            leftButtonText: "Închide",
+                            rightButtonText: "Șterge",
+                            rightButtonColorScheme: "red",
+                        }} />
 
                     {/* Add a new vote button */}
                     <Button

@@ -62,8 +62,8 @@ const userSlice = createSlice({
             state.email = action.payload['email'];
             state.first_name = action.payload['first_name'];
             state.last_name = action.payload['last_name'];
-            state.group_id = action.payload['group']['id'];
-            state.group_name = action.payload['group']['name'];
+            state.group_id = action.payload.group? action.payload.group.id : null ;
+            state.group_name = action.payload.group? action.payload.group.name : null;
             state.date_joined = action.payload['date_joined'];
             state.is_staff = action.payload['is_staff'];
         },
