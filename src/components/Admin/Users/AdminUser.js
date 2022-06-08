@@ -2,7 +2,8 @@ import { useState } from "react";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string } from 'yup'
 import { Controller, useForm } from "react-hook-form";
-import { Box, Button, Center, Checkbox, Flex, FormControl, FormErrorMessage, FormLabel, Input, Select, Text, Textarea } from "@chakra-ui/react";
+import { Box, Button, Center, Checkbox, Flex, FormControl, FormErrorMessage, FormLabel, Input, Select, Text, Textarea, useDisclosure } from "@chakra-ui/react";
+import CustomAlertDialog from "../../Misc/CustomAlertDialog";
 
 const validationSchema = object({
     first_name: string()
@@ -22,7 +23,8 @@ function AdminUser(props) {
     const user = props.data.user;
     const availableGroups = props.data.availableGroups;
 
-    const [isLoading, setIsLoading] = useState(false);
+    // Alert dialog logic
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     let initialValues = {
         first_name: '',
@@ -110,7 +112,7 @@ function AdminUser(props) {
             {!props.data.updateExisting &&
                 <Center mt="40px">
                     <Button
-                        isLoading={isLoading}
+                        isLoading={props.isLoading}
                         colorScheme="green"
                         color="white"
                         fontWeight="400"
@@ -134,16 +136,29 @@ function AdminUser(props) {
                         colorScheme='red'
                         float={{base: "none", md:'right'}}
                         w={{base: "100%", md: '120px'}}
-                        onClick={props.data.handleDelete}
+                        onClick={onOpen}
                     >
                         <Text mb='3px'>
                             Șterge
                         </Text>
                     </Button>
 
+                    <CustomAlertDialog
+                        onOpen={onOpen}
+                        onClose={onClose}
+                        isOpen={isOpen}
+                        handleAlertConfirm={props.data.handleDelete}
+                        data={{
+                            title: "Confirmă ștergerea.",
+                            body: "Ești sigur că vrei să ștergi userul?",
+                            leftButtonText: "Închide",
+                            rightButtonText: "Șterge",
+                            rightButtonColorScheme: "red",
+                        }} />
+
                     {/* Add a new vote button */}
                     <Button
-                        isLoading={isLoading}
+                        isLoading={props.isLoading}
                         colorScheme="green"
                         color="white"
                         fontWeight="400"

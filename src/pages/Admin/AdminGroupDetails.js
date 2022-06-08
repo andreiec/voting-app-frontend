@@ -46,6 +46,14 @@ function AdminGroupDetails() {
             .then((response) => {
                 setIsLoading(false);
                 navigate("/admin/groups/");
+
+                toast({
+                    title: 'Grup updatat cu succes!',
+                    status: 'success',
+                    position: 'top',
+                    duration: 4000,
+                    isClosable: true,
+                });
             })
             .catch((err) => {
                 if (err.response.status === 409) {
@@ -69,6 +77,14 @@ function AdminGroupDetails() {
             .then((response) => {
                 setIsLoading(false);
                 navigate("/admin/groups/");
+
+                toast({
+                    title: 'Grup șters cu succes!',
+                    status: 'success',
+                    position: 'top',
+                    duration: 4000,
+                    isClosable: true,
+                });
             })
             .catch((err) => {
                 if (err.response.status === 409) {

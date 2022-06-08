@@ -23,7 +23,6 @@ function AdminGroup(props) {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const [color, setColor] = useState(props.data.updateExisting? group.color : '#ffffff');
-    const [isLoading, setIsLoading] = useState(false);
 
     let initialValues = {
         name: '',
@@ -77,7 +76,6 @@ function AdminGroup(props) {
             {!props.data.updateExisting &&
                 <Center mt="40px">
                     <Button
-                        isLoading={isLoading}
                         colorScheme="green"
                         color="white"
                         fontWeight="400"
@@ -123,7 +121,6 @@ function AdminGroup(props) {
 
                     {/* Add a new vote button */}
                     <Button
-                        isLoading={isLoading}
                         colorScheme="green"
                         color="white"
                         fontWeight="400"

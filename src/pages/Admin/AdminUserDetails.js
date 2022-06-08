@@ -48,6 +48,7 @@ function AdminUserDetails() {
 
     const handleSubmit = (data) => {
         let final_data = {...user};
+    
         final_data.first_name = data.first_name;
         final_data.last_name = data.last_name;
         final_data.is_staff = data.is_staff;
@@ -62,8 +63,15 @@ function AdminUserDetails() {
         apiClient
             .put(`users/${user.id}/`, final_data, requestConfig)
             .then((response) => {
-                setIsLoading(false);
                 navigate("/admin/users/");
+
+                toast({
+                    title: 'User updatat cu succes!',
+                    status: 'success',
+                    position: 'top',
+                    duration: 4000,
+                    isClosable: true,
+                });
             })
             .catch((err) => {
                 if (err.response.status === 409) {
@@ -77,7 +85,6 @@ function AdminUserDetails() {
                 } else {
                     setError(err);
                 }
-                setIsLoading(false);
             })
     }
 
@@ -87,6 +94,14 @@ function AdminUserDetails() {
             .then((response) => {
                 setIsLoading(false);
                 navigate("/admin/users/");
+
+                toast({
+                    title: 'User șters cu succes!',
+                    status: 'success',
+                    position: 'top',
+                    duration: 4000,
+                    isClosable: true,
+                });
             })
             .catch((err) => {
                 if (err.response.status === 409) {

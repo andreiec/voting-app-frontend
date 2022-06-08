@@ -2,20 +2,19 @@ import { Fragment, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import apiClient from "../../http-common";
-import { Flex } from "@chakra-ui/react";
+import { Flex, useToast } from "@chakra-ui/react";
 import AdminVote from "../../components/Admin/Votes/AdminVote";
 import Titlebar from "../../layout/Titlebar";
-import AdminVoteInactive from "../../components/Admin/Votes/AdminVoteInactive";
 
 function AdminVoteDetails() {
     const params = useParams();
+    const toast = useToast();
 
     // State for vote, groups, users, and all votes
     const [vote, setVote] = useState({});
     const [groups, setGroups] = useState([]);
     const [users, setUsers] = useState([]);
     const [userSubmissions, setuserSubmissions] = useState([]);
-    const [userVotes, setUserVotes] = useState([]);
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -112,9 +111,23 @@ function AdminVoteDetails() {
             .get(`elections/${params.id}/close/`, requestConfig)
             .then((response) => {
                 navigate(`/admin/votes/archived/${response.data.vote_id}`, { replace: true })
+
+                toast({
+                    title: 'Vot încheiat cu succes!',
+                    status: 'success',
+                    position: 'top',
+                    duration: 4000,
+                    isClosable: true,
+                });
             })
             .catch((error) => {
-                console.log(error)
+                toast({
+                    title: 'A apărut o eroare!',
+                    status: 'error',
+                    position: 'top',
+                    duration: 4000,
+                    isClosable: true,
+                });
             })
     }
 
