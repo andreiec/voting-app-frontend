@@ -1,4 +1,4 @@
-import { Box, Text,  Button, Center, Flex, Divider, FormControl, FormErrorMessage, useToast } from "@chakra-ui/react";
+import { Box, Text,  Button, Center, Flex, Divider, FormControl, FormErrorMessage, useToast, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
 import { object, number, string, array } from 'yup'
 import CreateVoteGeneralInformation from "./CreateVoteGeneralInformation";
@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import Cookies from "js-cookie";
+import CustomAlertDialog from "../../Misc/CustomAlertDialog";
 
 
 // Function to compare start time and end time
@@ -141,6 +142,10 @@ const validationSchema = object({
 function CreateVoteForm(props) {
 
     const [isLoading, setIsLoading] = useState(false);
+
+    // Alert dialog logic
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
     const navigate = useNavigate();
     const toast = useToast();
 
@@ -250,7 +255,7 @@ function CreateVoteForm(props) {
     });
 
     return (
-        <form onSubmit={handleSubmit(submitForm)} autoComplete="off">
+        <form autoComplete="off">
             <Flex flexDir='column'>
 
                 {/* Header */}
@@ -281,14 +286,27 @@ function CreateVoteForm(props) {
                         colorScheme="green"
                         color="white"
                         fontWeight="400"
-                        type="submit"
+                        onClick={onOpen}
                         disabled={!(isValid && isDirty)}
                     >
                         Finalizează
                     </Button>
                 </Center>
+
+                <CustomAlertDialog
+                    onOpen={onOpen}
+                    onClose={onClose}
+                    isOpen={isOpen}
+                    handleAlertConfirm={handleSubmit(submitForm)}
+                    data={{
+                        title: "Confirmă crearea.",
+                        body: "Ești sigur că vrei să creezi votul?",
+                        leftButtonText: "Închide",
+                        rightButtonText: "Creează",
+                        rightButtonColorScheme: "green",
+                    }} />
             </Flex>
-            {/*<pre>{JSON.stringify(getValues(), null, 4)}</pre>*/}
+
         </form>
     )
 }
