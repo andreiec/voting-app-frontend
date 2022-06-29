@@ -9,7 +9,7 @@ import CustomAlertDialog from "../../Misc/CustomAlertDialog";
 function AdminVoteInactive(props) {
     
     const vote = props.data.vote;
-
+    console.log(vote)
     const navigate = useNavigate();
 
     // Alert dialog logic
@@ -42,7 +42,7 @@ function AdminVoteInactive(props) {
                     return (
                         <Flex flexDir='column' alignItems='center' gap='40px' key={index}>
                             <Text fontSize='md' fontWeight='600' w='fit-content'>{question.title}</Text>
-                            <AdminVoteInactiveQuestionTable key={index} data={{question: question, submittedVotesCount: 3}}/>
+                            <AdminVoteInactiveQuestionTable key={index} data={{question: question, submittedVotesCount: vote.data.submitted_votes}}/>
                         </Flex>
                     )
                 })}
