@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 import Vote from "../components/Votes/Vote";
 import VoteConfirmed from "../components/Votes/VoteConfirmed";
 import VoteClosed from "../components/Votes/VoteClosed";
+import { sha256 } from "js-sha256";
 
 
 function SingleVote() {
@@ -74,10 +75,14 @@ function SingleVote() {
 
 
     const submitHandler = (values, submitProps) => {
+        const sent_on = new Date().toISOString();
+        let hash = sha256(`${userSelector.id}.${params.id}.${sent_on}`);
+
         const submission_data = {
             user_id: userSelector.id,
             election_id: params.id,
-            sent_on: new Date(),
+            hash: hash,
+            sent_on: sent_on,
             votes: {
                 ...values
             }

@@ -39,7 +39,7 @@ function CreateVoteGeneralInformation(props) {
 
 
             {/* Manual closing field */}
-            <FormControl isInvalid={!!props.errors?.manual_closing?.message} mb='35px'>
+            <FormControl isInvalid={!!props.errors?.manual_closing?.message} mb='35px' hidden>
                 <FormLabel fontWeight="600">Utilizare manuală</FormLabel>
                     <Switch
                         onChange={() => {props.setValue('manual_closing', !manualClosing); setManualClosing(!manualClosing); props.trigger('voting_starts_at_hour'); props.trigger('voting_ends_at_hour');}}
